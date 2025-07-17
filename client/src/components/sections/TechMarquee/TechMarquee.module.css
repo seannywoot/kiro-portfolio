@@ -1,0 +1,203 @@
+/* TechMarquee Section Styles */
+.techMarqueeSection {
+  @apply py-20 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800;
+  overflow: hidden;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.sectionHeader {
+  @apply text-center mb-16;
+}
+
+.title {
+  @apply text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  @apply text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto;
+}
+
+/* Marquee Container */
+.marqueeContainer {
+  @apply relative;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+/* Marquee Row Styles */
+.marqueeRow {
+  @apply flex whitespace-nowrap py-4;
+  width: 100%;
+}
+
+.marqueeContent {
+  @apply flex gap-8 items-center;
+  animation-duration: var(--marquee-speed, 50s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/* Animation Directions */
+.marqueeLeft .marqueeContent {
+  animation-name: marqueeLeftToRight;
+}
+
+.marqueeRight .marqueeContent {
+  animation-name: marqueeRightToLeft;
+}
+
+/* Pause on Hover and Touch */
+.pauseOnHover:hover .marqueeContent {
+  animation-play-state: paused;
+}
+
+.paused .marqueeContent {
+  animation-play-state: paused;
+}
+
+/* Technology Item Styles */
+.techItem {
+  @apply flex items-center gap-3 px-6 py-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700;
+  @apply transition-all duration-300 hover:shadow-md hover:scale-105;
+  @apply cursor-pointer select-none;
+  min-width: fit-content;
+  flex-shrink: 0;
+}
+
+.techIcon {
+  @apply text-2xl;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.techName {
+  @apply text-sm font-medium text-slate-700 dark:text-slate-300;
+  @apply whitespace-nowrap;
+}
+
+/* Keyframe Animations for Seamless Infinite Scroll */
+@keyframes marqueeLeftToRight {
+  0% {
+    transform: translateX(-33.333%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes marqueeRightToLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* Touch Interactions */
+.marqueeContainer {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Smooth Animation Performance */
+.marqueeContent {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .techMarqueeSection {
+    @apply py-12;
+  }
+  
+  .title {
+    @apply text-3xl;
+  }
+  
+  .subtitle {
+    @apply text-base px-4;
+  }
+  
+  .marqueeContent {
+    @apply gap-4;
+    /* Slower animation on mobile for better readability */
+    animation-duration: calc(var(--marquee-speed, 50s) * 1.5);
+  }
+  
+  .techItem {
+    @apply px-4 py-2 gap-2;
+    /* Slightly larger touch targets on mobile */
+    min-height: 44px;
+  }
+  
+  .techIcon {
+    @apply text-xl;
+  }
+  
+  .techName {
+    @apply text-xs;
+  }
+  
+  /* Enhanced touch feedback */
+  .techItem:active {
+    @apply scale-95;
+    transition: transform 0.1s ease-out;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .marqueeContent {
+    animation: none;
+  }
+  
+  .marqueeRow {
+    @apply justify-center flex-wrap;
+  }
+  
+  .marqueeContainer {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .techItem {
+    @apply bg-slate-800/50 border-slate-600/50;
+    backdrop-filter: blur(10px);
+  }
+  
+  .techItem:hover {
+    @apply bg-slate-700/50 border-slate-500/50;
+  }
+}

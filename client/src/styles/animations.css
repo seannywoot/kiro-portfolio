@@ -1,0 +1,279 @@
+/**
+ * Animation keyframes and CSS variables for the portfolio website
+ */
+
+/* Animation timing and easing variables */
+:root {
+  /* Animation durations */
+  --duration-micro: 150ms;
+  --duration-fast: 300ms;
+  --duration-normal: 600ms;
+  --duration-slow: 1000ms;
+  
+  /* Easing functions */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Parallax and scroll variables */
+  --parallax-speed-slow: 0.2;
+  --parallax-speed-medium: 0.5;
+  --parallax-speed-fast: 0.8;
+  
+  /* Marquee animation speeds */
+  --marquee-speed-slow: 60s;
+  --marquee-speed-medium: 40s;
+  --marquee-speed-fast: 20s;
+  
+  /* Animation delays for staggered effects */
+  --stagger-delay-1: 0.1s;
+  --stagger-delay-2: 0.2s;
+  --stagger-delay-3: 0.3s;
+  --stagger-delay-4: 0.4s;
+  --stagger-delay-5: 0.5s;
+}
+
+/* Keyframe animations */
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide down animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale in animation */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Marquee animations */
+@keyframes marqueeLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marqueeRight {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Typewriter effect */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blinkCursor {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: currentColor;
+  }
+}
+
+/* Floating animation for subtle movement */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.5rem);
+  }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Bounce animation */
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40%, 43% {
+    transform: translateY(-1rem);
+  }
+  70% {
+    transform: translateY(-0.5rem);
+  }
+  90% {
+    transform: translateY(-0.25rem);
+  }
+}
+
+/* Utility animation classes */
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--duration-normal) var(--ease-bounce) forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+/* Marquee animation classes */
+.animate-marquee-left {
+  animation: marqueeLeft var(--marquee-speed-medium) linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marqueeRight var(--marquee-speed-medium) linear infinite;
+}
+
+/* Typewriter animation classes */
+.animate-typewriter {
+  overflow: hidden;
+  border-right: 2px solid currentColor;
+  white-space: nowrap;
+  animation: 
+    typewriter 3s steps(40, end),
+    blinkCursor 0.75s step-end infinite;
+}
+
+/* Staggered animation delays */
+.animate-stagger-1 {
+  animation-delay: var(--stagger-delay-1);
+}
+
+.animate-stagger-2 {
+  animation-delay: var(--stagger-delay-2);
+}
+
+.animate-stagger-3 {
+  animation-delay: var(--stagger-delay-3);
+}
+
+.animate-stagger-4 {
+  animation-delay: var(--stagger-delay-4);
+}
+
+.animate-stagger-5 {
+  animation-delay: var(--stagger-delay-5);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
+  }
+  
+  .animate-float {
+    animation: none;
+  }
+}
