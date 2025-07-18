@@ -1,0 +1,30 @@
+{
+  "enabled": true,
+  "name": "Documentation Sync",
+  "description": "Monitors TypeScript source files, configuration files, and package.json files across the monorepo and triggers documentation updates in README files when changes occur",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "client/src/**/*.ts",
+      "client/src/**/*.tsx",
+      "server/src/**/*.ts",
+      "shared/src/**/*.ts",
+      "client/package.json",
+      "server/package.json",
+      "shared/package.json",
+      "package.json",
+      "client/tsconfig.json",
+      "server/tsconfig.json",
+      "shared/tsconfig.json",
+      "tsconfig.json",
+      "client/vite.config.ts",
+      "client/vitest.config.ts",
+      "client/eslint.config.js"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Source code or configuration files have been modified in this TypeScript monorepo project. Please review the changes and update the relevant documentation. Focus on updating the main README.md file and any specific README files in the client/, server/, or shared/ directories. Ensure that any new features, API changes, configuration updates, or architectural modifications are properly documented. Pay special attention to updating build instructions, development setup, and any new dependencies or scripts that may have been added."
+  }
+}
