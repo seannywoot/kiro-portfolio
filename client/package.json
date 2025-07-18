@@ -6,10 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:analyze": "npm run build && npx vite-bundle-analyzer dist",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "test:performance": "vitest run --config vitest.performance.config.ts",
+    "audit:performance": "node scripts/performance-audit.js",
+    "audit:accessibility": "node scripts/accessibility-audit.js",
+    "audit:final": "node scripts/final-audit.js",
+    "audit:simple": "node scripts/simple-audit.js",
+    "audit:bundle": "npm run build && npx bundlesize",
+    "lighthouse": "npm run build && npm run preview & sleep 5 && npx lighthouse http://localhost:4173 --output=html --output-path=./lighthouse-report.html && pkill -f 'vite preview'",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
@@ -43,5 +52,17 @@
     "typescript-eslint": "^8.34.0",
     "vite": "^6.3.5",
     "vitest": "^3.2.4"
-  }
+  },
+  "bundlesize": [
+    {
+      "path": "./dist/assets/*.js",
+      "maxSize": "500kb",
+      "compression": "gzip"
+    },
+    {
+      "path": "./dist/assets/*.css",
+      "maxSize": "50kb",
+      "compression": "gzip"
+    }
+  ]
 }

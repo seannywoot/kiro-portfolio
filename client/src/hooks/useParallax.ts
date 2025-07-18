@@ -8,7 +8,7 @@ export interface UseParallaxOptions {
 }
 
 export interface UseParallaxReturn {
-  ref: React.RefObject<HTMLElement>;
+  ref: React.RefObject<HTMLElement | null>;
   offset: number;
   isVisible: boolean;
 }

@@ -1,0 +1,257 @@
+/* Error Boundary Styles */
+.errorContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  border-radius: 1rem;
+  margin: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .errorContainer {
+    background: linear-gradient(135deg, #1f1f1f, #2d1b1b);
+  }
+}
+
+.errorContent {
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.iconContainer {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.errorIcon {
+  color: #ef4444;
+  opacity: 0.8;
+}
+
+@media (prefers-color-scheme: dark) {
+  .errorIcon {
+    color: #f87171;
+  }
+}
+
+.errorTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .errorTitle {
+    color: #f9fafb;
+  }
+}
+
+.errorMessage {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .errorMessage {
+    color: #d1d5db;
+  }
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-height: 44px;
+  min-width: 120px;
+}
+
+.button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.primaryButton {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+}
+
+.primaryButton:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.secondaryButton {
+  background: rgba(255, 255, 255, 0.8);
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.secondaryButton:hover {
+  background: rgba(249, 250, 251, 0.9);
+  border-color: #9ca3af;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .secondaryButton {
+    background: rgba(55, 65, 81, 0.8);
+    color: #d1d5db;
+    border-color: #4b5563;
+  }
+  
+  .secondaryButton:hover {
+    background: rgba(75, 85, 99, 0.9);
+    border-color: #6b7280;
+  }
+}
+
+/* Error Details */
+.errorDetails {
+  text-align: left;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .errorDetails {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.detailsSummary {
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease;
+}
+
+.detailsSummary:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  .detailsSummary {
+    color: #d1d5db;
+  }
+  
+  .detailsSummary:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.errorStack {
+  margin-top: 1rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.errorStack h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 1rem 0 0.5rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .errorStack h4 {
+    color: #d1d5db;
+  }
+}
+
+.errorStack pre {
+  font-size: 0.75rem;
+  color: #6b7280;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (prefers-color-scheme: dark) {
+  .errorStack pre {
+    color: #9ca3af;
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .errorContainer {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  .errorTitle {
+    font-size: 1.25rem;
+  }
+  
+  .errorMessage {
+    font-size: 0.875rem;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .button {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .errorStack pre {
+    font-size: 0.7rem;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+  
+  .button:hover {
+    transform: none;
+  }
+}

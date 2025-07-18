@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { TechMarqueeProps, Technology } from '../../../lib/types';
+import ScreenReaderOnly from '../../common/ScreenReaderOnly/ScreenReaderOnly';
+// import { motion } from '../../../lib/accessibility';
 import styles from './TechMarquee.module.css';
 
 const TechMarquee: React.FC<TechMarqueeProps> = ({
@@ -72,8 +74,9 @@ const TechMarquee: React.FC<TechMarqueeProps> = ({
     direction: 'left' | 'right',
     ref: React.RefObject<HTMLDivElement | null>
   ) => {
-    // Duplicate the technologies array to create seamless infinite scroll
-    const duplicatedTechs = [...techs, ...techs, ...techs];
+    // Duplicate the technologies array twice to create seamless infinite scroll
+    // This ensures smooth looping without gaps
+    const duplicatedTechs = [...techs, ...techs];
 
     return (
       <div
@@ -93,11 +96,23 @@ const TechMarquee: React.FC<TechMarqueeProps> = ({
     <section className={styles.techMarqueeSection}>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <h2 className={styles.title}>Technologies & Tools</h2>
+          <h2 id="technologies-heading" className={styles.title}>Technologies & Tools</h2>
           <p className={styles.subtitle}>
             Crafting modern experiences with cutting-edge technologies
           </p>
         </div>
+        
+        {/* Screen reader accessible list of technologies */}
+        <ScreenReaderOnly>
+          <h3>Complete list of technologies:</h3>
+          <ul>
+            {technologies.map((tech, index) => (
+              <li key={`sr-${tech.name}-${index}`}>
+                {tech.name} - {tech.category}
+              </li>
+            ))}
+          </ul>
+        </ScreenReaderOnly>
         
         <div 
           className={`${styles.marqueeContainer} ${isPaused ? styles.paused : ''}`}
@@ -105,13 +120,25 @@ const TechMarquee: React.FC<TechMarqueeProps> = ({
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
+          role="img"
+          aria-label="Animated showcase of technologies and tools"
+          aria-describedby="tech-description"
         >
           {/* Top row - left to right */}
-          {renderMarqueeRow(topRowTechs, 'left', topRowRef)}
+          <div className={styles.marqueeRowWrapper} aria-hidden="true">
+            {renderMarqueeRow(topRowTechs, 'left', topRowRef)}
+          </div>
           
           {/* Bottom row - right to left */}
-          {renderMarqueeRow(bottomRowTechs, 'right', bottomRowRef)}
+          <div className={`${styles.marqueeRowWrapper} ${styles.marqueeRowDelayed}`} aria-hidden="true">
+            {renderMarqueeRow(bottomRowTechs, 'right', bottomRowRef)}
+          </div>
         </div>
+        
+        <ScreenReaderOnly id="tech-description">
+          This section displays an animated showcase of {technologies.length} technologies and tools used in development, 
+          including {technologies.map(tech => tech.name).join(', ')}.
+        </ScreenReaderOnly>
       </div>
     </section>
   );

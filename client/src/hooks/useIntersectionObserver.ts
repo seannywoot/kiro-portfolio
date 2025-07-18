@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import type { IntersectionObserverOptions } from '../lib/types';
 
 export interface UseIntersectionObserverReturn {
-  ref: React.RefObject<HTMLElement>;
+  ref: React.RefObject<HTMLDivElement | null>;
   isIntersecting: boolean;
   entry: IntersectionObserverEntry | null;
 }
@@ -20,7 +20,7 @@ export function useIntersectionObserver(
     root = null
   } = options;
 
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
 

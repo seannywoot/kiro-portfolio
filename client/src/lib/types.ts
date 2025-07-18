@@ -102,6 +102,11 @@ export interface AnimatedTextProps {
   className?: string;
 }
 
+export interface AboutProps {
+  personal: PersonalInfo;
+  skills: SkillCategory[];
+}
+
 // Animation and scroll related interfaces
 export interface ScrollPosition {
   x: number;
