@@ -20,11 +20,20 @@ export interface PersonalInfo {
   resume?: string;
 }
 
-// Technology interface for marquee display
+// Technology interface for marquee display with enhanced image support
 export interface Technology {
   name: string;
-  icon: string | React.ComponentType;
+  icon: string | React.ComponentType | ImageIcon;
   category: TechnologyCategory;
+  priority?: number; // For ordering in marquee
+}
+
+// Image icon interface for technology icons
+export interface ImageIcon {
+  type: 'image';
+  src: string;
+  alt: string;
+  fallback?: string; // Emoji fallback if image fails to load
 }
 
 export type TechnologyCategory = 

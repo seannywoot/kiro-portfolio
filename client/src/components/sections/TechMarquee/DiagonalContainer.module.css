@@ -1,0 +1,136 @@
+/* Diagonal Container Layout */
+.diagonalContainer {
+  display: grid;
+  grid-template-columns: var(--left-width, 40%) var(--right-width, 60%);
+  position: relative;
+  min-height: 400px;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate; /* Create stacking context for z-index */
+  align-items: stretch; /* Ensure both sections have equal height */
+}
+
+/* Diagonal divider effect - creates the visual separation */
+.diagonalContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--left-width, 40%);
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+  transform: skewX(calc(var(--diagonal-angle, 15deg) * -1));
+  transform-origin: top;
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .diagonalContainer::before {
+    background: linear-gradient(135deg, #374151, #4b5563);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Ensure proper grid alignment and positioning */
+.diagonalContainer > * {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Mobile responsive - stack vertically */
+@media (max-width: 768px) {
+  .diagonalContainer {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    min-height: auto;
+    gap: 0; /* Remove gap for seamless mobile layout */
+  }
+  
+  /* Hide diagonal divider on mobile */
+  .diagonalContainer::before {
+    display: none;
+  }
+}
+
+/* Tablet responsive - adjust proportions */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .diagonalContainer {
+    grid-template-columns: 45% 55%;
+    min-height: 350px;
+  }
+  
+  /* Adjust diagonal divider position for tablet */
+  .diagonalContainer::before {
+    left: 45%;
+  }
+}
+
+/* Desktop responsive - optimal proportions */
+@media (min-width: 1025px) and (max-width: 1439px) {
+  .diagonalContainer {
+    grid-template-columns: 42% 58%;
+    min-height: 400px;
+  }
+  
+  /* Adjust diagonal divider position for desktop */
+  .diagonalContainer::before {
+    left: 42%;
+  }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1440px) {
+  .diagonalContainer {
+    grid-template-columns: 40% 60%;
+    min-height: 450px;
+  }
+  
+  /* Adjust diagonal divider position for large screens */
+  .diagonalContainer::before {
+    left: 40%;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1920px) {
+  .diagonalContainer {
+    min-height: 500px;
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+  
+  /* Maintain diagonal divider position for extra large screens */
+  .diagonalContainer::before {
+    left: 40%;
+  }
+}
+
+/* Support for browsers without CSS Grid */
+@supports not (display: grid) {
+  .diagonalContainer {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .diagonalContainer > :first-child {
+    flex: 0 0 40%;
+  }
+  
+  .diagonalContainer > :last-child {
+    flex: 1;
+  }
+}
+
+/* Mobile fallback for non-grid browsers */
+@supports not (display: grid) {
+  @media (max-width: 768px) {
+    .diagonalContainer {
+      flex-direction: column;
+    }
+    
+    .diagonalContainer > :first-child {
+      flex: none;
+    }
+  }
+}

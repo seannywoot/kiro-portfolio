@@ -1,0 +1,67 @@
+/* Tech Icon Styles */
+.techIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.emojiIcon {
+  font-size: 1.5rem;
+}
+
+.imageIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.componentIcon {
+  font-size: 1.5rem;
+}
+
+.fallbackIcon {
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .emojiIcon,
+  .componentIcon,
+  .fallbackIcon {
+    font-size: 1.1rem;
+  }
+  
+  .imageIcon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .emojiIcon,
+  .componentIcon,
+  .fallbackIcon {
+    font-size: 1.25rem;
+  }
+  
+  .imageIcon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .emojiIcon,
+  .componentIcon,
+  .fallbackIcon {
+    font-size: 1.75rem;
+  }
+  
+  .imageIcon {
+    width: 28px;
+    height: 28px;
+  }
+}

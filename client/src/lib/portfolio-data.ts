@@ -1,8 +1,97 @@
 /**
- * Sample portfolio data demonstrating the TypeScript interfaces
+ * Enhanced portfolio data with image-based technology icons
+ * 
+ * This file contains the portfolio data structure with enhanced technology support:
+ * - Image-based icons with fallback mechanisms
+ * - Priority-based ordering for marquee display
+ * - Utility functions for icon rendering and data manipulation
+ * 
+ * Technology icons can be:
+ * - String emojis (e.g., "⚛️")
+ * - React components
+ * - ImageIcon objects with src, alt, and fallback properties
+ * 
+ * Available image files in public directory:
+ * - /react.png
+ * - /CSS-Logo-PNG-Symbol-for-Web-Development-Transparent.png
+ * - /JavaScript-Logo-PNG-Symbol-for-Web-Development-Transparent.png
+ * - /HTML5-Logo-PNG-Symbol-for-Web-Development-Transparent.png
+ * - /Python-programming-code-coding-transparent-PNG-image.png
+ * - /vite.svg
+ * - /figma.png
+ * - /photoshop.png
  */
 
-import { PortfolioData } from './types';
+import React from 'react';
+import { PortfolioData, ImageIcon, Technology } from './types';
+
+/**
+ * Utility function to check if a technology icon is an image icon
+ */
+export const isImageIcon = (icon: Technology['icon']): icon is ImageIcon => {
+  return typeof icon === 'object' && icon !== null && 'type' in icon && icon.type === 'image';
+};
+
+/**
+ * Utility function to get fallback icon for a technology
+ */
+export const getFallbackIcon = (technology: Technology): string => {
+  if (isImageIcon(technology.icon) && technology.icon.fallback) {
+    return technology.icon.fallback;
+  }
+  
+  // Default fallback based on category
+  const categoryFallbacks: Record<string, string> = {
+    frontend: '🌐',
+    backend: '⚙️',
+    database: '🗄️',
+    tools: '🔧',
+    cloud: '☁️'
+  };
+  
+  return categoryFallbacks[technology.category] || '💻';
+};
+
+/**
+ * Utility function to get technologies sorted by priority
+ */
+export const getTechnologiesByPriority = (technologies: Technology[]): Technology[] => {
+  return [...technologies].sort((a, b) => (a.priority || 999) - (b.priority || 999));
+};
+
+/**
+ * Utility function to render technology icon with fallback support
+ * This function handles string icons, React components, and ImageIcon objects
+ */
+export const renderTechnologyIcon = (
+  technology: Technology,
+  onImageError?: (tech: Technology) => void
+): React.ReactNode => {
+  const { icon } = technology;
+  
+  // Handle string icons (emojis)
+  if (typeof icon === 'string') {
+    return icon;
+  }
+  
+  // Handle ImageIcon objects
+  if (isImageIcon(icon)) {
+    return React.createElement('img', {
+      src: icon.src,
+      alt: icon.alt,
+      onError: () => onImageError?.(technology),
+      style: { width: '24px', height: '24px', objectFit: 'contain' }
+    });
+  }
+  
+  // Handle React components
+  if (typeof icon === 'function') {
+    return React.createElement(icon);
+  }
+  
+  // Fallback
+  return getFallbackIcon(technology);
+};
 
 export const portfolioData: PortfolioData = {
   personal: {
@@ -14,30 +103,118 @@ export const portfolioData: PortfolioData = {
   },
   
   technologies: [
-    { name: "React", icon: "⚛️", category: "frontend" },
-    { name: "TypeScript", icon: "📘", category: "frontend" },
-    { name: "Tailwind CSS", icon: "🎨", category: "frontend" },
-    { name: "Next.js", icon: "▲", category: "frontend" },
-    { name: "Vue.js", icon: "💚", category: "frontend" },
-    { name: "Vite", icon: "⚡", category: "tools" },
-    { name: "Node.js", icon: "🟢", category: "backend" },
-    { name: "Express", icon: "🚀", category: "backend" },
-    { name: "FastAPI", icon: "🔥", category: "backend" },
-    { name: "Python", icon: "🐍", category: "backend" },
-    { name: "PostgreSQL", icon: "🐘", category: "database" },
-    { name: "MongoDB", icon: "🍃", category: "database" },
-    { name: "Redis", icon: "🔴", category: "database" },
-    { name: "Docker", icon: "🐳", category: "tools" },
-    { name: "Kubernetes", icon: "☸️", category: "tools" },
-    { name: "AWS", icon: "☁️", category: "cloud" },
-    { name: "Vercel", icon: "🔺", category: "cloud" },
-    { name: "Git", icon: "📝", category: "tools" },
-    { name: "Figma", icon: "🎯", category: "tools" },
-    { name: "Jest", icon: "🃏", category: "tools" },
-    { name: "Cypress", icon: "🌲", category: "tools" },
-    { name: "GraphQL", icon: "💜", category: "backend" },
-    { name: "Prisma", icon: "🔷", category: "database" },
-    { name: "Supabase", icon: "🟢", category: "database" }
+    { 
+      name: "React", 
+      icon: { 
+        type: 'image', 
+        src: "/react.png", 
+        alt: "React logo", 
+        fallback: "⚛️" 
+      } as ImageIcon, 
+      category: "frontend",
+      priority: 1
+    },
+    { 
+      name: "TypeScript", 
+      icon: "📘", 
+      category: "frontend",
+      priority: 2
+    },
+    { 
+      name: "CSS", 
+      icon: { 
+        type: 'image', 
+        src: "/CSS-Logo-PNG-Symbol-for-Web-Development-Transparent.png", 
+        alt: "CSS3 logo", 
+        fallback: "🎨" 
+      } as ImageIcon, 
+      category: "frontend",
+      priority: 3
+    },
+    { 
+      name: "JavaScript", 
+      icon: { 
+        type: 'image', 
+        src: "/JavaScript-Logo-PNG-Symbol-for-Web-Development-Transparent.png", 
+        alt: "JavaScript logo", 
+        fallback: "💛" 
+      } as ImageIcon, 
+      category: "frontend",
+      priority: 4
+    },
+    { 
+      name: "HTML5", 
+      icon: { 
+        type: 'image', 
+        src: "/HTML5-Logo-PNG-Symbol-for-Web-Development-Transparent.png", 
+        alt: "HTML5 logo", 
+        fallback: "🌐" 
+      } as ImageIcon, 
+      category: "frontend",
+      priority: 5
+    },
+    { 
+      name: "Python", 
+      icon: { 
+        type: 'image', 
+        src: "/Python-programming-code-coding-transparent-PNG-image.png", 
+        alt: "Python logo", 
+        fallback: "🐍" 
+      } as ImageIcon, 
+      category: "backend",
+      priority: 6
+    },
+    { 
+      name: "Vite", 
+      icon: { 
+        type: 'image', 
+        src: "/vite.svg", 
+        alt: "Vite logo", 
+        fallback: "⚡" 
+      } as ImageIcon, 
+      category: "tools",
+      priority: 7
+    },
+    { 
+      name: "Figma", 
+      icon: { 
+        type: 'image', 
+        src: "/figma.png", 
+        alt: "Figma logo", 
+        fallback: "🎯" 
+      } as ImageIcon, 
+      category: "tools",
+      priority: 8
+    },
+    { 
+      name: "Photoshop", 
+      icon: { 
+        type: 'image', 
+        src: "/photoshop.png", 
+        alt: "Adobe Photoshop logo", 
+        fallback: "🖼️" 
+      } as ImageIcon, 
+      category: "tools",
+      priority: 9
+    },
+    { name: "Next.js", icon: "▲", category: "frontend", priority: 10 },
+    { name: "Vue.js", icon: "💚", category: "frontend", priority: 11 },
+    { name: "Node.js", icon: "🟢", category: "backend", priority: 12 },
+    { name: "Express", icon: "🚀", category: "backend", priority: 13 },
+    { name: "FastAPI", icon: "🔥", category: "backend", priority: 14 },
+    { name: "PostgreSQL", icon: "🐘", category: "database", priority: 15 },
+    { name: "MongoDB", icon: "🍃", category: "database", priority: 16 },
+    { name: "Redis", icon: "🔴", category: "database", priority: 17 },
+    { name: "Docker", icon: "🐳", category: "tools", priority: 18 },
+    { name: "Kubernetes", icon: "☸️", category: "tools", priority: 19 },
+    { name: "AWS", icon: "☁️", category: "cloud", priority: 20 },
+    { name: "Vercel", icon: "🔺", category: "cloud", priority: 21 },
+    { name: "Git", icon: "📝", category: "tools", priority: 22 },
+    { name: "Jest", icon: "🃏", category: "tools", priority: 23 },
+    { name: "Cypress", icon: "🌲", category: "tools", priority: 24 },
+    { name: "GraphQL", icon: "💜", category: "backend", priority: 25 },
+    { name: "Prisma", icon: "🔷", category: "database", priority: 26 },
+    { name: "Supabase", icon: "🟢", category: "database", priority: 27 }
   ],
   
   projects: [
