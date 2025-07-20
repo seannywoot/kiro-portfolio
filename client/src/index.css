@@ -108,10 +108,10 @@
   --sidebar-ring: oklch(0.7731 0 0);
 
   /* Portfolio-specific variables using Claude theme colors */
-  --portfolio-primary: oklch(0.6171 0.1375 39.0427); /* Claude orange */
-  --portfolio-secondary: oklch(
-    0.6898 0.1581 290.4107
-  ); /* Claude purple accent */
+  --portfolio-primary: oklch(0.6171 0.1375 39.0427);
+  /* Claude orange */
+  --portfolio-secondary: oklch(0.6898 0.1581 290.4107);
+  /* Claude purple accent */
   --portfolio-text-muted: oklch(0.6059 0.0075 97.4233);
   --portfolio-surface: oklch(0.9818 0.0054 95.0986);
   --portfolio-surface-elevated: oklch(0.9663 0.008 98.8792);
@@ -188,10 +188,10 @@
   --sidebar-ring: oklch(0.7731 0 0);
 
   /* Portfolio-specific dark mode colors using Claude theme */
-  --portfolio-primary: oklch(0.6724 0.1308 38.7559); /* Claude orange dark */
-  --portfolio-secondary: oklch(
-    0.6898 0.1581 290.4107
-  ); /* Claude purple accent */
+  --portfolio-primary: oklch(0.6724 0.1308 38.7559);
+  /* Claude orange dark */
+  --portfolio-secondary: oklch(0.6898 0.1581 290.4107);
+  /* Claude purple accent */
   --portfolio-text-muted: oklch(0.7713 0.0169 99.0657);
   --portfolio-surface: oklch(0.2679 0.0036 106.6427);
   --portfolio-surface-elevated: oklch(0.3085 0.0035 106.6039);
@@ -230,6 +230,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
@@ -298,6 +299,7 @@
       opacity: 0;
       transform: translateY(10px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -309,6 +311,7 @@
       opacity: 1;
       transform: translateY(0);
     }
+
     to {
       opacity: 0;
       transform: translateY(-10px);
@@ -371,6 +374,7 @@
 
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
+
     html,
     * {
       scroll-behavior: auto;

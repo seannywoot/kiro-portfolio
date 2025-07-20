@@ -8,11 +8,12 @@
   width: clamp(32px, 5vw, 40px);
   height: clamp(32px, 5vw, 40px);
   border-radius: 8px;
-  background: var(--muted);
-  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
   
   /* Hardware acceleration for smooth animations */
   transform: translate3d(0, 0, 0);
@@ -35,11 +36,12 @@
 /* Dark mode support for icon containers */
 @media (prefers-color-scheme: dark) {
   .techIcon {
-    background: var(--muted);
-    border-color: var(--border);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 
-      0 2px 4px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      0 4px 8px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
   }
   
   .techIcon:hover {
