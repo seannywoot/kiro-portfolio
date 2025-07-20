@@ -41,7 +41,7 @@ export function Hero({
     <section
       className={cn(
         'relative min-h-screen flex items-center justify-center overflow-hidden',
-        'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900',
+        'bg-gradient-to-br from-[var(--background)] via-[var(--muted)] to-[var(--background)]',
         styles.hero,
         className
       )}
@@ -58,7 +58,7 @@ export function Hero({
       </ParallaxContainer>
 
       {/* Main Content */}
-      <div className="container mx-auto px-6 text-center text-white relative z-10">
+      <div className="container mx-auto px-6 text-center text-[var(--foreground)] relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Avatar */}
           {avatar && (
@@ -82,7 +82,7 @@ export function Hero({
             text={name}
             animation="fadeIn"
             delay={200}
-            className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+            className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-[var(--foreground)] to-[var(--muted-foreground)] bg-clip-text text-transparent"
           />
 
           {/* Animated Title */}
@@ -90,7 +90,7 @@ export function Hero({
             text={title}
             animation="slideUp"
             delay={600}
-            className="text-xl md:text-2xl text-blue-300 mb-6 font-medium"
+            className="text-xl md:text-2xl text-[var(--primary)] mb-6 font-medium"
           />
 
           {/* Animated Description */}
@@ -98,7 +98,7 @@ export function Hero({
             text={description}
             animation="fadeIn"
             delay={1000}
-            className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-[var(--muted-foreground)] mb-8 max-w-2xl mx-auto leading-relaxed"
           />
 
           {/* Call to Action */}
@@ -113,8 +113,8 @@ export function Hero({
                 onClick={onCtaClick}
                 size="lg"
                 className={cn(
-                  'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700',
-                  'text-white font-semibold px-8 py-3 rounded-full',
+                  'bg-[var(--primary)] hover:bg-[var(--primary)]/90',
+                  'text-[var(--primary-foreground)] font-semibold px-8 py-3 rounded-full',
                   'transform transition-all duration-300 hover:scale-105',
                   'shadow-lg hover:shadow-xl',
                   styles.ctaButton
@@ -127,11 +127,11 @@ export function Hero({
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
           <button
             onClick={scrollToNext}
             className={cn(
-              'text-white/60 hover:text-white transition-colors duration-300',
+              'text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors duration-300',
               'flex flex-col items-center gap-2 group',
               styles.scrollIndicator
             )}

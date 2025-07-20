@@ -95,10 +95,10 @@ export const renderTechnologyIcon = (
 
 export const portfolioData: PortfolioData = {
   personal: {
-    name: "Alex Johnson",
+    name: "Seann Tamondong",
     title: "Senior Full Stack Developer",
     bio: "Passionate full-stack developer with 5+ years of experience creating modern, scalable web applications. I specialize in React, TypeScript, and Node.js, with a focus on performance optimization and user experience. I love turning complex problems into simple, beautiful solutions.",
-    avatar: "/images/avatar.jpg",
+    avatar: "/2X2.jpg",
     resume: "/documents/alex-johnson-resume.pdf"
   },
   

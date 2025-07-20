@@ -19,7 +19,7 @@ export function ScrollIndicator({
   showPercentage = false,
   position = 'top',
   thickness = 4,
-  color = 'bg-blue-500',
+  color = 'bg-[var(--primary)]',
   ...props
 }: ScrollIndicatorProps & React.HTMLAttributes<HTMLDivElement>) {
   const { progress } = useScrollProgress();

@@ -4,14 +4,11 @@ import Navigation from './components/common/Navigation/Navigation';
 import ScrollProgress from './components/common/ScrollProgress/ScrollProgress';
 import ScreenReaderOnly from './components/common/ScreenReaderOnly/ScreenReaderOnly';
 import ErrorBoundary from './components/common/ErrorBoundary/ErrorBoundary';
-import LazySection from './components/common/LazySection/LazySection';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
-import { 
-  ModernMarqueeWithLoading,
-  AboutWithLoading,
-  ProjectsWithLoading,
-  ContactWithLoading
-} from './components/sections/LazyComponents';
+import ModernMarquee from './components/sections/ModernMarquee/ModernMarquee';
+import About from './components/sections/About/About';
+import Projects from './components/sections/Projects/Projects';
+import Contact from './components/sections/Contact/Contact';
 import { portfolioData } from './lib/portfolio-data';
 import { motion } from './lib/accessibility';
 import { initializePerformanceMonitoring, ResourceHints } from './lib/performance';
@@ -84,7 +81,7 @@ function App() {
   // Show loading screen while app initializes
   if (isAppLoading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
         <div className="text-center">
           <LoadingSpinner size="large" />
           <p className="mt-4 text-slate-400 text-sm">Loading portfolio...</p>
@@ -127,80 +124,72 @@ function App() {
 
         {/* Technologies Section */}
         <ErrorBoundary>
-          <LazySection rootMargin="200px">
-            <section 
-              id="technologies" 
-              aria-labelledby="technologies-heading"
-              role="region"
-              aria-label="Technologies and tools showcase"
-              className="transition-all duration-700 ease-out"
-            >
-              <ModernMarqueeWithLoading
-                technologies={portfolioData.technologies}
-                speed={25}
-              />
-            </section>
-          </LazySection>
+          <section 
+            id="technologies" 
+            aria-labelledby="technologies-heading"
+            role="region"
+            aria-label="Technologies and tools showcase"
+            className="transition-all duration-700 ease-out"
+          >
+            <ModernMarquee
+              technologies={portfolioData.technologies}
+              speed={25}
+            />
+          </section>
         </ErrorBoundary>
 
         {/* About Section */}
         <ErrorBoundary>
-          <LazySection rootMargin="200px">
-            <section 
-              id="about" 
-              aria-labelledby="about-heading"
-              role="region"
-              aria-label="About me and skills"
-              className="transition-all duration-700 ease-out"
-            >
-              <AboutWithLoading
-                personal={portfolioData.personal}
-                skills={portfolioData.skills}
-              />
-            </section>
-          </LazySection>
+          <section 
+            id="about" 
+            aria-labelledby="about-heading"
+            role="region"
+            aria-label="About me and skills"
+            className="transition-all duration-700 ease-out"
+          >
+            <About
+              personal={portfolioData.personal}
+              skills={portfolioData.skills}
+            />
+          </section>
         </ErrorBoundary>
 
         {/* Projects Section */}
         <ErrorBoundary>
-          <LazySection rootMargin="200px">
-            <section 
-              id="projects" 
-              aria-labelledby="projects-heading"
-              role="region"
-              aria-label="Portfolio projects"
-              className="transition-all duration-700 ease-out"
-            >
-              <ProjectsWithLoading projects={portfolioData.projects} />
-            </section>
-          </LazySection>
+          <section 
+            id="projects" 
+            aria-labelledby="projects-heading"
+            role="region"
+            aria-label="Portfolio projects"
+            className="transition-all duration-700 ease-out"
+          >
+            <Projects projects={portfolioData.projects} />
+          </section>
         </ErrorBoundary>
 
         {/* Contact Section */}
         <ErrorBoundary>
-          <LazySection rootMargin="200px">
-            <section 
-              id="contact" 
-              aria-labelledby="contact-heading"
-              role="region"
-              aria-label="Contact information and form"
-              className="transition-all duration-700 ease-out"
-            >
-              <ContactWithLoading contact={portfolioData.contact} />
-            </section>
-          </LazySection>
+          <section 
+            id="contact" 
+            aria-labelledby="contact-heading"
+            role="region"
+            aria-label="Contact information and form"
+            className="transition-all duration-700 ease-out"
+          >
+            <Contact contact={portfolioData.contact} />
+          </section>
         </ErrorBoundary>
       </main>
 
       {/* Footer */}
-      <footer role="contentinfo" className="bg-gradient-to-r from-slate-900 to-slate-800 text-white py-12 border-t border-slate-700">
+      <footer role="contentinfo" className="bg-[var(--card)] text-[var(--card-foreground)] py-12 border-t border-[var(--border)]">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-center md:text-left">
-              <p className="text-sm text-slate-400 mb-2">
+              <p className="text-sm text-[var(--muted-foreground)] mb-2">
                 © {new Date().getFullYear()} {portfolioData.personal.name}. All rights reserved.
               </p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-[var(--muted-foreground)]/70">
                 Built with React, TypeScript, and Tailwind CSS
               </p>
             </div>
@@ -212,7 +201,7 @@ function App() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-white transition-all duration-200 hover:scale-110 interactive"
+                  className="text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-all duration-200 hover:scale-110 interactive"
                   aria-label={`Visit ${social.platform} profile`}
                 >
                   <span className="text-lg" role="img" aria-hidden="true">
@@ -223,10 +212,10 @@ function App() {
             </div>
           </div>
           
-          <div className="mt-8 pt-6 border-t border-slate-700 text-center">
+          <div className="mt-8 pt-6 border-t border-[var(--border)] text-center">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-all duration-200 interactive text-sm"
+              className="inline-flex items-center gap-2 text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-all duration-200 interactive text-sm"
               aria-label="Scroll to top of page"
             >
               <span>Back to top</span>

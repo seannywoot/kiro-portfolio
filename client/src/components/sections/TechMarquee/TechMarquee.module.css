@@ -161,21 +161,21 @@
   
   /* Enhanced focus indication for reduced motion users */
   .techMarqueeSection:focus-within {
-    outline: 3px solid #3B82F6;
+    outline: 3px solid var(--ring);
     outline-offset: 2px;
-    background: rgba(59, 130, 246, 0.05);
+    background: color-mix(in srgb, var(--primary) 5%, transparent);
   }
 }
 
 /* Enhanced focus management for keyboard navigation */
 .techMarqueeSection:focus-within {
   /* Subtle focus enhancement */
-  outline: 2px solid #3B82F6;
+  outline: 2px solid var(--ring);
   outline-offset: 4px;
   /* Smooth focus transition */
   transition: outline 0.2s ease-out, box-shadow 0.2s ease-out;
   /* Optional subtle glow effect */
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ring) 10%, transparent);
 }
 
 /* Enhanced skip link for better accessibility */
@@ -183,15 +183,15 @@
   position: absolute;
   top: -50px;
   left: 8px;
-  background: linear-gradient(135deg, #3B82F6, #1D4ED8);
-  color: white;
+  background: var(--primary);
+  color: var(--primary-foreground);
   padding: 12px 16px;
   text-decoration: none;
   border-radius: 6px;
   font-weight: 600;
   font-size: 14px;
   z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px color-mix(in srgb, var(--shadow-color) 10%, transparent);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   /* Hardware acceleration for smooth animation */
   transform: translate3d(0, 0, 0);
@@ -201,8 +201,8 @@
 .skipLink:focus {
   top: 8px;
   transform: translate3d(0, 0, 0) scale(1.02);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-  outline: 2px solid #FBBF24;
+  box-shadow: 0 8px 12px color-mix(in srgb, var(--shadow-color) 15%, transparent);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
@@ -230,13 +230,13 @@
 /* Dark mode optimizations */
 @media (prefers-color-scheme: dark) {
   .techMarqueeSection:focus-within {
-    outline-color: #60A5FA;
-    box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.1);
+    outline-color: var(--ring);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--ring) 10%, transparent);
   }
   
   .skipLink {
-    background: linear-gradient(135deg, #60A5FA, #3B82F6);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    background: var(--primary);
+    box-shadow: 0 4px 6px color-mix(in srgb, var(--shadow-color) 30%, transparent);
   }
 }
 
