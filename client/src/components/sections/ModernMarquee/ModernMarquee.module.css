@@ -44,6 +44,7 @@
   align-items: center;
   justify-content: center;
   perspective: 1200px;
+  contain: layout style paint;
 }
 
 .marqueeContainer {
@@ -53,6 +54,7 @@
   transform: rotateX(10deg) rotateY(-10deg) rotateZ(10deg);
   transform-style: preserve-3d;
   transform-origin: center center;
+  contain: layout style;
 }
 
 .marqueeColumn {
@@ -62,6 +64,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  contain: layout style;
 }
 
 .marqueeColumn:nth-child(1) {
@@ -86,6 +89,9 @@
   gap: 2px;
   animation: marqueeSlideVertical var(--animation-duration, 25s) linear infinite;
   animation-delay: var(--column-delay, 0s);
+  will-change: auto;
+  contain: layout style;
+  backface-visibility: hidden;
 }
 
 .columnUp .columnContent {

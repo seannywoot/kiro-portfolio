@@ -55,7 +55,14 @@ const ModernMarquee: React.FC<ModernMarqueeProps> = ({
           } as React.CSSProperties}
         >
           <div className={styles.columnContent}>
-            {[...columnIcons, ...columnIcons, ...columnIcons]} {/* Triple for seamless infinite loop */}
+            {/* Triple for seamless infinite loop with unique keys */}
+            {columnIcons}
+            {columnIcons.map((icon, idx) => 
+              React.cloneElement(icon, { key: `${icon.key}-copy1-${idx}` })
+            )}
+            {columnIcons.map((icon, idx) => 
+              React.cloneElement(icon, { key: `${icon.key}-copy2-${idx}` })
+            )}
           </div>
         </div>
       );
