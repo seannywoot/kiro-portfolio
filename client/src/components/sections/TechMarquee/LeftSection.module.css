@@ -1,107 +1,292 @@
-/* Left Section Styles */
+/* Enhanced Left Section with Premium Visual Design */
 .leftSection {
-  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  background: linear-gradient(
+    135deg,
+    #f8fafc 0%,
+    #f1f5f9 25%,
+    #e2e8f0 75%,
+    #cbd5e1 100%
+  );
   clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
-  padding: 4rem 2rem;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 2rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
   z-index: 1;
+  
+  /* Enhanced hardware acceleration for clip-path */
+  transform: translate3d(0, 0, 0);
+  will-change: auto; /* Performance optimization */
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  
+  /* Optimize for smooth rendering and 60fps performance */
+  contain: layout style paint;
+  
+  /* Enhanced browser compatibility */
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  -webkit-clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+  
+  /* Smooth hover transition */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced dark mode with sophisticated gradients */
+@media (prefers-color-scheme: dark) {
+  .leftSection {
+    background: linear-gradient(
+      135deg,
+      #0f172a 0%,
+      #1e293b 25%,
+      #334155 75%,
+      #475569 100%
+    );
+  }
+}
+
+/* Subtle hover effect for enhanced interactivity */
+.leftSection:hover {
+  background: linear-gradient(
+    135deg,
+    #f1f5f9 0%,
+    #e2e8f0 25%,
+    #cbd5e1 75%,
+    #b6c7d4 100%
+  );
+  transform: translate3d(0, 0, 0) scale(1.002);
 }
 
 @media (prefers-color-scheme: dark) {
-  .leftSection {
-    background: linear-gradient(135deg, #0f172a, #1e293b);
+  .leftSection:hover {
+    background: linear-gradient(
+      135deg,
+      #1e293b 0%,
+      #334155 25%,
+      #475569 75%,
+      #64748b 100%
+    );
   }
 }
 
 .content {
   max-width: 90%;
   margin-left: 0;
+  position: relative;
+  z-index: 2;
+  
+  /* Smooth content transitions */
+  transition: all 0.3s ease-out;
 }
 
+/* Enhanced typography with sophisticated gradient */
 .title {
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 700;
   color: #0f172a;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  
+  /* Enhanced gradient text with premium feel */
+  background: linear-gradient(
+    135deg,
+    #3B82F6 0%,
+    #6366F1 25%,
+    #8B5CF6 50%,
+    #A855F7 75%,
+    #C084FC 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  line-height: 1.1;
+  background-size: 200% 200%;
+  
+  /* Hardware acceleration for gradient text */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  
+  /* Smooth text animation */
+  animation: gradientShift 8s ease-in-out infinite;
+  
+  /* Enhanced text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Gradient animation for premium feel */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Dark mode title adjustments */
 @media (prefers-color-scheme: dark) {
   .title {
-    color: #ffffff;
+    background: linear-gradient(
+      135deg,
+      #60A5FA 0%,
+      #818CF8 25%,
+      #A78BFA 50%,
+      #C084FC 75%,
+      #DDD6FE 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
 .subtitle {
-  font-size: 1.25rem;
-  color: #475569;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #64748b;
   line-height: 1.6;
-  font-weight: 500;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  margin-bottom: 0;
+  
+  /* Enhanced text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  
+  /* Smooth fade-in transition */
+  opacity: 0.9;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  transform: translate3d(0, 0, 0);
 }
 
+/* Hover effect for subtitle */
+.leftSection:hover .subtitle {
+  opacity: 1;
+  transform: translate3d(0, -2px, 0);
+}
+
+/* Dark mode subtitle */
 @media (prefers-color-scheme: dark) {
   .subtitle {
-    color: #cbd5e1;
+    color: #94a3b8;
   }
 }
 
-/* Mobile responsive */
-@media (max-width: 768px) {
+/* Enhanced mobile responsive design */
+@media (max-width: 767px) {
   .leftSection {
     clip-path: none;
-    padding: 3rem 1.5rem;
+    background: linear-gradient(
+      180deg,
+      #f8fafc 0%,
+      #e2e8f0 100%
+    );
+    padding: 3rem 1.5rem 2rem;
     text-align: center;
+    border-radius: 0 0 24px 24px;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .leftSection {
+      background: linear-gradient(
+        180deg,
+        #0f172a 0%,
+        #1e293b 100%
+      );
+    }
   }
   
   .content {
     max-width: 100%;
-    margin: 0 auto;
   }
   
   .title {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 8vw, 2.5rem);
     margin-bottom: 1rem;
   }
   
   .subtitle {
-    font-size: 1.125rem;
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
   }
 }
 
-/* Tablet responsive */
-@media (min-width: 769px) and (max-width: 1024px) {
+/* Enhanced tablet responsive */
+@media (min-width: 768px) and (max-width: 1024px) {
   .leftSection {
     padding: 3rem 1.5rem;
     clip-path: polygon(0 0, 88% 0, 100% 100%, 0 100%);
   }
   
   .title {
-    font-size: 3rem;
-  }
-  
-  .subtitle {
-    font-size: 1.125rem;
+    font-size: clamp(2.8rem, 4vw, 3.2rem);
   }
 }
 
-/* Large screen optimizations */
-@media (min-width: 1440px) {
-  .leftSection {
-    padding: 5rem 3rem;
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .title {
+    animation: none !important;
+    background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   
+  .leftSection {
+    transition: none !important;
+  }
+  
+  .leftSection:hover {
+    transform: none !important;
+  }
+  
+  .content,
+  .subtitle {
+    transition: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
   .title {
-    font-size: 4rem;
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    color: #000 !important;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .title {
+      color: #fff !important;
+    }
   }
   
   .subtitle {
-    font-size: 1.375rem;
+    color: #333 !important;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .subtitle {
+      color: #ccc !important;
+    }
+  }
+}
+
+/* Print styles */
+@media print {
+  .leftSection {
+    background: #fff !important;
+    clip-path: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc;
+  }
+  
+  .title {
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    color: #000 !important;
   }
 }

@@ -1,32 +1,183 @@
-/* Tech Icon Styles */
+/* Enhanced Tech Icon Styles with Premium Visual Design */
 .techIcon {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  position: relative;
+  
+  /* Hardware acceleration for smooth animations */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Enhanced Emoji Icons with Better Rendering */
 .emojiIcon {
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  line-height: 1;
+  
+  /* Enhanced emoji rendering */
+  font-variant-emoji: emoji;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  
+  /* Subtle hover animation */
+  transition: all 0.3s ease-out;
 }
 
+.emojiIcon:hover {
+  transform: translate3d(0, 0, 0) scale(1.2) rotate(10deg);
+  filter: brightness(1.1);
+}
+
+/* Enhanced Image Icons with Premium Loading */
 .imageIcon {
-  width: 24px;
-  height: 24px;
+  width: clamp(20px, 4vw, 28px);
+  height: clamp(20px, 4vw, 28px);
   object-fit: contain;
-  border-radius: 2px;
+  border-radius: 4px;
+  
+  /* Enhanced image rendering */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  
+  /* Smooth loading transition */
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(0.8);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+.imageIcon.loaded {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.imageIcon:hover {
+  transform: translate3d(0, 0, 0) scale(1.1);
+  filter: brightness(1.05) saturate(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark mode image adjustments */
+@media (prefers-color-scheme: dark) {
+  .imageIcon:hover {
+    filter: brightness(1.1) saturate(1.05);
+  }
+}
+
+/* Enhanced Component Icons (Lucide) */
 .componentIcon {
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  color: #64748b;
+  stroke-width: 2;
+  
+  /* Enhanced SVG rendering */
+  shape-rendering: geometricPrecision;
+  
+  /* Smooth hover transition */
+  transition: all 0.3s ease-out;
 }
 
+.componentIcon:hover {
+  color: #3B82F6;
+  transform: translate3d(0, 0, 0) scale(1.15);
+  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
+}
+
+@media (prefers-color-scheme: dark) {
+  .componentIcon {
+    color: #94a3b8;
+  }
+  
+  .componentIcon:hover {
+    color: #60A5FA;
+  }
+}
+
+/* Enhanced Fallback Icon with Loading State */
 .fallbackIcon {
-  font-size: 1.5rem;
-  opacity: 0.8;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  color: #9ca3af;
+  opacity: 0.7;
+  
+  /* Loading pulse animation */
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  
+  /* Smooth transition */
+  transition: all 0.3s ease-out;
 }
 
-/* Responsive adjustments */
+.fallbackIcon:hover {
+  opacity: 1;
+  color: #6b7280;
+  transform: translate3d(0, 0, 0) scale(1.1);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .fallbackIcon {
+    color: #6b7280;
+  }
+  
+  .fallbackIcon:hover {
+    color: #9ca3af;
+  }
+}
+
+/* Loading state for all icon types */
+.techIcon[data-loading="true"] {
+  /* Subtle loading animation */
+  animation: iconPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(0, 0, 0) scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+/* Error state styling */
+.techIcon[data-error="true"] {
+  opacity: 0.5;
+  filter: grayscale(1);
+  
+  /* Subtle error indication */
+  border: 1px dashed rgba(239, 68, 68, 0.3);
+  border-radius: 4px;
+  padding: 2px;
+}
+
+/* Focus states for accessibility */
+.techIcon:focus {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.techIcon:focus-visible {
+  /* Enhanced focus for keyboard navigation */
+  outline: 2px solid #3B82F6;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Enhanced Mobile Responsive Design */
 @media (max-width: 480px) {
   .emojiIcon,
   .componentIcon,
@@ -35,8 +186,15 @@
   }
   
   .imageIcon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* Reduced animation on mobile for better performance */
+  .emojiIcon:hover,
+  .componentIcon:hover,
+  .fallbackIcon:hover {
+    transform: translate3d(0, 0, 0) scale(1.05);
   }
 }
 
@@ -53,15 +211,105 @@
   }
 }
 
-@media (min-width: 1440px) {
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
   .emojiIcon,
   .componentIcon,
   .fallbackIcon {
-    font-size: 1.75rem;
+    font-size: 1.4rem;
+  }
+  
+  .imageIcon {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1025px) {
+  .emojiIcon,
+  .componentIcon,
+  .fallbackIcon {
+    font-size: 1.5rem;
   }
   
   .imageIcon {
     width: 28px;
     height: 28px;
   }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .emojiIcon:hover,
+  .imageIcon:hover,
+  .componentIcon:hover,
+  .fallbackIcon:hover {
+    transform: none !important;
+    animation: none !important;
+  }
+  
+  .techIcon[data-loading="true"] {
+    animation: none !important;
+  }
+  
+  .fallbackIcon {
+    animation: none !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .componentIcon {
+    color: #000 !important;
+    stroke-width: 3;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .componentIcon {
+      color: #fff !important;
+    }
+  }
+  
+  .fallbackIcon {
+    color: #000 !important;
+    opacity: 1 !important;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .fallbackIcon {
+      color: #fff !important;
+    }
+  }
+  
+  .techIcon:focus {
+    outline: 3px solid #000 !important;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .techIcon:focus {
+      outline: 3px solid #fff !important;
+    }
+  }
+}
+
+/* Print Styles */
+@media print {
+  .techIcon {
+    filter: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  
+  .imageIcon {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Performance optimization for complex icons */
+.techIcon {
+  /* Modern performance hint */
+  content-visibility: auto;
+  contain: layout style paint;
 }

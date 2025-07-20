@@ -12,6 +12,10 @@ export const LazyTechMarquee = lazy(() =>
   import('./TechMarquee/TechMarquee').then(module => ({ default: module.default }))
 );
 
+export const LazyModernMarquee = lazy(() => 
+  import('./ModernMarquee/ModernMarquee').then(module => ({ default: module.default }))
+);
+
 export const LazyAbout = lazy(() => 
   import('./About/About').then(module => ({ default: module.default }))
 );
@@ -27,6 +31,11 @@ export const LazyContact = lazy(() =>
 // Create wrapped components with loading fallbacks
 export const TechMarqueeWithLoading = withLazyLoading(
   () => import('./TechMarquee/TechMarquee'),
+  <LoadingSpinner text="Loading technologies..." />
+);
+
+export const ModernMarqueeWithLoading = withLazyLoading(
+  () => import('./ModernMarquee/ModernMarquee'),
   <LoadingSpinner text="Loading technologies..." />
 );
 

@@ -13,12 +13,23 @@ const LeftSection: React.FC<LeftSectionProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`${styles.leftSection} ${className}`}>
+    <div 
+      className={`${styles.leftSection} ${className}`}
+      role="banner"
+      aria-label="Technology section introduction"
+    >
       <div className={styles.content}>
-        <h2 id="technologies-heading" className={styles.title}>
+        <h2 
+          id="technologies-heading" 
+          className={styles.title}
+          aria-level={2}
+        >
           {title}
         </h2>
-        <p className={styles.subtitle}>
+        <p 
+          className={styles.subtitle}
+          aria-describedby="technologies-heading"
+        >
           {subtitle}
         </p>
       </div>

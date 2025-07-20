@@ -19,7 +19,11 @@ const TechIcon: React.FC<TechIconProps> = ({ technology, className = '' }) => {
   // Handle string icons (emojis)
   if (typeof icon === 'string') {
     return (
-      <span className={`${styles.techIcon} ${styles.emojiIcon} ${className}`}>
+      <span 
+        className={`${styles.techIcon} ${styles.emojiIcon} ${className}`}
+        role="img"
+        aria-label={`${name} technology icon`}
+      >
         {icon}
       </span>
     );
@@ -30,10 +34,12 @@ const TechIcon: React.FC<TechIconProps> = ({ technology, className = '' }) => {
     return (
       <img
         src={icon.src}
-        alt={icon.alt}
+        alt={icon.alt || `${name} technology logo`}
         className={`${styles.techIcon} ${styles.imageIcon} ${className}`}
         onError={handleImageError}
         loading="lazy"
+        role="img"
+        aria-describedby={`tech-${name.toLowerCase().replace(/\s+/g, '-')}`}
       />
     );
   }
@@ -42,8 +48,12 @@ const TechIcon: React.FC<TechIconProps> = ({ technology, className = '' }) => {
   if (typeof icon === 'function') {
     const IconComponent = icon;
     return (
-      <span className={`${styles.techIcon} ${styles.componentIcon} ${className}`}>
-        <IconComponent />
+      <span 
+        className={`${styles.techIcon} ${styles.componentIcon} ${className}`}
+        role="img"
+        aria-label={`${name} technology icon`}
+      >
+        <IconComponent aria-hidden="true" />
       </span>
     );
   }
@@ -54,7 +64,11 @@ const TechIcon: React.FC<TechIconProps> = ({ technology, className = '' }) => {
     : getFallbackIcon(technology);
 
   return (
-    <span className={`${styles.techIcon} ${styles.fallbackIcon} ${className}`}>
+    <span 
+      className={`${styles.techIcon} ${styles.fallbackIcon} ${className}`}
+      role="img"
+      aria-label={`${name} technology icon (fallback)`}
+    >
       {fallbackIcon}
     </span>
   );

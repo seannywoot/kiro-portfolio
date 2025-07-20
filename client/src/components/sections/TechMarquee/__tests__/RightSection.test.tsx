@@ -63,12 +63,12 @@ describe('RightSection', () => {
   it('sets up intersection observer for performance optimization', () => {
     render(<RightSection technologies={mockTechnologies} />);
     
-    // Should have called IntersectionObserver constructor
+    // Should have called IntersectionObserver constructor with enhanced configuration
     expect(mockIntersectionObserver).toHaveBeenCalledWith(
       expect.any(Function),
       expect.objectContaining({
-        threshold: 0.1,
-        rootMargin: '50px'
+        threshold: [0, 0.1, 0.25, 0.5],
+        rootMargin: '100px 0px'
       })
     );
   });

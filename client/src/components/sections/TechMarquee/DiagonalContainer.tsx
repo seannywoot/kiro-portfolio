@@ -28,7 +28,8 @@ const DiagonalContainer: React.FC<DiagonalContainerProps> = ({
       className={`${styles.diagonalContainer} ${className}`}
       style={customProperties}
       role="region"
-      aria-label="Technology showcase with diagonal layout"
+      aria-labelledby="technologies-heading"
+      aria-describedby="tech-description"
     >
       {children}
     </div>

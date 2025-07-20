@@ -1,12 +1,256 @@
-/* TechMarquee Section Styles */
+/* Enhanced TechMarquee Section Styles with Polish */
 .techMarqueeSection {
   padding: 0;
   background: transparent;
   overflow: hidden;
+  position: relative;
+  
+  /* Enhanced hardware acceleration for the entire section */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  
+  /* Optimize for smooth rendering and 60fps performance */
+  contain: layout style paint;
+  will-change: auto; /* Only enable when needed */
+  
+  /* Force GPU layer creation with minimal impact */
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  
+  /* Enhanced smooth transitions for state changes */
+  transition: opacity 0.3s ease-out, transform 0.2s ease-out;
 }
 
 .container {
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
+  position: relative;
+  
+  /* Hardware acceleration for container */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  
+  /* Smooth transitions for responsive changes */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Performance optimization states based on visibility */
+.techMarqueeSection[data-performance-mode="low"] {
+  /* Reduce rendering complexity when not visible */
+  will-change: auto;
+  /* Minimal GPU usage when not visible */
+  transform: translate3d(0, 0, 0) scale(0.999);
+  opacity: 0.98; /* Slight optimization trigger */
+}
+
+.techMarqueeSection[data-performance-mode="high"] {
+  /* Enable high-performance rendering when visible */
+  will-change: transform, opacity;
+  /* Full GPU acceleration when visible */
+  transform: translate3d(0, 0, 0) scale(1);
+  opacity: 1;
+}
+
+/* Enhanced hardware acceleration states */
+.techMarqueeSection[style*="--hardware-acceleration: enabled"] {
+  /* Maximum hardware acceleration when visible and needed */
+  will-change: transform, opacity, clip-path;
+  transform-style: preserve-3d;
+  /* Enable subpixel antialiasing */
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+}
+
+.techMarqueeSection[style*="--hardware-acceleration: minimal"] {
+  /* Minimal hardware acceleration for battery savings */
+  will-change: auto;
+  transform-style: flat;
+  /* Standard font rendering */
+  -webkit-font-smoothing: antialiased;
+  font-smooth: auto;
+}
+
+/* Enhanced visibility level optimizations */
+.techMarqueeSection[style*="--visibility-level: full"] {
+  /* Full performance mode - all optimizations enabled */
+  will-change: transform, opacity, clip-path;
+  animation-play-state: running;
+  /* Enhanced visual quality */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.techMarqueeSection[style*="--visibility-level: partial"] {
+  /* Partial performance mode - moderate optimizations */
+  will-change: transform;
+  animation-play-state: running;
+  /* Balanced visual quality */
+  image-rendering: auto;
+}
+
+.techMarqueeSection[style*="--visibility-level: none"] {
+  /* Minimal performance mode - pause expensive operations */
+  will-change: auto;
+  animation-play-state: paused;
+  /* Optimized for non-visible state */
+  image-rendering: auto;
+}
+
+/* Enhanced not visible state */
+.notVisible {
+  /* Comprehensive optimizations when section is not visible */
+  pointer-events: none;
+  /* Reduce rendering complexity with subtle visual cue */
+  opacity: 0.99;
+  /* Additional performance optimizations */
+  transform: translate3d(0, 0, 0) scale(0.999);
+  filter: blur(0px); /* Trigger GPU layer without visual impact */
+}
+
+/* Enhanced smooth hover effects */
+.techMarqueeSection:hover {
+  /* Subtle enhancement on hover */
+  transform: translate3d(0, 0, 0) scale(1.001);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Loading state optimization */
+.techMarqueeSection[data-loading="true"] {
+  /* Optimized rendering during loading */
+  will-change: opacity;
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.techMarqueeSection[data-loading="false"] {
+  /* Smooth entrance animation */
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Enhanced Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .techMarqueeSection {
+    /* Disable all animations and transforms for reduced motion */
+    animation: none !important;
+    transition: opacity 0.2s ease !important; /* Keep only essential transitions */
+    transform: none !important;
+    will-change: auto !important;
+    /* Ensure stable rendering */
+    contain: style paint !important;
+  }
+  
+  .techMarqueeSection * {
+    /* Disable animations for all child elements */
+    animation: none !important;
+    transition: opacity 0.2s ease !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+  
+  .container {
+    /* Ensure container stability in reduced motion */
+    transform: none !important;
+    transition: opacity 0.2s ease !important;
+  }
+  
+  /* Enhanced focus indication for reduced motion users */
+  .techMarqueeSection:focus-within {
+    outline: 3px solid #3B82F6;
+    outline-offset: 2px;
+    background: rgba(59, 130, 246, 0.05);
+  }
+}
+
+/* Enhanced focus management for keyboard navigation */
+.techMarqueeSection:focus-within {
+  /* Subtle focus enhancement */
+  outline: 2px solid #3B82F6;
+  outline-offset: 4px;
+  /* Smooth focus transition */
+  transition: outline 0.2s ease-out, box-shadow 0.2s ease-out;
+  /* Optional subtle glow effect */
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Enhanced skip link for better accessibility */
+.skipLink {
+  position: absolute;
+  top: -50px;
+  left: 8px;
+  background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Hardware acceleration for smooth animation */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.skipLink:focus {
+  top: 8px;
+  transform: translate3d(0, 0, 0) scale(1.02);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  outline: 2px solid #FBBF24;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .techMarqueeSection:focus-within {
+    outline: 3px solid;
+    outline-offset: 2px;
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  .skipLink {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+  
+  .skipLink:focus {
+    background: #fff;
+    color: #000;
+    border: 2px solid #000;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  .techMarqueeSection:focus-within {
+    outline-color: #60A5FA;
+    box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.1);
+  }
+  
+  .skipLink {
+    background: linear-gradient(135deg, #60A5FA, #3B82F6);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Bundle size optimization - only load complex styles when needed */
+@media (min-width: 768px) {
+  .techMarqueeSection {
+    /* Desktop-specific optimizations */
+    contain: layout style paint size;
+  }
+}
+
+/* Performance hint for browsers */
+.techMarqueeSection {
+  /* Hint to browser about content type */
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px; /* Expected size hint */
 }

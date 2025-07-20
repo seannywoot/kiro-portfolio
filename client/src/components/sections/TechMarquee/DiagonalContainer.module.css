@@ -1,4 +1,4 @@
-/* Diagonal Container Layout */
+/* Enhanced Diagonal Container Layout with Polished Visuals */
 .diagonalContainer {
   display: grid;
   grid-template-columns: var(--left-width, 40%) var(--right-width, 60%);
@@ -8,27 +8,83 @@
   overflow: hidden;
   isolation: isolate; /* Create stacking context for z-index */
   align-items: stretch; /* Ensure both sections have equal height */
+  
+  /* Enhanced hardware acceleration for diagonal container */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  
+  /* Optimize for smooth rendering and 60fps performance */
+  contain: layout style paint;
+  will-change: auto; /* Only enable when needed */
+  
+  /* Force GPU layer creation for optimal performance */
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  
+  /* Smooth responsive transitions */
+  transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              min-height 0.3s ease-out;
+  
+  /* Enhanced premium hover effect */
+  box-shadow: 0 2px 24px 0 rgba(59,130,246,0.08), 0 1.5px 6px 0 rgba(59,130,246,0.04);
 }
 
-/* Diagonal divider effect - creates the visual separation */
+/* Enhanced diagonal divider effect with smooth gradients */
 .diagonalContainer::before {
   content: '';
   position: absolute;
   top: 0;
   left: var(--left-width, 40%);
-  width: 2px;
+  width: 3px; /* Slightly thicker for better visibility */
   height: 100%;
-  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
-  transform: skewX(calc(var(--diagonal-angle, 15deg) * -1));
+  background: linear-gradient(
+    135deg,
+    rgba(226, 232, 240, 0.8) 0%,
+    rgba(203, 213, 225, 0.9) 50%,
+    rgba(148, 163, 184, 0.8) 100%
+  );
+  transform: skewX(calc(var(--diagonal-angle, 15deg) * -1)) translate3d(0, 0, 0);
   transform-origin: top;
   z-index: 10;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+  /* Enhanced shadow for depth */
+  box-shadow: 
+    0 0 20px rgba(0, 0, 0, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  
+  /* Hardware acceleration for smooth skew animation */
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  
+  /* Optimize for smooth rendering */
+  contain: layout style paint;
+  
+  /* Smooth transition for responsive changes */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Enhanced browser compatibility */
+  -webkit-transform: skewX(calc(var(--diagonal-angle, 15deg) * -1)) translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000px;
 }
 
+/* Enhanced dark mode support with refined gradients */
 @media (prefers-color-scheme: dark) {
   .diagonalContainer::before {
-    background: linear-gradient(135deg, #374151, #4b5563);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(
+      135deg,
+      rgba(55, 65, 81, 0.9) 0%,
+      rgba(75, 85, 99, 1) 50%,
+      rgba(107, 114, 128, 0.9) 100%
+    );
+    box-shadow: 
+      0 0 25px rgba(0, 0, 0, 0.4),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -36,101 +92,188 @@
 .diagonalContainer > * {
   position: relative;
   min-height: 100%;
+  /* Ensure smooth rendering for child elements */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
-/* Mobile responsive - stack vertically */
-@media (max-width: 768px) {
+/* Enhanced Mobile responsive design with smooth stacking */
+@media (max-width: 767px) {
   .diagonalContainer {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     min-height: auto;
-    gap: 0; /* Remove gap for seamless mobile layout */
+    gap: 0;
+    /* Optimized mobile layout */
+    padding: 0;
   }
   
-  /* Hide diagonal divider on mobile */
+  /* Hide diagonal divider on mobile for cleaner look */
   .diagonalContainer::before {
-    display: none;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
   }
 }
 
-/* Tablet responsive - adjust proportions */
-@media (min-width: 769px) and (max-width: 1024px) {
+/* Enhanced Tablet responsive with optimized proportions */
+@media (min-width: 768px) and (max-width: 1024px) {
   .diagonalContainer {
     grid-template-columns: 45% 55%;
-    min-height: 350px;
+    min-height: 380px;
   }
   
-  /* Adjust diagonal divider position for tablet */
+  /* Adjust diagonal divider for tablet proportions */
   .diagonalContainer::before {
     left: 45%;
+    width: 2.5px;
   }
 }
 
-/* Desktop responsive - optimal proportions */
+/* Enhanced Desktop responsive with refined proportions */
 @media (min-width: 1025px) and (max-width: 1439px) {
   .diagonalContainer {
     grid-template-columns: 42% 58%;
-    min-height: 400px;
+    min-height: 420px;
   }
   
-  /* Adjust diagonal divider position for desktop */
+  /* Perfect diagonal positioning for desktop */
   .diagonalContainer::before {
     left: 42%;
+    width: 3px;
   }
 }
 
-/* Large screen optimizations */
-@media (min-width: 1440px) {
+/* Enhanced Large screen optimizations with premium proportions */
+@media (min-width: 1440px) and (max-width: 1919px) {
   .diagonalContainer {
     grid-template-columns: 40% 60%;
-    min-height: 450px;
+    min-height: 460px;
   }
   
-  /* Adjust diagonal divider position for large screens */
+  /* Optimal diagonal positioning for large screens */
   .diagonalContainer::before {
     left: 40%;
+    width: 3px;
   }
 }
 
-/* Extra large screens */
+/* Enhanced Extra large screens with contained layout */
 @media (min-width: 1920px) {
   .diagonalContainer {
     min-height: 500px;
     max-width: 1920px;
     margin: 0 auto;
+    /* Enhanced spacing for ultra-wide displays */
+    padding: 0 clamp(1rem, 5vw, 4rem);
   }
   
-  /* Maintain diagonal divider position for extra large screens */
   .diagonalContainer::before {
     left: 40%;
+    width: 4px; /* Slightly thicker for ultra-wide visibility */
   }
 }
 
-/* Support for browsers without CSS Grid */
+/* Enhanced hover effects for interactive feel */
+.diagonalContainer:hover {
+  /* Premium hover: subtle scale, shadow, and color shift */
+  box-shadow: 0 6px 32px 0 rgba(59,130,246,0.16), 0 2px 8px 0 rgba(59,130,246,0.08);
+  transform: translate3d(0, 0, 0) scale(1.01);
+  transition: box-shadow 0.4s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+/* Reduced motion support with enhanced accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .diagonalContainer {
+    /* Stable layout for reduced motion users */
+    transition: none !important;
+  }
+  
+  .diagonalContainer::before {
+    /* Static divider for reduced motion */
+    transform: skewX(calc(var(--diagonal-angle, 15deg) * -1)) translate3d(0, 0, 0) !important;
+    transition: none !important;
+  }
+  
+  .diagonalContainer:hover::before {
+    /* No hover effects for reduced motion */
+    transform: skewX(calc(var(--diagonal-angle, 15deg) * -1)) translate3d(0, 0, 0) !important;
+  }
+}
+
+/* Enhanced high contrast mode support */
+@media (prefers-contrast: high) {
+  .diagonalContainer::before {
+    background: linear-gradient(
+      135deg,
+      #000 0%,
+      #333 50%,
+      #000 100%
+    );
+    box-shadow: none;
+    width: 4px;
+  }
+}
+
+/* Enhanced browser fallback with graceful degradation */
 @supports not (display: grid) {
   .diagonalContainer {
     display: flex;
     flex-direction: row;
+    align-items: stretch;
   }
   
   .diagonalContainer > :first-child {
     flex: 0 0 40%;
+    border-right: 3px solid rgba(203, 213, 225, 0.9);
   }
   
   .diagonalContainer > :last-child {
     flex: 1;
   }
+  
+  /* Hide complex diagonal divider in non-grid browsers */
+  .diagonalContainer::before {
+    display: none;
+  }
 }
 
-/* Mobile fallback for non-grid browsers */
+/* Enhanced mobile fallback for non-grid browsers */
 @supports not (display: grid) {
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .diagonalContainer {
       flex-direction: column;
     }
     
     .diagonalContainer > :first-child {
       flex: none;
+      border-right: none;
+      border-bottom: 2px solid rgba(203, 213, 225, 0.7);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
     }
+  }
+}
+
+/* Enhanced content visibility optimization */
+.diagonalContainer {
+  /* Modern performance hint */
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
+}
+
+/* Focus management enhancement */
+.diagonalContainer:focus-within {
+  /* Enhanced focus: premium outline and shadow */
+  outline: 2.5px solid #6366F1;
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.15);
+  transition: outline 0.2s, box-shadow 0.2s;
+}
+
+/* Performance optimization for complex layouts */
+@media (min-width: 768px) {
+  .diagonalContainer {
+    /* Enhanced containment for desktop */
+    contain: layout style paint size;
   }
 }

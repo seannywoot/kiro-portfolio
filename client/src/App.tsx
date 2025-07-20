@@ -7,7 +7,7 @@ import ErrorBoundary from './components/common/ErrorBoundary/ErrorBoundary';
 import LazySection from './components/common/LazySection/LazySection';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import { 
-  TechMarqueeWithLoading,
+  ModernMarqueeWithLoading,
   AboutWithLoading,
   ProjectsWithLoading,
   ContactWithLoading
@@ -135,10 +135,9 @@ function App() {
               aria-label="Technologies and tools showcase"
               className="transition-all duration-700 ease-out"
             >
-              <TechMarqueeWithLoading
+              <ModernMarqueeWithLoading
                 technologies={portfolioData.technologies}
-                speed={30}
-                pauseOnHover={true}
+                speed={25}
               />
             </section>
           </LazySection>

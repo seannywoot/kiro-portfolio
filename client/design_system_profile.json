@@ -1,0 +1,174 @@
+{
+  "designSystem": {
+    "name": "Modern App Icon Grid System",
+    "version": "1.0",
+    "description": "A dark-themed, grid-based icon layout system with rounded squares and consistent visual hierarchy",
+    "purpose": "Revamp existing marquee design with modern dark theme aesthetic and improved visual consistency"
+  },
+  "layout": {
+    "structure": "grid",
+    "gridType": "uniform",
+    "columns": "auto-fit",
+    "rows": "auto-fit",
+    "gap": {
+      "horizontal": "medium",
+      "vertical": "medium",
+      "value": "12-16px"
+    },
+    "containerShape": "rounded-square",
+    "aspectRatio": "1:1"
+  },
+  "colorPalette": {
+    "background": {
+      "primary": "#1a1a1a",
+      "secondary": "#2d2d2d",
+      "container": "#333333"
+    },
+    "iconColors": {
+      "accent1": "#4a9eff",
+      "accent2": "#ff6b47", 
+      "accent3": "#ffd700",
+      "accent4": "#ff4081",
+      "accent5": "#00e676",
+      "neutral1": "#ffffff",
+      "neutral2": "#cccccc",
+      "neutral3": "#888888"
+    },
+    "contrast": "high"
+  },
+  "iconDesignPrinciples": {
+    "style": "modern-minimal",
+    "approach": "geometric-symbolic",
+    "complexity": "simplified",
+    "symbolism": "abstract-to-literal-spectrum",
+    "consistency": "unified-visual-language"
+  },
+  "iconCharacteristics": {
+    "shapes": {
+      "primary": ["geometric", "angular", "curved"],
+      "complexity": "medium-to-simple",
+      "strokeWeight": "varied",
+      "fillStyle": ["solid", "gradient", "outline"]
+    },
+    "visualTreatments": {
+      "gradients": true,
+      "shadows": "subtle",
+      "glows": "minimal",
+      "transparency": "selective",
+      "layering": "moderate"
+    },
+    "iconTypes": [
+      "abstract-geometric",
+      "symbolic-literal", 
+      "letter-based",
+      "shape-combination",
+      "outlined-forms"
+    ]
+  },
+  "container": {
+    "shape": "rounded-rectangle",
+    "borderRadius": "20-25%",
+    "background": "dark-neutral",
+    "padding": "12-16px",
+    "elevation": "subtle",
+    "hoverStates": true
+  },
+  "typography": {
+    "labels": {
+      "visibility": "contextual",
+      "position": "below-icon",
+      "font": "system-ui",
+      "size": "small",
+      "color": "neutral-light",
+      "alignment": "center"
+    }
+  },
+  "spacing": {
+    "iconPadding": "medium",
+    "gridGap": "consistent",
+    "margins": "balanced",
+    "proportions": "golden-ratio-inspired"
+  },
+  "interactionStates": {
+    "default": "neutral-background",
+    "hover": "subtle-highlight",
+    "active": "pressed-state",
+    "focus": "accessibility-outline"
+  },
+  "designTokens": {
+    "borderRadius": {
+      "small": "8px",
+      "medium": "12px", 
+      "large": "16px",
+      "container": "20px"
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "24px"
+    },
+    "shadows": {
+      "subtle": "0 2px 8px rgba(0,0,0,0.15)",
+      "medium": "0 4px 12px rgba(0,0,0,0.25)"
+    }
+  },
+  "implementationGuidelines": {
+    "iconSize": {
+      "recommended": "24x24 to 48x48px",
+      "scalability": "vector-based",
+      "pixelPerfect": true
+    },
+    "colorUsage": {
+      "maxColorsPerIcon": "2-3",
+      "contrastRatio": "minimum 4.5:1",
+      "colorHarmony": "complementary-or-analogous"
+    },
+    "gridAlignment": {
+      "snapToGrid": true,
+      "opticalAlignment": "prioritized",
+      "consistent-margins": true
+    }
+  },
+  "accessibilityConsiderations": {
+    "contrast": "WCAG-AA-compliant",
+    "focusStates": "visible",
+    "colorBlindness": "considered",
+    "screenReader": "semantic-labeling"
+  },
+  "responsiveAdaptation": {
+    "gridColumns": "responsive",
+    "iconScaling": "proportional", 
+    "touchTargets": "minimum-44px",
+    "mobileFriendly": true
+  },
+  "migrationGuidelines": {
+    "objective": "Revamp existing marquee design with modern dark theme aesthetic",
+    "transitionApproach": {
+      "colorScheme": "light-to-dark-migration",
+      "layoutUpdate": "grid-modernization",
+      "iconRefresh": "consistent-style-application",
+      "userExperience": "enhanced-visual-hierarchy"
+    },
+    "implementationPriority": [
+      "Apply dark theme color palette",
+      "Implement rounded container system", 
+      "Standardize icon sizing and spacing",
+      "Update visual treatments and effects",
+      "Enhance accessibility features"
+    ],
+    "compatibilityNotes": {
+      "existingContent": "maintain-functional-equivalence",
+      "userFamiliarity": "preserve-navigation-patterns", 
+      "brandConsistency": "evolve-visual-identity",
+      "performanceImpact": "optimize-for-speed"
+    }
+  },
+  "brandingFlexibility": {
+    "colorCustomization": "themeable",
+    "logoIntegration": "supported",
+    "brandConsistency": "maintainable",
+    "scalability": "enterprise-ready"
+  }
+}
