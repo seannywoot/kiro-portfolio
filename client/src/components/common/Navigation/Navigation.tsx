@@ -23,6 +23,7 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
   const [activeSection, setActiveSection] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Initialize dark mode from system preference or localStorage
   useEffect(() => {
@@ -40,13 +41,18 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100; // Offset for better detection
+      const scrollPosition = window.scrollY;
+      const scrollOffset = scrollPosition + 100; // Offset for better section detection
+      
+      // Update scroll state for glassmorphism effect
+      setIsScrolled(scrollPosition > 50);
 
+      // Update active section
       for (const section of sections) {
         const element = document.getElementById(section.id);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          if (scrollOffset >= offsetTop && scrollOffset < offsetTop + offsetHeight) {
             setActiveSection(section.id);
             break;
           }
@@ -85,31 +91,43 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ease-out">
+      <div 
+        className={cn(
+          "relative rounded-2xl px-6 py-3 transition-all duration-300 ease-out",
+          "border border-border/20",
+          isScrolled 
+            ? "bg-background/70 backdrop-blur-xl shadow-2xl shadow-primary/10" 
+            : "bg-background/40 backdrop-blur-sm"
+        )}
+        style={{
+          boxShadow: isScrolled 
+            ? '0 8px 32px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 40px rgba(var(--primary-rgb, 59, 130, 246), 0.15)' 
+            : '0 4px 16px rgba(0, 0, 0, 0.04)'
+        }}
+      >
+        <div className="flex items-center justify-center gap-8">
           {/* Logo/Brand */}
-          <div className="flex-shrink-0">
-            <Button
-              variant="ghost"
-              onClick={() => scrollToSection('hero')}
-              className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent hover:bg-transparent"
-            >
-              Portfolio
-            </Button>
-          </div>
+          <Button
+            variant="ghost"
+            onClick={() => scrollToSection('hero')}
+            className="text-lg font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent hover:bg-transparent px-3 py-2"
+          >
+            Portfolio
+          </Button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden md:flex items-center">
             <NavigationMenu>
-              <NavigationMenuList>
+              <NavigationMenuList className="flex items-center gap-2">
                 {sections.map((section) => (
                   <NavigationMenuItem key={section.id}>
                     <NavigationMenuLink
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        "cursor-pointer",
-                        activeSection === section.id && "bg-accent text-accent-foreground"
+                        "cursor-pointer px-4 py-2 rounded-xl transition-all duration-200",
+                        "hover:bg-primary/10 hover:text-primary",
+                        activeSection === section.id && "bg-primary/15 text-primary font-medium"
                       )}
                       onClick={() => scrollToSection(section.id)}
                     >
@@ -121,45 +139,43 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
             </NavigationMenu>
           </div>
 
-          {/* Theme Toggle & Mobile Menu */}
-          <div className="flex items-center gap-2">
-            {/* Theme Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleDarkMode}
-              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-              className="h-9 w-9"
-            >
-              {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleDarkMode}
+            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            className="h-9 w-9 rounded-xl hover:bg-primary/10"
+          >
+            {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </Button>
 
-            {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden h-9 w-9"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-              aria-expanded={isMenuOpen}
-            >
-              {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-            </Button>
-          </div>
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden h-9 w-9 rounded-xl hover:bg-primary/10"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </Button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-sm">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="md:hidden absolute top-full left-0 right-0 mt-2 rounded-xl bg-background/90 backdrop-blur-xl border border-border/20 shadow-xl">
+            <div className="p-3 space-y-1">
               {sections.map((section) => (
                 <Button
                   key={section.id}
                   variant="ghost"
                   onClick={() => scrollToSection(section.id)}
                   className={cn(
-                    "w-full justify-start text-left",
-                    activeSection === section.id && "bg-accent text-accent-foreground"
+                    "w-full justify-center text-center rounded-lg transition-all duration-200",
+                    "hover:bg-primary/10 hover:text-primary",
+                    activeSection === section.id && "bg-primary/15 text-primary font-medium"
                   )}
                 >
                   {section.label}

@@ -8,6 +8,7 @@ export interface PortfolioData {
   technologies: Technology[];
   projects: Project[];
   skills: SkillCategory[];
+  workExperience: WorkExperience[];
   contact: ContactInfo;
 }
 
@@ -66,6 +67,19 @@ export interface Skill {
   name: string;
   level: number; // 1-5 or percentage
   icon?: string;
+}
+
+// Work experience interface
+export interface WorkExperience {
+  id: string;
+  company: string;
+  position: string;
+  duration: string;
+  description: string;
+  technologies: string[];
+  videoUrl?: string;
+  videoThumbnail?: string;
+  achievements?: string[];
 }
 
 // Contact information

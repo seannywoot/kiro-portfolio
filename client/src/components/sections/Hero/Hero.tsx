@@ -127,12 +127,15 @@ export function Hero({
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30">
           <button
             onClick={scrollToNext}
             className={cn(
               'text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors duration-300',
               'flex flex-col items-center gap-2 group',
+              'bg-[var(--background)]/80 backdrop-blur-sm rounded-full px-4 py-3',
+              'border border-[var(--border)]/30 hover:border-[var(--border)]/60',
+              'shadow-lg hover:shadow-xl',
               styles.scrollIndicator
             )}
             aria-label="Scroll to next section"
@@ -140,6 +143,7 @@ export function Hero({
             <span className="text-sm font-medium">Scroll Down</span>
             <ChevronDown 
               className="w-6 h-6 animate-bounce group-hover:animate-pulse" 
+              data-testid="chevron-down"
             />
           </button>
         </div>

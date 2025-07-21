@@ -114,23 +114,24 @@
 .iconWrapper {
   width: 190px;
   height: 190px;
-  background: color-mix(in srgb, var(--card) 2%, transparent);
+  background: color-mix(in srgb, var(--card) 25%, rgba(0, 0, 0, 0.1));
   border-radius: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--border) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(8px);
   /* Completely flat - no transforms, shadows, or depth */
 }
 
 /* Removed pseudo-elements for completely flat design */
 
 .iconWrapper:hover {
-  background: color-mix(in srgb, var(--card) 4%, transparent);
-  border-color: color-mix(in srgb, var(--border) 8%, transparent);
+  background: color-mix(in srgb, var(--card) 35%, rgba(0, 0, 0, 0.15));
+  border-color: color-mix(in srgb, var(--border) 40%, transparent);
 }
 
 .iconImage {
@@ -153,6 +154,7 @@
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(-33.33%);
   }
@@ -162,6 +164,7 @@
   0% {
     transform: translateY(-33.33%);
   }
+
   100% {
     transform: translateY(0);
   }

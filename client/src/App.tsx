@@ -7,6 +7,7 @@ import ErrorBoundary from './components/common/ErrorBoundary/ErrorBoundary';
 import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
 import ModernMarquee from './components/sections/ModernMarquee/ModernMarquee';
 import About from './components/sections/About/About';
+import WorkExperience from './components/sections/WorkExperience/WorkExperience';
 import Projects from './components/sections/Projects/Projects';
 import Contact from './components/sections/Contact/Contact';
 import { portfolioData } from './lib/portfolio-data';
@@ -21,8 +22,7 @@ function App() {
   // Navigation sections configuration
   const navigationSections = [
     { id: 'hero', label: 'Home' },
-    { id: 'technologies', label: 'Technologies' },
-    { id: 'about', label: 'About' },
+    { id: 'work-experience', label: 'Experience' },
     { id: 'projects', label: 'Projects' },
     { id: 'contact', label: 'Contact' }
   ];
@@ -151,6 +151,19 @@ function App() {
               personal={portfolioData.personal}
               skills={portfolioData.skills}
             />
+          </section>
+        </ErrorBoundary>
+
+        {/* Work Experience Section */}
+        <ErrorBoundary>
+          <section 
+            id="work-experience" 
+            aria-labelledby="work-experience-heading"
+            role="region"
+            aria-label="Professional work experience"
+            className="transition-all duration-700 ease-out"
+          >
+            <WorkExperience workExperience={portfolioData.workExperience} />
           </section>
         </ErrorBoundary>
 
