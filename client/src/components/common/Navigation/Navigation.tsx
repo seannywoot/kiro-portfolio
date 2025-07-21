@@ -91,23 +91,23 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
   };
 
   return (
-    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ease-out">
+    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ease-out w-full flex justify-center">
       <div 
         className={cn(
-          "relative rounded-2xl px-6 py-3 transition-all duration-300 ease-out",
-          "border border-border/20",
+          "relative rounded-2xl px-10 py-4 transition-all duration-300 ease-out max-w-5xl w-full",
+          "border border-border/40 shadow-2xl flex items-center justify-between gap-4",
           isScrolled 
-            ? "bg-background/70 backdrop-blur-xl shadow-2xl shadow-primary/10" 
-            : "bg-background/40 backdrop-blur-sm"
+            ? "bg-[var(--surface-elevated)]/95 backdrop-blur-xl" 
+            : "bg-[var(--surface-elevated)]/90 backdrop-blur-md"
         )}
         style={{
           boxShadow: isScrolled 
-            ? '0 8px 32px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 40px rgba(var(--primary-rgb, 59, 130, 246), 0.15)' 
-            : '0 4px 16px rgba(0, 0, 0, 0.04)'
+            ? '0 8px 32px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 40px rgba(var(--primary-rgb, 59, 130, 246), 0.18)' 
+            : '0 4px 16px rgba(0, 0, 0, 0.08)'
         }}
       >
-        <div className="flex items-center justify-center gap-8">
-          {/* Logo/Brand */}
+        {/* Left: Brand */}
+        <div className="flex-1 flex items-center min-w-0">
           <Button
             variant="ghost"
             onClick={() => scrollToSection('hero')}
@@ -115,8 +115,9 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
           >
             Portfolio
           </Button>
-
-          {/* Desktop Navigation - Centered */}
+        </div>
+        {/* Center: Nav Links */}
+        <div className="flex-1 flex items-center justify-center min-w-0">
           <div className="hidden md:flex items-center">
             <NavigationMenu>
               <NavigationMenuList className="flex items-center gap-2">
@@ -138,8 +139,9 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
               </NavigationMenuList>
             </NavigationMenu>
           </div>
-
-          {/* Theme Toggle */}
+        </div>
+        {/* Right: Theme Toggle and Mobile Menu */}
+        <div className="flex-1 flex items-center justify-end min-w-0 gap-2">
           <Button
             variant="ghost"
             size="icon"
@@ -149,8 +151,6 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
           >
             {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
-
-          {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
@@ -162,7 +162,6 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
             {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </Button>
         </div>
-
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden absolute top-full left-0 right-0 mt-2 rounded-xl bg-background/90 backdrop-blur-xl border border-border/20 shadow-xl">

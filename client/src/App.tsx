@@ -104,7 +104,7 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main id="main-content" role="main">
+      <main id="main-content" tabIndex={-1} className="focus:outline-none">
         {/* Hero Section */}
         <section 
           id="hero" 
@@ -122,6 +122,8 @@ function App() {
           />
         </section>
 
+        <hr className="section-divider" />
+
         {/* Technologies Section */}
         <ErrorBoundary>
           <section 
@@ -137,6 +139,8 @@ function App() {
             />
           </section>
         </ErrorBoundary>
+
+        <hr className="section-divider" />
 
         {/* About Section */}
         <ErrorBoundary>
@@ -154,6 +158,8 @@ function App() {
           </section>
         </ErrorBoundary>
 
+        <hr className="section-divider" />
+
         {/* Work Experience Section */}
         <ErrorBoundary>
           <section 
@@ -167,6 +173,8 @@ function App() {
           </section>
         </ErrorBoundary>
 
+        <hr className="section-divider" />
+
         {/* Projects Section */}
         <ErrorBoundary>
           <section 
@@ -179,6 +187,8 @@ function App() {
             <Projects projects={portfolioData.projects} />
           </section>
         </ErrorBoundary>
+
+        <hr className="section-divider" />
 
         {/* Contact Section */}
         <ErrorBoundary>

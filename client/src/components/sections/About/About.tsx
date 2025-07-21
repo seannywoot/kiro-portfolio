@@ -56,15 +56,6 @@ const About: React.FC<AboutProps> = ({
   return (
     <section className={styles.aboutSection}>
       <div className={styles.container}>
-        {/* Background Parallax Elements */}
-        <ParallaxContainer speed={0.3} direction="up" className={styles.parallaxBg1}>
-          <div className={styles.bgShape1} />
-        </ParallaxContainer>
-        
-        <ParallaxContainer speed={0.2} direction="down" className={styles.parallaxBg2}>
-          <div className={styles.bgShape2} />
-        </ParallaxContainer>
-
         {/* Main Content */}
         <div className={styles.content}>
           {/* About Me Section */}

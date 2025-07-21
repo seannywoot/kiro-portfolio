@@ -17,7 +17,7 @@ const WorkExperience: React.FC<WorkExperienceProps> = ({ workExperience }) => {
   };
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-[var(--background)] to-[var(--muted)]/20">
+    <section className="py-20 px-4 bg-[var(--background)]">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">

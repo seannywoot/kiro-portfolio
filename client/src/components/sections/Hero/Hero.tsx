@@ -41,22 +41,12 @@ export function Hero({
     <section
       className={cn(
         'relative min-h-screen flex items-center justify-center overflow-hidden',
-        'bg-gradient-to-br from-[var(--background)] via-[var(--muted)] to-[var(--background)]',
         styles.hero,
         className
       )}
       data-section="hero"
       {...props}
     >
-      {/* Background Parallax Elements */}
-      <ParallaxContainer speed={0.3} className="absolute inset-0 -z-10">
-        <div className={styles.backgroundPattern} />
-      </ParallaxContainer>
-
-      <ParallaxContainer speed={0.5} className="absolute inset-0 -z-10">
-        <div className={styles.gradientOrb} />
-      </ParallaxContainer>
-
       {/* Main Content */}
       <div className="container mx-auto px-6 text-center text-[var(--foreground)] relative z-10">
         <div className="max-w-4xl mx-auto">
