@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Project } from '../../../lib/types';
 import { ExternalLink, Github, Eye } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import styles from './Projects.module.css';
 
 interface ProjectCardProps {
@@ -90,15 +91,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, featured = false, on
               onError={handleImageError}
             />
             {!imageLoaded && (
-              <div className={styles.imagePlaceholder}>
-                <Eye size={32} />
-              </div>
+              <Skeleton className="absolute inset-0 w-full h-full" />
             )}
           </>
         ) : (
           <div className={styles.imagePlaceholder}>
-            <Eye size={32} />
-            <span>Preview</span>
+            <Skeleton className="w-full h-full" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
+              <Eye size={32} />
+              <span className="text-sm mt-2">Preview</span>
+            </div>
           </div>
         )}
         

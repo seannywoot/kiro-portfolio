@@ -40,7 +40,6 @@ export default function Lanyard({
   fov = 20,
   transparent = true,
 }: LanyardProps) {
-
   return (
     <div className="relative z-0 w-full h-screen flex justify-center items-center transform scale-100 origin-center">
       <Canvas
@@ -108,7 +107,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
   const rot = new THREE.Vector3();
   const dir = new THREE.Vector3();
 
-  const segmentProps: any = {
+  const segmentProps: unknown = {
     type: "dynamic" as RigidBodyProps["type"],
     canSleep: true,
     colliders: false,
@@ -119,13 +118,14 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
   const { nodes, materials } = useGLTF(cardGLB) as unknown;
   const texture = useTexture(lanyardTexture);
 
-  const [curve] = useState(() =>
-    new THREE.CatmullRomCurve3([
-      new THREE.Vector3(),
-      new THREE.Vector3(),
-      new THREE.Vector3(),
-      new THREE.Vector3(),
-    ])
+  const [curve] = useState(
+    () =>
+      new THREE.CatmullRomCurve3([
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+      ])
   );
 
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
@@ -220,7 +220,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
           type={"fixed" as RigidBodyProps["type"]}
         />
         <RigidBody
-          position={[0.5, 0, 0]}
+          position={[-0.5, 0, 0]}
           ref={j1}
           {...segmentProps}
           type={"dynamic" as RigidBodyProps["type"]}
@@ -228,7 +228,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
-          position={[1, 0, 0]}
+          position={[-1, 0, 0]}
           ref={j2}
           {...segmentProps}
           type={"dynamic" as RigidBodyProps["type"]}
@@ -236,7 +236,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
-          position={[1.5, 0, 0]}
+          position={[-1.5, 0, 0]}
           ref={j3}
           {...segmentProps}
           type={"dynamic" as RigidBodyProps["type"]}
@@ -244,7 +244,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
-          position={[2, 0, 0]}
+          position={[-2, 0, 0]}
           ref={card}
           {...segmentProps}
           type={

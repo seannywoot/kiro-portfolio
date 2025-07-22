@@ -479,19 +479,22 @@
   color: var(--muted-foreground);
 }
 
-/* Spinner Animation */
-.spinner {
+/* Button Skeleton Animation */
+.buttonSkeleton {
   width: 16px;
   height: 16px;
-  border: 2px solid transparent;
-  border-top: 2px solid currentColor;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+  background: currentColor;
+  border-radius: 2px;
+  opacity: 0.6;
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
   }
 }
 
@@ -661,7 +664,8 @@
     transform: none;
   }
   
-  .spinner {
+  .buttonSkeleton {
     animation: none;
+    opacity: 0.5;
   }
 }

@@ -4,7 +4,7 @@ import Navigation from './components/common/Navigation/Navigation';
 import ScrollProgress from './components/common/ScrollProgress/ScrollProgress';
 import ScreenReaderOnly from './components/common/ScreenReaderOnly/ScreenReaderOnly';
 import ErrorBoundary from './components/common/ErrorBoundary/ErrorBoundary';
-import LoadingSpinner from './components/common/LoadingSpinner/LoadingSpinner';
+import SkeletonLoader from './components/common/SkeletonLoader/SkeletonLoader';
 import ModernMarquee from './components/sections/ModernMarquee/ModernMarquee';
 import About from './components/sections/About/About';
 import WorkExperience from './components/sections/WorkExperience/WorkExperience';
@@ -81,10 +81,12 @@ function App() {
   // Show loading screen while app initializes
   if (isAppLoading) {
     return (
-      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
-        <div className="text-center">
-          <LoadingSpinner size="large" />
-          <p className="mt-4 text-slate-400 text-sm">Loading portfolio...</p>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--background)' }}>
+        <div className="w-full max-w-4xl mx-auto px-4">
+          <SkeletonLoader variant="hero" />
+          <div className="mt-8 text-center">
+            <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>Loading portfolio...</p>
+          </div>
         </div>
       </div>
     );

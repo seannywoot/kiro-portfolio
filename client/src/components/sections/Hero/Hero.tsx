@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatedText } from "../../common/AnimatedText/AnimatedText";
 import { Button } from "../../ui/button";
 import { ChevronDown } from "lucide-react";
@@ -29,6 +29,17 @@ export function Hero({
   className,
   ...props
 }: HeroProps & React.HTMLAttributes<HTMLElement>) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Trigger the loading animation after component mounts
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const scrollToNext = () => {
     const nextSection = document.querySelector('[data-section="tech-marquee"]');
     if (nextSection) {
@@ -50,48 +61,89 @@ export function Hero({
       <div className="relative w-full h-full flex items-center">
         <div className="w-full max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center">
           {/* Left side - Lanyard Component (50% width on desktop) */}
-          <div className="w-full lg:w-1/2 h-[500px] lg:h-[700px] relative z-0 mb-8 lg:mb-0">
+          <div 
+            className={cn(
+              "w-full lg:w-1/2 h-[500px] lg:h-[700px] relative z-0 mb-8 lg:mb-0",
+              "transition-all duration-1200 ease-out",
+              isLoaded 
+                ? "opacity-100 translate-y-0" 
+                : "opacity-0 -translate-y-8",
+              styles.lanyardContainer
+            )}
+            style={{ transitionDelay: "100ms" }}
+          >
             <Lanyard position={[-2, 0, 15]} gravity={[0, -40, 0]} fov={15} />
           </div>
-          
+
           {/* Right Side - Text Content (50% width on desktop) */}
           <div className="w-full lg:w-1/2 text-center lg:text-left text-[var(--foreground)] flex flex-col justify-center z-10 lg:mt-100">
-            {/* Animated Name */}
-            <AnimatedText
-              text={name}
-              animation="fadeIn"
-              delay={200}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[var(--foreground)] to-[var(--muted-foreground)] bg-clip-text text-transparent break-words"
-            />
-
-            {/* Animated Title with Typing Effect */}
-            <div className="text-lg md:text-xl lg:text-2xl text-[var(--primary)] mb-6 font-medium">
-              <TextType
-                text={["Front-End Developer", "UI/UX Design", "Graphic Design"]}
-                typingSpeed={75}
-                pauseDuration={1500}
-                showCursor={true}
-                cursorCharacter="|"
-                className="text-lg md:text-xl lg:text-2xl text-[var(--primary)] font-medium"
-              />
+            {/* Animated Name with falling effect */}
+            <div
+              className={cn(
+                "transition-all duration-1000 ease-out",
+                isLoaded 
+                  ? "opacity-100 translate-y-0" 
+                  : "opacity-0 -translate-y-12",
+                styles.heroFallAnimation
+              )}
+              style={{ transitionDelay: "300ms" }}
+            >
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[var(--foreground)] to-[var(--muted-foreground)] bg-clip-text text-transparent break-words">
+                {name}
+              </div>
             </div>
 
-            {/* Animated Description */}
-            <AnimatedText
-              text={description}
-              animation="fadeIn"
-              delay={1000}
-              className="text-base md:text-lg text-[var(--muted-foreground)] mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
-            />
+            {/* Animated Title with Typing Effect and falling effect */}
+            <div
+              className={cn(
+                "transition-all duration-1000 ease-out",
+                isLoaded 
+                  ? "opacity-100 translate-y-0" 
+                  : "opacity-0 -translate-y-10",
+                styles.heroFallAnimation
+              )}
+              style={{ transitionDelay: "600ms" }}
+            >
+              <div className="text-lg md:text-xl lg:text-2xl text-[var(--primary)] mb-6 font-medium">
+                <TextType
+                  text={["Front-End Developer", "UI/UX Design", "Graphic Design"]}
+                  typingSpeed={75}
+                  pauseDuration={1500}
+                  showCursor={true}
+                  cursorCharacter="|"
+                  className="text-lg md:text-xl lg:text-2xl text-[var(--primary)] font-medium"
+                />
+              </div>
+            </div>
 
-            {/* Call to Action */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
-              <AnimatedText
-                text=""
-                animation="fadeIn"
-                delay={1400}
-                className="contents"
-              >
+            {/* Animated Description with falling effect */}
+            <div
+              className={cn(
+                "transition-all duration-1000 ease-out",
+                isLoaded 
+                  ? "opacity-100 translate-y-0" 
+                  : "opacity-0 -translate-y-8",
+                styles.heroFallAnimation
+              )}
+              style={{ transitionDelay: "900ms" }}
+            >
+              <div className="text-base md:text-lg text-[var(--muted-foreground)] mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                {description}
+              </div>
+            </div>
+
+            {/* Call to Action with falling effect */}
+            <div
+              className={cn(
+                "transition-all duration-1000 ease-out",
+                isLoaded 
+                  ? "opacity-100 translate-y-0" 
+                  : "opacity-0 -translate-y-6",
+                styles.heroFallAnimation
+              )}
+              style={{ transitionDelay: "1200ms" }}
+            >
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                 <Button
                   onClick={onCtaClick}
                   size="lg"
@@ -105,14 +157,23 @@ export function Hero({
                 >
                   {ctaText}
                 </Button>
-              </AnimatedText>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-30">
+      {/* Scroll Indicator with falling effect */}
+      <div
+        className={cn(
+          "absolute bottom-20 left-1/2 transform -translate-x-1/2 z-30",
+          "transition-all duration-1000 ease-out",
+          isLoaded 
+            ? "opacity-100 translate-y-0" 
+            : "opacity-0 -translate-y-4"
+        )}
+        style={{ transitionDelay: "1500ms" }}
+      >
         <button
           onClick={scrollToNext}
           className={cn(

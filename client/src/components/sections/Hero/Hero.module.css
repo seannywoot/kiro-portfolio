@@ -45,6 +45,16 @@
   animation: fadeInUp 2s ease-out 1.8s both;
 }
 
+/* Hero Fall Animation */
+.heroFallAnimation {
+  animation: heroFallBounce 0.8s ease-out forwards;
+}
+
+/* Lanyard Container Animation */
+.lanyardContainer {
+  animation: lanyardContainerFall 1s ease-out forwards;
+}
+
 /* Animations */
 @keyframes float {
   0%, 100% {
@@ -89,6 +99,40 @@
   }
 }
 
+@keyframes heroFallBounce {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(8px);
+    opacity: 0.8;
+  }
+  80% {
+    transform: translateY(-4px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes lanyardContainerFall {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(5px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .gradientOrb {
@@ -108,7 +152,9 @@
   .backgroundPattern,
   .gradientOrb,
   .avatar,
-  .scrollIndicator {
+  .scrollIndicator,
+  .heroFallAnimation,
+  .lanyardContainer {
     animation: none;
   }
   

@@ -319,7 +319,7 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
               >
                 {isSubmitting ? (
                   <>
-                    <div className={styles.spinner} />
+                    <div className={styles.buttonSkeleton} />
                     <span>Sending...</span>
                   </>
                 ) : (
