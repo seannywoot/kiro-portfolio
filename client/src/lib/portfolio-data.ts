@@ -105,8 +105,8 @@ export const renderTechnologyIcon = (
 export const portfolioData: PortfolioData = {
   personal: {
     name: "Seann Tamondong",
-    title: "Senior Full Stack Developer",
-    bio: "Passionate full-stack developer with 5+ years of experience creating modern, scalable web applications. I specialize in React, TypeScript, and Node.js, with a focus on performance optimization and user experience. I love turning complex problems into simple, beautiful solutions.",
+    title: "Front-End Developer • UI/UX Design • Graphic Design",
+    bio: "2nd year student at Gordon College with a passion for creating beautiful, user-centered digital experiences. I specialize in UI/UX design, front-end development, and graphic design, focusing on crafting intuitive interfaces that blend functionality with visual appeal. I love transforming creative ideas into engaging digital solutions.",
     avatar: "/2X2.jpg",
     resume: "/documents/alex-johnson-resume.pdf",
   },
@@ -139,7 +139,7 @@ export const portfolioData: PortfolioData = {
       name: "JavaScript",
       icon: {
         type: "image",
-        src: "/JavaScript-Logo-PNG-Symbol-for-Web-Development-Transparent.png",
+        src: "/JAVASCRIPT.png",
         alt: "JavaScript logo",
         fallback: "💛",
       } as ImageIcon,
@@ -161,7 +161,7 @@ export const portfolioData: PortfolioData = {
       name: "HTML5",
       icon: {
         type: "image",
-        src: "/HTML5-Logo-PNG-Symbol-for-Web-Development-Transparent.png",
+        src: "/HTML.png",
         alt: "HTML5 logo",
         fallback: "🌐",
       } as ImageIcon,
@@ -174,7 +174,7 @@ export const portfolioData: PortfolioData = {
       name: "CSS3",
       icon: {
         type: "image",
-        src: "/CSS-Logo-PNG-Symbol-for-Web-Development-Transparent.png",
+        src: "/CSS.png",
         alt: "CSS3 logo",
         fallback: "🎨",
       } as ImageIcon,
@@ -218,7 +218,7 @@ export const portfolioData: PortfolioData = {
       name: "VS Code",
       icon: {
         type: "image",
-        src: "/vsc.png",
+        src: "/VS CODE.png",
         alt: "Visual Studio Code logo",
         fallback: "💻",
       } as ImageIcon,
@@ -231,7 +231,7 @@ export const portfolioData: PortfolioData = {
       name: "Python",
       icon: {
         type: "image",
-        src: "/Python-programming-code-coding-transparent-PNG-image.png",
+        src: "/PYTHON.png",
         alt: "Python logo",
         fallback: "🐍",
       } as ImageIcon,
@@ -264,7 +264,7 @@ export const portfolioData: PortfolioData = {
       name: "Hono",
       icon: {
         type: "image",
-        src: "/Hono Framework Icon.png",
+        src: "/HONO.png",
         alt: "Hono framework logo",
         fallback: "🔥",
       } as ImageIcon,
@@ -376,28 +376,166 @@ export const portfolioData: PortfolioData = {
     {
       name: "Frontend Development",
       skills: [
-        { name: "React", level: 5, icon: "⚛️" },
-        { name: "TypeScript", level: 4, icon: "📘" },
-        { name: "CSS/Tailwind", level: 5, icon: "🎨" },
-        { name: "JavaScript", level: 5, icon: "💛" },
+        {
+          name: "React",
+          level: 4,
+          icon: {
+            type: "image",
+            src: "/react.png",
+            alt: "React logo",
+            fallback: "⚛️",
+          } as ImageIcon,
+        },
+        {
+          name: "Vue.js",
+          level: 3,
+          icon: {
+            type: "image",
+            src: "/vue.png",
+            alt: "Vue.js logo",
+            fallback: "💚",
+          } as ImageIcon,
+        },
+        {
+          name: "JavaScript",
+          level: 4,
+          icon: {
+            type: "image",
+            src: "/JAVASCRIPT.png",
+            alt: "JavaScript logo",
+            fallback: "💛",
+          } as ImageIcon,
+        },
+        {
+          name: "TypeScript",
+          level: 3,
+          icon: {
+            type: "image",
+            src: "/typescript.png",
+            alt: "TypeScript logo",
+            fallback: "📘",
+          } as ImageIcon,
+        },
+        {
+          name: "HTML5",
+          level: 5,
+          icon: {
+            type: "image",
+            src: "/HTML.png",
+            alt: "HTML5 logo",
+            fallback: "🌐",
+          } as ImageIcon,
+        },
+        {
+          name: "CSS3",
+          level: 4,
+          icon: {
+            type: "image",
+            src: "/CSS.png",
+            alt: "CSS3 logo",
+            fallback: "🎨",
+          } as ImageIcon,
+        },
       ],
     },
     {
-      name: "Backend Development",
+      name: "Design & Creative Tools",
       skills: [
-        { name: "Node.js", level: 4, icon: "🟢" },
-        { name: "Express", level: 4, icon: "🚀" },
-        { name: "API Design", level: 4, icon: "🔗" },
-        { name: "Database Design", level: 3, icon: "🗄️" },
+        {
+          name: "Figma",
+          level: 4,
+          icon: {
+            type: "image",
+            src: "/figma.png",
+            alt: "Figma logo",
+            fallback: "🎯",
+          } as ImageIcon,
+        },
+        {
+          name: "Photoshop",
+          level: 4,
+          icon: {
+            type: "image",
+            src: "/photoshop.png",
+            alt: "Adobe Photoshop logo",
+            fallback: "🖼️",
+          } as ImageIcon,
+        },
+        {
+          name: "DaVinci Resolve",
+          level: 3,
+          icon: {
+            type: "image",
+            src: "/davinci.png",
+            alt: "DaVinci Resolve logo",
+            fallback: "🎬",
+          } as ImageIcon,
+        },
       ],
     },
     {
-      name: "Tools & DevOps",
+      name: "Development Tools & Languages",
       skills: [
-        { name: "Git", level: 5, icon: "📝" },
-        { name: "Docker", level: 3, icon: "🐳" },
-        { name: "AWS", level: 3, icon: "☁️" },
-        { name: "CI/CD", level: 3, icon: "🔄" },
+        {
+          name: "VS Code",
+          level: 5,
+          icon: {
+            type: "image",
+            src: "/VS CODE.png",
+            alt: "Visual Studio Code logo",
+            fallback: "💻",
+          } as ImageIcon,
+        },
+        {
+          name: "Python",
+          level: 3,
+          icon: {
+            type: "image",
+            src: "/PYTHON.png",
+            alt: "Python logo",
+            fallback: "🐍",
+          } as ImageIcon,
+        },
+        {
+          name: "Java",
+          level: 3,
+          icon: {
+            type: "image",
+            src: "/java.png",
+            alt: "Java logo",
+            fallback: "☕",
+          } as ImageIcon,
+        },
+        {
+          name: "Vite",
+          level: 3,
+          icon: {
+            type: "image",
+            src: "/vite.svg",
+            alt: "Vite logo",
+            fallback: "⚡",
+          } as ImageIcon,
+        },
+        {
+          name: "Bun",
+          level: 2,
+          icon: {
+            type: "image",
+            src: "/Bun.png",
+            alt: "Bun runtime logo",
+            fallback: "🥟",
+          } as ImageIcon,
+        },
+        {
+          name: "Hono",
+          level: 2,
+          icon: {
+            type: "image",
+            src: "/HONO.png",
+            alt: "Hono framework logo",
+            fallback: "🔥",
+          } as ImageIcon,
+        },
       ],
     },
   ],
