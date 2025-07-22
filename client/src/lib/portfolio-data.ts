@@ -461,23 +461,23 @@ export const portfolioData: PortfolioData = {
   ],
 
   contact: {
-    email: "alex.johnson.dev@gmail.com",
-    phone: "+1 (555) 987-6543",
-    location: "San Francisco, CA",
+    email: "seannpatrick25@gmail.com",
+    phone: "0931 843 7976",
+    location: "Olongapo City Zambales",
     socialMedia: [
       {
         platform: "GitHub",
-        url: "https://github.com/alexjohnson-dev",
+        url: "https://github.com/seannywoot",
         icon: "🐙",
       },
       {
-        platform: "LinkedIn",
-        url: "https://linkedin.com/in/alexjohnson-fullstack",
+        platform: "Facebook",
+        url: "https://www.facebook.com/seann.patrick.tamondong/",
         icon: "💼",
       },
       {
-        platform: "Twitter",
-        url: "https://twitter.com/alexjohnson_dev",
+        platform: "Pinterest",
+        url: "https://ph.pinterest.com/animedits_exe/",
         icon: "🐦",
       },
       {

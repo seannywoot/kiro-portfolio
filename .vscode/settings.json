@@ -1,2 +1,33 @@
 {
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
+  "css.customData": [
+    {
+      "version": 1.1,
+      "atDirectives": [
+        {
+          "name": "@custom-variant",
+          "description": "Tailwind CSS v4 custom variant directive"
+        },
+        {
+          "name": "@theme",
+          "description": "Tailwind CSS v4 theme directive"
+        },
+        {
+          "name": "@apply",
+          "description": "Tailwind CSS apply directive"
+        }
+      ]
+    }
+  ],
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+  "cSpell.words": [
+    "tabindex",
+    "tailwindcss",
+    "oklch",
+    "clsx"
+  ]
 }

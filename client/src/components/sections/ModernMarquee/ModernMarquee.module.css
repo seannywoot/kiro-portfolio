@@ -20,13 +20,9 @@
 .sectionTitle {
   font-size: 3.5rem;
   font-weight: 700;
-  color: var(--foreground);
+  color: var(--muted-foreground);
   margin-bottom: 1rem;
   line-height: 1.1;
-  background: linear-gradient(135deg, var(--primary), var(--chart-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .sectionSubtitle {
