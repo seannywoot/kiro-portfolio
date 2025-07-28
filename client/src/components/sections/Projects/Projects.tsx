@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Project } from '../../../lib/types';
 import ProjectCard from './ProjectCard';
 import ProjectModal from './ProjectModal';
 import Masonry from '../../ui/Masonry';
+import { preloadImagesWithDimensions, willImageBeCropped, ImageDimensions } from '../../../utils/imageUtils';
 import styles from './Projects.module.css';
 
 interface ProjectsProps {
@@ -15,12 +16,43 @@ interface MasonryWithModalProps {
 }
 
 const MasonryWithModal: React.FC<MasonryWithModalProps> = ({ projects, onProjectClick }) => {
-  const masonryItems = projects.map((project, index) => ({
-    id: project.id,
-    img: project.images[0] || "/images/placeholder-design.jpg",
-    url: "#", // We'll handle clicks through the component
-    height: 300 + (index % 4) * 150, // More varied heights for better masonry effect
-  }));
+  const [imageDimensions, setImageDimensions] = useState<Map<string, ImageDimensions>>(new Map());
+  const [itemsReady, setItemsReady] = useState(false);
+
+  // Preload images and get their dimensions
+  useEffect(() => {
+    const imageUrls = projects.map(project => project.images[0] || "/images/placeholder-design.jpg");
+    
+    preloadImagesWithDimensions(imageUrls).then((dimensions) => {
+      setImageDimensions(dimensions);
+      setItemsReady(true);
+    });
+  }, [projects]);
+
+  // Function to check if an image needs cropping indicator
+  const checkImageCropping = (imageSrc: string, containerWidth: number, containerHeight: number): boolean => {
+    const dimensions = imageDimensions.get(imageSrc);
+    if (!dimensions) return true; // Default to showing indicator if we can't determine
+
+    return willImageBeCropped(dimensions.aspectRatio, containerWidth, containerHeight, 0.15);
+  };
+
+  const masonryItems = projects.map((project, index) => {
+    const assignedHeight = 300 + (index % 4) * 150;
+    const imageSrc = project.images[0] || "/images/placeholder-design.jpg";
+    
+    // Estimate container width (this would be calculated by masonry)
+    const estimatedWidth = 250; // Approximate column width
+    
+    return {
+      id: project.id,
+      img: imageSrc,
+      url: "#", // We'll handle clicks through the component
+      height: assignedHeight,
+      title: project.title,
+      showCropIndicator: itemsReady ? checkImageCropping(imageSrc, estimatedWidth, assignedHeight) : true,
+    };
+  });
 
   const handleItemClick = (itemId: string) => {
     const project = projects.find(p => p.id === itemId);
@@ -47,10 +79,12 @@ const MasonryWithModal: React.FC<MasonryWithModalProps> = ({ projects, onProject
         duration={0.6}
         stagger={0.05}
         animateFrom="bottom"
-        scaleOnHover={true}
-        hoverScale={0.95}
+        scaleOnHover={false}
         blurToFocus={true}
         colorShiftOnHover={false}
+        enableExpansion={true}
+        expansionScale={1.15}
+        expansionDuration={0.4}
       />
     </div>
   );

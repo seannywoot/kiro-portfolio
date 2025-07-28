@@ -616,3 +616,109 @@
     transform: none;
   }
 }
+
+/* Enhanced Masonry Styles for Expandable Cards */
+.masonryContainer {
+  position: relative;
+  overflow: visible; /* Allow expansion to show outside bounds */
+  padding: 20px; /* Add padding to accommodate expansion */
+}
+
+/* Masonry item base styles */
+.masonryContainer :global(.masonry-item) {
+  transition: z-index 0s; /* Instant z-index changes */
+  border-radius: 10px;
+}
+
+/* Masonry card styles */
+.masonryContainer :global(.masonry-card) {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+}
+
+/* Masonry image styles */
+.masonryContainer :global(.masonry-image) {
+  transition: background-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: background-size;
+}
+
+/* Crop indicator styling */
+.masonryContainer :global(.crop-indicator) {
+  animation: pulse 2s infinite;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Expansion indicator styling */
+.masonryContainer :global(.expansion-indicator) {
+  animation: expandPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes expandPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* Hover state improvements */
+.masonryContainer :global(.masonry-item .hover-hint) {
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Enhanced hover effects */
+.masonryContainer :global(.masonry-item:hover .masonry-card) {
+  transform: translateY(-2px);
+}
+
+.masonryContainer :global(.masonry-item:focus .masonry-card) {
+  transform: translateY(-2px);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .masonryContainer :global(.masonry-item:hover) {
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+  }
+  
+  .masonryContainer :global(.masonry-item .hover-hint) {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .masonryContainer :global(.masonry-item) {
+    transition: none;
+  }
+  
+  .masonryContainer :global(.crop-indicator) {
+    animation: none;
+  }
+}
+
+/* Focus states for keyboard navigation */
+.masonryContainer :global(.masonry-item:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
