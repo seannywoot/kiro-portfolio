@@ -10,16 +10,18 @@ const About: React.FC<AboutProps> = ({
   personal,
   skills
 }) => {
-  const renderSkillBar = (skill: unknown, index: number) => {
+  const renderSkillItem = (skill: unknown, index: number) => {
     const percentage = (skill.level / 5) * 100;
     
     return (
       <div key={skill.name} className={styles.skillItem}>
         <div className={styles.skillHeader}>
-          <span className={styles.skillIcon} aria-hidden="true">
-            {renderTechnologyIcon({ name: skill.name, icon: skill.icon, category: 'skill', priority: 0 })}
-          </span>
-          <span className={styles.skillName}>{skill.name}</span>
+          <div className={styles.skillInfo}>
+            <span className={styles.skillIcon} aria-hidden="true">
+              {renderTechnologyIcon({ name: skill.name, icon: skill.icon, category: 'skill', priority: 0 })}
+            </span>
+            <span className={styles.skillName}>{skill.name}</span>
+          </div>
           <span className={styles.skillLevel} aria-label={`Skill level: ${skill.level} out of 5`}>
             {skill.level}/5
           </span>
@@ -52,7 +54,7 @@ const About: React.FC<AboutProps> = ({
     <div key={category.name} className={styles.skillCategory}>
       <h3 className={styles.categoryTitle}>{category.name}</h3>
       <div className={styles.skillsList}>
-        {category.skills.map((skill, skillIndex) => renderSkillBar(skill, skillIndex))}
+        {category.skills.map((skill, skillIndex) => renderSkillItem(skill, skillIndex))}
       </div>
     </div>
   );

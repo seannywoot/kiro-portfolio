@@ -206,6 +206,45 @@ bun run dev:server  # Run the Hono backend
 bun run dev:client  # Run the Vite dev server for React
 ```
 
+### Testing
+
+The client includes comprehensive testing capabilities with Vitest:
+
+```bash
+# Run all tests
+cd client && bun run test
+
+# Run tests once
+cd client && bun run test:run
+
+# Run performance tests
+cd client && bun run test:performance
+
+# Type checking
+cd client && bun run type-check
+```
+
+### Performance Auditing
+
+Built-in performance monitoring and auditing tools:
+
+```bash
+# Performance audit
+cd client && bun run audit:performance
+
+# Accessibility audit
+cd client && bun run audit:accessibility
+
+# Bundle size analysis
+cd client && bun run audit:bundle
+
+# Complete audit suite
+cd client && bun run audit:final
+
+# Lighthouse performance report
+cd client && bun run lighthouse
+```
+
 ### Building
 
 ```bash
@@ -215,6 +254,9 @@ bun run build
 # Or build individual parts
 bun run build:shared  # Build the shared types package
 bun run build:client  # Build the React frontend
+
+# Build with bundle analysis
+cd client && bun run build:analyze
 ```
 
 ### Deployment
