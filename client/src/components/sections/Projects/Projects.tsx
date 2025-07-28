@@ -1,41 +1,101 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Project } from '../../../lib/types';
 import ProjectCard from './ProjectCard';
 import ProjectModal from './ProjectModal';
-import ScreenReaderOnly from '../../common/ScreenReaderOnly/ScreenReaderOnly';
-import { Filter } from 'lucide-react';
+import Masonry from '../../ui/Masonry';
+import { preloadImagesWithDimensions, willImageBeCropped, ImageDimensions } from '../../../utils/imageUtils';
 import styles from './Projects.module.css';
 
 interface ProjectsProps {
   projects: Project[];
 }
 
+interface MasonryWithModalProps {
+  projects: Project[];
+  onProjectClick: (project: Project) => void;
+}
+
+const MasonryWithModal: React.FC<MasonryWithModalProps> = ({ projects, onProjectClick }) => {
+  const [imageDimensions, setImageDimensions] = useState<Map<string, ImageDimensions>>(new Map());
+  const [itemsReady, setItemsReady] = useState(false);
+
+  // Preload images and get their dimensions
+  useEffect(() => {
+    const imageUrls = projects.map(project => project.images[0] || "/images/placeholder-design.jpg");
+    
+    preloadImagesWithDimensions(imageUrls).then((dimensions) => {
+      setImageDimensions(dimensions);
+      setItemsReady(true);
+    });
+  }, [projects]);
+
+  // Function to check if an image needs cropping indicator
+  const checkImageCropping = (imageSrc: string, containerWidth: number, containerHeight: number): boolean => {
+    const dimensions = imageDimensions.get(imageSrc);
+    if (!dimensions) return true; // Default to showing indicator if we can't determine
+
+    return willImageBeCropped(dimensions.aspectRatio, containerWidth, containerHeight, 0.15);
+  };
+
+  const masonryItems = projects.map((project, index) => {
+    const assignedHeight = 300 + (index % 4) * 150;
+    const imageSrc = project.images[0] || "/images/placeholder-design.jpg";
+    
+    // Estimate container width (this would be calculated by masonry)
+    const estimatedWidth = 250; // Approximate column width
+    
+    return {
+      id: project.id,
+      img: imageSrc,
+      url: "#", // We'll handle clicks through the component
+      height: assignedHeight,
+      title: project.title,
+      showCropIndicator: itemsReady ? checkImageCropping(imageSrc, estimatedWidth, assignedHeight) : true,
+    };
+  });
+
+  const handleItemClick = (itemId: string) => {
+    const project = projects.find(p => p.id === itemId);
+    if (project) {
+      onProjectClick(project);
+    }
+  };
+
+  return (
+    <div onClick={(e) => {
+      const target = e.target as HTMLElement;
+      const masonryItem = target.closest('[data-key]');
+      if (masonryItem) {
+        e.preventDefault();
+        const itemId = masonryItem.getAttribute('data-key');
+        if (itemId) {
+          handleItemClick(itemId);
+        }
+      }
+    }}>
+      <Masonry
+        items={masonryItems}
+        ease="power3.out"
+        duration={0.6}
+        stagger={0.05}
+        animateFrom="bottom"
+        scaleOnHover={false}
+        blurToFocus={true}
+        colorShiftOnHover={false}
+        enableExpansion={true}
+        expansionScale={1.15}
+        expansionDuration={0.4}
+      />
+    </div>
+  );
+};
+
 const Projects: React.FC<ProjectsProps> = ({ projects }) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState<string>('all');
 
-  // Get all unique technologies for filtering
-  const allTechnologies = useMemo(() => {
-    const techSet = new Set<string>();
-    projects.forEach(project => {
-      project.technologies.forEach(tech => techSet.add(tech));
-    });
-    return Array.from(techSet).sort();
-  }, [projects]);
-
-  // Filter projects based on selected technology
-  const filteredProjects = useMemo(() => {
-    if (selectedFilter === 'all') {
-      return projects;
-    }
-    return projects.filter(project => 
-      project.technologies.includes(selectedFilter)
-    );
-  }, [projects, selectedFilter]);
-
-  const featuredProjects = filteredProjects.filter(project => project.featured);
-  const otherProjects = filteredProjects.filter(project => !project.featured);
+  const featuredProjects = projects.filter(project => project.featured);
+  const otherProjects = projects.filter(project => !project.featured);
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -47,55 +107,14 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
     setSelectedProject(null);
   };
 
-  const handleFilterChange = (technology: string) => {
-    setSelectedFilter(technology);
-  };
-
   return (
     <section className={styles.projectsSection}>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
           <h2 id="projects-heading" className={styles.title}>Featured Projects</h2>
           <p className={styles.subtitle}>
-            A showcase of my recent work and creative solutions
+            A showcase of my recent development work and creative solutions
           </p>
-        </div>
-
-        {/* Technology Filter */}
-        <div className={styles.filterSection} role="region" aria-labelledby="filter-heading">
-          <div className={styles.filterHeader}>
-            <Filter size={18} aria-hidden="true" />
-            <span id="filter-heading">Filter by Technology</span>
-          </div>
-          <div 
-            className={styles.filterTags}
-            role="group"
-            aria-labelledby="filter-heading"
-            aria-describedby="filter-description"
-          >
-            <button
-              className={`${styles.filterTag} ${selectedFilter === 'all' ? styles.activeFilter : ''}`}
-              onClick={() => handleFilterChange('all')}
-              aria-pressed={selectedFilter === 'all'}
-              aria-describedby="filter-description"
-            >
-              All Projects
-            </button>
-            {allTechnologies.map((tech) => (
-              <button
-                key={tech}
-                className={`${styles.filterTag} ${selectedFilter === tech ? styles.activeFilter : ''}`}
-                onClick={() => handleFilterChange(tech)}
-                aria-pressed={selectedFilter === tech}
-                aria-describedby="filter-description"
-              >
-                {tech}
-              </button>
-            ))}
-          </div>
-          <ScreenReaderOnly id="filter-description">
-            Use these buttons to filter projects by technology. Currently showing {filteredProjects.length} of {projects.length} projects.
-          </ScreenReaderOnly>
         </div>
 
         {/* Featured Projects Grid */}
@@ -112,50 +131,19 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
           </div>
         )}
 
-        {/* Other Projects Grid */}
+        {/* Other Projects Grid - Graphic Design & Creative Work */}
         {otherProjects.length > 0 && (
           <>
             <div className={styles.sectionDivider}>
-              <h3 className={styles.sectionSubtitle}>Other Projects</h3>
+              <h3 className={styles.sectionSubtitle}>Graphic Design & Creative Work</h3>
             </div>
-            <div className={styles.projectsGrid}>
-              {otherProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  featured={false}
-                  onClick={() => handleProjectClick(project)}
-                />
-              ))}
+            <div className={styles.masonryContainer}>
+              <MasonryWithModal
+                projects={otherProjects}
+                onProjectClick={handleProjectClick}
+              />
             </div>
           </>
-        )}
-
-        {/* All Projects Grid (when no featured distinction) */}
-        {featuredProjects.length === 0 && (
-          <div className={styles.projectsGrid}>
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                featured={false}
-                onClick={() => handleProjectClick(project)}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* No Results Message */}
-        {filteredProjects.length === 0 && (
-          <div className={styles.noResults}>
-            <p>No projects found using <strong>{selectedFilter}</strong></p>
-            <button 
-              className={styles.clearFilter}
-              onClick={() => handleFilterChange('all')}
-            >
-              Show All Projects
-            </button>
-          </div>
         )}
       </div>
 

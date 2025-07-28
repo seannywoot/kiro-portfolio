@@ -141,6 +141,26 @@
   }
 }
 
+/* Masonry Container */
+.masonryContainer {
+  width: 100%;
+  min-height: 600px;
+  position: relative;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .masonryContainer {
+    min-height: 800px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .masonryContainer {
+    min-height: 1000px;
+  }
+}
+
 /* Project Card Styles */
 .projectCard {
   background: color-mix(in srgb, var(--card) 80%, transparent);
@@ -404,82 +424,7 @@
   }
 }
 
-/* Filter Section */
-.filterSection {
-  margin-bottom: 3rem;
-  text-align: center;
-}
 
-.filterHeader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #374151;
-  margin-bottom: 1rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  .filterHeader {
-    color: #d1d5db;
-  }
-}
-
-.filterTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
-  max-width: 60rem;
-  margin: 0 auto;
-}
-
-.filterTag {
-  background: rgba(255, 255, 255, 0.8);
-  color: #374151;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(10px);
-}
-
-.filterTag:hover {
-  background: rgba(59, 130, 246, 0.1);
-  border-color: rgba(59, 130, 246, 0.3);
-  color: #3b82f6;
-}
-
-.activeFilter {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border-color: transparent;
-}
-
-.activeFilter:hover {
-  background: var(--primary);
-  opacity: 0.9;
-  color: var(--primary-foreground);
-}
-
-@media (prefers-color-scheme: dark) {
-  .filterTag {
-    background: rgba(30, 41, 59, 0.8);
-    color: #d1d5db;
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .filterTag:hover {
-    background: rgba(59, 130, 246, 0.2);
-    border-color: rgba(59, 130, 246, 0.4);
-    color: #93c5fd;
-  }
-}
 
 /* Clickable Card */
 .clickableCard {
@@ -490,36 +435,7 @@
   transform: translateY(-8px) scale(1.02);
 }
 
-/* No Results */
-.noResults {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: #6b7280;
-}
 
-@media (prefers-color-scheme: dark) {
-  .noResults {
-    color: #9ca3af;
-  }
-}
-
-.clearFilter {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: 1rem;
-}
-
-.clearFilter:hover {
-  background: var(--primary);
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
 
 /* Responsive Design */
 @media (max-width: 480px) {
@@ -540,18 +456,7 @@
     margin-bottom: 2.5rem;
   }
   
-  .filterSection {
-    margin-bottom: 2rem;
-  }
-  
-  .filterTags {
-    gap: 0.5rem;
-  }
-  
-  .filterTag {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.8rem;
-  }
+
   
   .projectContent {
     padding: 1rem;
@@ -710,4 +615,110 @@
   .projectLink:hover {
     transform: none;
   }
+}
+
+/* Enhanced Masonry Styles for Expandable Cards */
+.masonryContainer {
+  position: relative;
+  overflow: visible; /* Allow expansion to show outside bounds */
+  padding: 20px; /* Add padding to accommodate expansion */
+}
+
+/* Masonry item base styles */
+.masonryContainer :global(.masonry-item) {
+  transition: z-index 0s; /* Instant z-index changes */
+  border-radius: 10px;
+}
+
+/* Masonry card styles */
+.masonryContainer :global(.masonry-card) {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+}
+
+/* Masonry image styles */
+.masonryContainer :global(.masonry-image) {
+  transition: background-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: background-size;
+}
+
+/* Crop indicator styling */
+.masonryContainer :global(.crop-indicator) {
+  animation: pulse 2s infinite;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Expansion indicator styling */
+.masonryContainer :global(.expansion-indicator) {
+  animation: expandPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes expandPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* Hover state improvements */
+.masonryContainer :global(.masonry-item .hover-hint) {
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Enhanced hover effects */
+.masonryContainer :global(.masonry-item:hover .masonry-card) {
+  transform: translateY(-2px);
+}
+
+.masonryContainer :global(.masonry-item:focus .masonry-card) {
+  transform: translateY(-2px);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .masonryContainer :global(.masonry-item:hover) {
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+  }
+  
+  .masonryContainer :global(.masonry-item .hover-hint) {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .masonryContainer :global(.masonry-item) {
+    transition: none;
+  }
+  
+  .masonryContainer :global(.crop-indicator) {
+    animation: none;
+  }
+}
+
+/* Focus states for keyboard navigation */
+.masonryContainer :global(.masonry-item:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }

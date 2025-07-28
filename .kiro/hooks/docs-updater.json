@@ -1,0 +1,34 @@
+{
+  "name": "Documentation Updater",
+  "description": "Updates documentation when source files change",
+  "trigger": {
+    "type": "file_change",
+    "patterns": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/package.json",
+      "**/tsconfig.json",
+      "**/vite.config.ts",
+      "**/eslint.config.js",
+      "**/*.md",
+      "**/components.json"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/.git/**",
+      "**/coverage/**",
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      "**/*.spec.ts",
+      "**/*.spec.tsx"
+    ]
+  },
+  "action": {
+    "type": "agent_request",
+    "prompt": "Source files have been modified in this TypeScript/React project. Please review the changes and update the documentation accordingly:\n\n1. Update the main README.md file to reflect any new features, components, or architectural changes\n2. If there's a /docs folder, update relevant documentation files there as well\n3. Ensure documentation covers:\n   - New components or features added\n   - Changes to existing functionality\n   - Updated installation or usage instructions\n   - Any breaking changes or migration notes\n   - Performance improvements or optimizations\n\nFocus on keeping documentation accurate, helpful, and up-to-date with the current codebase. Include code examples where appropriate and maintain consistency with the existing documentation style."
+  }
+}

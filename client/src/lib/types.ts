@@ -66,7 +66,7 @@ export interface SkillCategory {
 export interface Skill {
   name: string;
   level: number; // 1-5 or percentage
-  icon?: string;
+  icon?: string | React.ComponentType | ImageIcon;
 }
 
 // Work experience interface
