@@ -49,11 +49,7 @@ export function Hero({
 
   return (
     <section
-      className={cn(
-        "relative min-h-screen overflow-hidden",
-        styles.hero,
-        className
-      )}
+      className={cn("relative min-h-screen", styles.hero, className)}
       data-section="hero"
       {...props}
     >
@@ -61,18 +57,18 @@ export function Hero({
       <div className="relative w-full h-full flex items-center">
         <div className="w-full max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center">
           {/* Left side - Lanyard Component (50% width on desktop) */}
-          <div 
+          <div
             className={cn(
-              "w-full lg:w-1/2 h-[500px] lg:h-[700px] relative z-0 mb-8 lg:mb-0",
+              "w-full lg:w-1/2 h-[600px] lg:h-[800px] relative z-0 mb-8 lg:mb-0",
               "transition-all duration-1200 ease-out",
-              isLoaded 
-                ? "opacity-100 translate-y-0" 
+              isLoaded
+                ? "opacity-100 translate-y-0"
                 : "opacity-0 -translate-y-8",
               styles.lanyardContainer
             )}
             style={{ transitionDelay: "100ms" }}
           >
-            <Lanyard position={[-2, 0, 15]} gravity={[0, -40, 0]} fov={15} />
+            <Lanyard position={[-2, 0, 15]} gravity={[0, -15, 0]} fov={13} />
           </div>
 
           {/* Right Side - Text Content (50% width on desktop) */}
@@ -81,8 +77,8 @@ export function Hero({
             <div
               className={cn(
                 "transition-all duration-1000 ease-out",
-                isLoaded 
-                  ? "opacity-100 translate-y-0" 
+                isLoaded
+                  ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-12",
                 styles.heroFallAnimation
               )}
@@ -97,8 +93,8 @@ export function Hero({
             <div
               className={cn(
                 "transition-all duration-1000 ease-out",
-                isLoaded 
-                  ? "opacity-100 translate-y-0" 
+                isLoaded
+                  ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-10",
                 styles.heroFallAnimation
               )}
@@ -106,7 +102,11 @@ export function Hero({
             >
               <div className="text-lg md:text-xl lg:text-2xl text-[var(--primary)] mb-6 font-medium">
                 <TextType
-                  text={["Front-End Developer", "UI/UX Design", "Graphic Design"]}
+                  text={[
+                    "Front-End Developer",
+                    "UI/UX Design",
+                    "Graphic Design",
+                  ]}
                   typingSpeed={75}
                   pauseDuration={1500}
                   showCursor={true}
@@ -120,8 +120,8 @@ export function Hero({
             <div
               className={cn(
                 "transition-all duration-1000 ease-out",
-                isLoaded 
-                  ? "opacity-100 translate-y-0" 
+                isLoaded
+                  ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-8",
                 styles.heroFallAnimation
               )}
@@ -136,8 +136,8 @@ export function Hero({
             <div
               className={cn(
                 "transition-all duration-1000 ease-out",
-                isLoaded 
-                  ? "opacity-100 translate-y-0" 
+                isLoaded
+                  ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-6",
                 styles.heroFallAnimation
               )}
@@ -168,9 +168,7 @@ export function Hero({
         className={cn(
           "absolute bottom-20 left-1/2 transform -translate-x-1/2 z-30",
           "transition-all duration-1000 ease-out",
-          isLoaded 
-            ? "opacity-100 translate-y-0" 
-            : "opacity-0 -translate-y-4"
+          isLoaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         )}
         style={{ transitionDelay: "1500ms" }}
       >
