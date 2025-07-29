@@ -282,6 +282,17 @@ export const portfolioData: PortfolioData = {
       category: "tools",
       priority: 15,
     },
+    {
+      name: "GitHub",
+      icon: {
+        type: "image",
+        src: "/github-sign.png",
+        alt: "GitHub logo",
+        fallback: "🐙",
+      } as ImageIcon,
+      category: "tools",
+      priority: 16,
+    },
   ],
 
   projects: [
@@ -300,7 +311,16 @@ export const portfolioData: PortfolioData = {
       ],
       liveUrl: "#",
       githubUrl: "https://github.com/Swif7ify/OCPL-Barcode",
-      images: ["/images/placeholder-project.jpg"],
+      images: [
+        "/OCPL/Screenshot 2025-07-29 092854.png",
+        "/OCPL/Screenshot 2025-07-29 092906.png",
+        "/OCPL/Screenshot 2025-07-29 092917.png",
+        "/OCPL/Screenshot 2025-07-29 092922.png",
+        "/OCPL/Screenshot 2025-07-29 092927.png",
+        "/OCPL/Screenshot 2025-07-29 092933.png",
+        "/OCPL/Screenshot 2025-07-29 092952.png",
+        "/OCPL/Screenshot 2025-07-29 093005.png"
+      ],
       featured: true,
     },
     {
@@ -317,9 +337,13 @@ export const portfolioData: PortfolioData = {
         "CSS3",
         "Vue.js",
       ],
-      liveUrl: "#",
+      liveUrl: "https://flow-i3g6.vercel.app/landing#/landing",
       githubUrl: "https://github.com/seannywoot/flow-application-cc",
-      images: ["/images/placeholder-project.jpg"],
+      images: [
+        "/Flow/Screenshot 2025-07-29 091613.png",
+        "/Flow/Screenshot 2025-07-29 091837.png",
+        "/Flow/Screenshot 2025-07-29 092220.png"
+      ],
       featured: true,
     },
     {
@@ -338,7 +362,9 @@ export const portfolioData: PortfolioData = {
       ],
       liveUrl: "#",
       githubUrl: "https://github.com/seannywoot/MedMars",
-      images: ["/images/placeholder-project.jpg"],
+      images: [
+        "/GC-Medmars/GC-Medmars.png"
+      ],
       featured: true,
     },
 
@@ -644,6 +670,16 @@ export const portfolioData: PortfolioData = {
             fallback: "🔥",
           } as ImageIcon,
         },
+        {
+          name: "GitHub",
+          level: 4,
+          icon: {
+            type: "image",
+            src: "/github-sign.png",
+            alt: "GitHub logo",
+            fallback: "🐙",
+          } as ImageIcon,
+        },
       ],
     },
   ],
@@ -709,27 +745,47 @@ export const portfolioData: PortfolioData = {
   contact: {
     email: "seannpatrick25@gmail.com",
     phone: "0931 843 7976",
-    location: "Olongapo City Zambales",
+    location: "Olongapo City, Zambales",
     socialMedia: [
       {
         platform: "GitHub",
         url: "https://github.com/seannywoot",
-        icon: "🐙",
+        icon: {
+          type: "image",
+          src: "/github-sign.png",
+          alt: "GitHub logo",
+          fallback: "🐙",
+        } as ImageIcon,
       },
       {
         platform: "Facebook",
         url: "https://www.facebook.com/seann.patrick.tamondong/",
-        icon: "💼",
+        icon: {
+          type: "image",
+          src: "/facebook.png",
+          alt: "Facebook logo",
+          fallback: "💼",
+        } as ImageIcon,
       },
       {
         platform: "Pinterest",
         url: "https://ph.pinterest.com/animedits_exe/",
-        icon: "🐦",
+        icon: {
+          type: "image",
+          src: "/pinterest.png",
+          alt: "Pinterest logo",
+          fallback: "🐦",
+        } as ImageIcon,
       },
       {
-        platform: "Portfolio",
-        url: "https://alexjohnson.dev",
-        icon: "🌐",
+        platform: "LinkedIn",
+        url: "https://www.linkedin.com/in/seann-patrick-tamondong-512562377/",
+        icon: {
+          type: "image",
+          src: "/linkedin.png",
+          alt: "LinkedIn logo",
+          fallback: "🌐",
+        } as ImageIcon,
       },
     ],
   },

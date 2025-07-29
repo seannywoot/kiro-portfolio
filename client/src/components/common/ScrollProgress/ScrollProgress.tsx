@@ -9,12 +9,13 @@ const ScrollProgress: React.FC = () => {
     const updateScrollProgress = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollTop / docHeight) * 100;
-      setScrollProgress(Math.min(progress, 100));
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setScrollProgress(Math.max(0, Math.min(progress, 100)));
     };
 
     window.addEventListener('scroll', updateScrollProgress, { passive: true });
-    updateScrollProgress(); // Initial calculation
+    // Delay initial calculation to ensure proper document height
+    setTimeout(updateScrollProgress, 100);
 
     return () => window.removeEventListener('scroll', updateScrollProgress);
   }, []);

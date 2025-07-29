@@ -617,79 +617,25 @@
   }
 }
 
-/* Enhanced Masonry Styles for Expandable Cards */
+/* Clean Masonry Styles */
 .masonryContainer {
   position: relative;
-  overflow: visible; /* Allow expansion to show outside bounds */
-  padding: 20px; /* Add padding to accommodate expansion */
+  width: 100%;
+  min-height: 600px;
 }
 
 /* Masonry item base styles */
 .masonryContainer :global(.masonry-item) {
-  transition: z-index 0s; /* Instant z-index changes */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 10px;
 }
 
-/* Masonry card styles */
-.masonryContainer :global(.masonry-card) {
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 10px;
-  overflow: hidden;
-  will-change: transform, box-shadow;
+/* Simple hover effect */
+.masonryContainer :global(.masonry-item:hover) {
+  transform: scale(0.95);
 }
 
-/* Masonry image styles */
-.masonryContainer :global(.masonry-image) {
-  transition: background-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: background-size;
-}
-
-/* Crop indicator styling */
-.masonryContainer :global(.crop-indicator) {
-  animation: pulse 2s infinite;
-  transition: opacity 0.3s ease;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-/* Expansion indicator styling */
-.masonryContainer :global(.expansion-indicator) {
-  animation: expandPulse 1.5s ease-in-out infinite;
-}
-
-@keyframes expandPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-}
-
-/* Hover state improvements */
-.masonryContainer :global(.masonry-item .hover-hint) {
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-/* Enhanced hover effects */
-.masonryContainer :global(.masonry-item:hover .masonry-card) {
-  transform: translateY(-2px);
-}
-
-.masonryContainer :global(.masonry-item:focus .masonry-card) {
-  transform: translateY(-2px);
+.masonryContainer :global(.masonry-item:focus) {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }

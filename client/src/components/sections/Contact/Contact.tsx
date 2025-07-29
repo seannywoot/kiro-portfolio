@@ -124,7 +124,16 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
           aria-label={`Visit my ${social.platform} profile`}
         >
           <span className={styles.socialIcon}>
-            {typeof social.icon === "string" ? social.icon : <social.icon />}
+            {typeof social.icon === "string" 
+              ? social.icon 
+              : social.icon && typeof social.icon === "object" && "src" in social.icon
+              ? <img 
+                  src={social.icon.src} 
+                  alt={social.icon.alt || social.platform}
+                  style={{ width: "20px", height: "20px", objectFit: "contain" }}
+                />
+              : <social.icon />
+            }
           </span>
           <span className={styles.socialPlatform}>{social.platform}</span>
         </a>

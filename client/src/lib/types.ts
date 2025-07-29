@@ -93,7 +93,7 @@ export interface ContactInfo {
 export interface SocialMediaLink {
   platform: string;
   url: string;
-  icon: string | React.ComponentType;
+  icon: string | React.ComponentType | ImageIcon;
 }
 
 // Component prop interfaces

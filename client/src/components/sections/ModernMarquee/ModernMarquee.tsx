@@ -80,10 +80,12 @@ const ModernMarquee: React.FC<ModernMarqueeProps> = ({
     >
       {/* Left section with title */}
       <div className={styles.leftSection}>
-        <h2 className={styles.sectionTitle}>Technologies I use</h2>
-        <p className={styles.sectionSubtitle}>
-          Crafting modern experiences with cutting-edge tools and frameworks
-        </p>
+        <div className={styles.textContent}>
+          <h2 className={styles.sectionTitle}>Technologies I Use</h2>
+          <p className={styles.sectionSubtitle}>
+            Crafting modern experiences with cutting-edge tools and frameworks
+          </p>
+        </div>
       </div>
 
       {/* Right section with marquee */}

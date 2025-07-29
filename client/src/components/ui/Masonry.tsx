@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -6,11 +7,11 @@ import React, {
   useState,
 } from "react";
 import { gsap } from "gsap";
-import CropIndicator from "./CropIndicator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
-  const get = () =>
-    values[queries.findIndex((q) => matchMedia(q).matches)] ?? defaultValue;
+  const get = useCallback(() =>
+    values[queries.findIndex((q) => matchMedia(q).matches)] ?? defaultValue, [queries, values, defaultValue]);
   const [value, setValue] = useState<number>(get);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const useMedia = (queries: string[], values: number[], defaultValue: number): nu
       queries.forEach((q) =>
         matchMedia(q).removeEventListener("change", handler)
       );
-  }, [queries]);
+  }, [get, queries]);
 
   return value;
 };
@@ -61,7 +62,6 @@ interface Item {
   url: string;
   height: number;
   title?: string;
-  showCropIndicator?: boolean;
 }
 
 interface MasonryProps {
@@ -74,9 +74,6 @@ interface MasonryProps {
   hoverScale?: number;
   blurToFocus?: boolean;
   colorShiftOnHover?: boolean;
-  enableExpansion?: boolean;
-  expansionScale?: number;
-  expansionDuration?: number;
 }
 
 const Masonry: React.FC<MasonryProps> = ({
@@ -85,13 +82,10 @@ const Masonry: React.FC<MasonryProps> = ({
   duration = 0.6,
   stagger = 0.05,
   animateFrom = "bottom",
-  scaleOnHover = false, // Disable default scaling for expansion
-  hoverScale = 0.95,
+  scaleOnHover = true,
+  hoverScale = 1.05,
   blurToFocus = true,
   colorShiftOnHover = false,
-  enableExpansion = true,
-  expansionScale = 1.15,
-  expansionDuration = 0.4,
 }) => {
   const columns = useMedia(
     [
@@ -105,10 +99,8 @@ const Masonry: React.FC<MasonryProps> = ({
   );
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
   const [imagesReady, setImagesReady] = useState(false);
-  const [expandedItem, setExpandedItem] = useState<string | null>(null);
-  const expansionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const getInitialPosition = (item: any) => {
+  const getInitialPosition = useCallback((item: { x: number; y: number; w: number; h: number }) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
     if (!containerRect) return { x: item.x, y: item.y };
 
@@ -135,7 +127,7 @@ const Masonry: React.FC<MasonryProps> = ({
       default:
         return { x: item.x, y: item.y + 100 };
     }
-  };
+  }, [animateFrom, containerRef]);
 
   useEffect(() => {
     preloadImages(items.map((i) => i.img)).then(() => setImagesReady(true));
@@ -201,7 +193,7 @@ const Masonry: React.FC<MasonryProps> = ({
     hasMounted.current = true;
   }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease, getInitialPosition]);
 
-  const handleMouseEnter = (id: string, element: HTMLElement, item: Item) => {
+  const handleMouseEnter = (id: string, element: HTMLElement) => {
     if (scaleOnHover) {
       gsap.to(`[data-key="${id}"]`, {
         scale: hoverScale,
@@ -213,49 +205,6 @@ const Masonry: React.FC<MasonryProps> = ({
     if (colorShiftOnHover) {
       const overlay = element.querySelector(".color-overlay") as HTMLElement;
       if (overlay) gsap.to(overlay, { opacity: 0.3, duration: 0.3 });
-    }
-
-    // Handle expansion
-    if (enableExpansion) {
-      // Clear any existing timeout
-      if (expansionTimeoutRef.current) {
-        clearTimeout(expansionTimeoutRef.current);
-      }
-
-      expansionTimeoutRef.current = setTimeout(() => {
-        setExpandedItem(id);
-        
-        // Animate expansion
-        const cardElement = element.querySelector('.masonry-card') as HTMLElement;
-        const imageElement = element.querySelector('.masonry-image') as HTMLElement;
-        
-        if (cardElement && imageElement) {
-          // Bring to front
-          gsap.set(element, { zIndex: 100 });
-          
-          // Expand the card
-          gsap.to(cardElement, {
-            scale: expansionScale,
-            duration: expansionDuration,
-            ease: "power2.out",
-            transformOrigin: "center center",
-          });
-
-          // Change background-size to contain to show full image
-          gsap.to(imageElement, {
-            backgroundSize: "contain",
-            duration: expansionDuration,
-            ease: "power2.out",
-          });
-
-          // Add subtle shadow enhancement
-          gsap.to(cardElement, {
-            boxShadow: "0px 25px 80px -10px rgba(0,0,0,0.4)",
-            duration: expansionDuration,
-            ease: "power2.out",
-          });
-        }
-      }, 300); // Small delay before expansion
     }
   };
 
@@ -272,58 +221,11 @@ const Masonry: React.FC<MasonryProps> = ({
       const overlay = element.querySelector(".color-overlay") as HTMLElement;
       if (overlay) gsap.to(overlay, { opacity: 0, duration: 0.3 });
     }
-
-    // Handle expansion cleanup
-    if (enableExpansion) {
-      // Clear timeout
-      if (expansionTimeoutRef.current) {
-        clearTimeout(expansionTimeoutRef.current);
-        expansionTimeoutRef.current = null;
-      }
-
-      // If this item was expanded, contract it
-      if (expandedItem === id) {
-        setExpandedItem(null);
-        
-        const cardElement = element.querySelector('.masonry-card') as HTMLElement;
-        const imageElement = element.querySelector('.masonry-image') as HTMLElement;
-        
-        if (cardElement && imageElement) {
-          // Contract the card
-          gsap.to(cardElement, {
-            scale: 1,
-            duration: expansionDuration * 0.8, // Slightly faster contraction
-            ease: "power2.out",
-            boxShadow: "0px 10px 50px -10px rgba(0,0,0,0.2)", // Reset shadow
-          });
-
-          // Reset background-size to cover
-          gsap.to(imageElement, {
-            backgroundSize: "cover",
-            duration: expansionDuration * 0.8,
-            ease: "power2.out",
-          });
-
-          // Reset z-index after animation
-          gsap.set(element, { 
-            zIndex: 1,
-            delay: expansionDuration * 0.8
-          });
-        }
-      }
-    }
   };
 
   // Remove mouse move handler as we don't need it for expansion
 
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (expansionTimeoutRef.current) {
-        clearTimeout(expansionTimeoutRef.current);
-      }
-    };
-  }, []);
+
 
   return (
     <div 
@@ -331,88 +233,60 @@ const Masonry: React.FC<MasonryProps> = ({
       className="relative w-full h-full"
     >
       {grid.map((item) => (
-        <div
-          key={item.id}
-          data-key={item.id}
-          className="absolute box-content cursor-pointer group masonry-item"
-          style={{ 
-            willChange: "transform, width, height, opacity",
-            zIndex: expandedItem === item.id ? 100 : 1,
-          }}
-          tabIndex={0}
-          role="button"
-          aria-label={`View ${item.title || `project ${item.id}`} details`}
-          onClick={(e) => {
-            // Let parent components handle the click event
-            e.stopPropagation();
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              e.currentTarget.click();
-            }
-          }}
-          onMouseEnter={(e) => handleMouseEnter(item.id, e.currentTarget, item)}
-          onMouseLeave={(e) => handleMouseLeave(item.id, e.currentTarget)}
-          onFocus={(e) => handleMouseEnter(item.id, e.currentTarget, item)}
-          onBlur={(e) => handleMouseLeave(item.id, e.currentTarget)}
-        >
-          <div
-            className="masonry-card relative w-full h-full rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] overflow-hidden"
-            style={{ 
-              transformOrigin: "center center",
-              willChange: "transform, box-shadow",
-            }}
-          >
+        <Tooltip key={item.id} delayDuration={300}>
+          <TooltipTrigger asChild>
             <div
-              className="masonry-image relative w-full h-full bg-cover bg-center transition-all duration-300"
-              style={{ 
-                backgroundImage: `url(${item.img})`,
-                willChange: "background-size",
+              data-key={item.id}
+              className="absolute box-content cursor-pointer group masonry-item"
+              style={{ willChange: "transform, width, height, opacity" }}
+              tabIndex={0}
+              role="button"
+              aria-label={`View ${item.title || `project ${item.id}`} details`}
+              onClick={(e) => {
+                // Let parent components handle the click event
+                e.stopPropagation();
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  e.currentTarget.click();
+                }
+              }}
+              onMouseEnter={(e) => handleMouseEnter(item.id, e.currentTarget)}
+              onMouseLeave={(e) => handleMouseLeave(item.id, e.currentTarget)}
+              onFocus={(e) => handleMouseEnter(item.id, e.currentTarget)}
+              onBlur={(e) => handleMouseLeave(item.id, e.currentTarget)}
             >
-              {/* Crop indicator - only show when not expanded */}
-              <CropIndicator isVisible={item.showCropIndicator !== false && expandedItem !== item.id} />
-              
-              {/* Expansion indicator - show when expanded */}
-              {expandedItem === item.id && (
-                <div className="absolute top-2 right-2 z-10">
-                  <div className="bg-green-500/80 backdrop-blur-sm rounded-full p-1.5 flex items-center justify-center">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="text-white"
-                    >
-                      <path
-                        d="M9 12L11 14L15 10"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              )}
-              
-              {/* Hover overlay with hint */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 group-focus:bg-black/20 transition-colors duration-300 rounded-[10px] flex items-center justify-center">
-                <div className="hover-hint opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5">
-                  <span className="text-gray-800 text-xs font-medium">
-                    {expandedItem === item.id ? "Full image view" : "Hover to expand"}
-                  </span>
-                </div>
+              <div
+                className="relative w-full h-full bg-cover bg-center rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] overflow-hidden"
+                style={{ backgroundImage: `url(${item.img})` }}
+              >
+                {colorShiftOnHover && (
+                  <div className="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
+                )}
               </div>
-
-              {colorShiftOnHover && (
-                <div className="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent 
+            side="top" 
+            sideOffset={10}
+            className="p-0 border-0 bg-transparent shadow-2xl max-w-sm"
+          >
+            <div className="relative">
+              <img
+                src={item.img}
+                alt={item.title || `Project ${item.id}`}
+                className="w-full max-w-sm h-auto object-contain rounded-lg shadow-2xl border border-border/20"
+                style={{ maxHeight: '400px' }}
+              />
+              {item.title && (
+                <div className="absolute bottom-0 left-0 right-0 bg-black/80 text-white p-2 rounded-b-lg">
+                  <p className="text-sm font-medium truncate">{item.title}</p>
+                </div>
               )}
             </div>
-          </div>
-        </div>
+          </TooltipContent>
+        </Tooltip>
       ))}
     </div>
   );

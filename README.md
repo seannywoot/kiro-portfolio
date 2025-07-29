@@ -1,191 +1,96 @@
-# bhvr 🦫
+# Seann Tamondong - Portfolio 🎨
 
-![cover](https://cdn.stevedylan.dev/ipfs/bafybeievx27ar5qfqyqyud7kemnb5n2p4rzt2matogi6qttwkpxonqhra4)
+![Hero Section](./client/public/HeroSection.png)
 
-A full-stack TypeScript monorepo starter with shared types, using Bun, Hono, Vite, and React
+A modern, full-stack portfolio website showcasing front-end development, UI/UX design, and graphic design work. Built with TypeScript, React, and modern web technologies.
 
-## Why bhvr?
+## About This Portfolio
 
-While there are plenty of existing app building stacks out there, many of them are either bloated, outdated, or have too much of a vendor lock-in. bhvr is built with the opinion that you should be able to deploy your client or server in any environment while also keeping type saftey.
+This portfolio showcases the work of Seann Tamondong, a 2nd year student at Gordon College with a passion for creating beautiful, user-centered digital experiences. The site demonstrates expertise in UI/UX design, front-end development, and graphic design, featuring both development projects and creative work.
 
 ## Features
 
-- **Full-Stack TypeScript**: End-to-end type safety between client and server
-- **Shared Types**: Common type definitions shared between client and server
-- **Monorepo Structure**: Organized as a workspaces-based monorepo
-- **Modern Stack**:
+- **Modern Portfolio Design**: Clean, responsive design showcasing development and design work
+- **Interactive Components**: Smooth animations, scroll effects, and modern UI interactions
+- **Performance Optimized**: Built with performance in mind using modern optimization techniques
+- **Full-Stack Architecture**: Complete monorepo structure with shared types
+- **Technology Stack**:
+  - [React](https://react.dev) with TypeScript for the frontend
+  - [Vite](https://vitejs.dev) for fast development and building
+  - [Tailwind CSS](https://tailwindcss.com) for styling
   - [Bun](https://bun.sh) as the JavaScript runtime
-  - [Hono](https://hono.dev) as the backend framework
-  - [Vite](https://vitejs.dev) for frontend bundling
-  - [React](https://react.dev) for the frontend UI
+  - [Hono](https://hono.dev) for the backend API
+  - [Three.js](https://threejs.org) for 3D graphics and animations
 
 ## Project Structure
 
 ```
 .
-├── client/               # React frontend
-├── server/               # Hono backend
-├── shared/               # Shared TypeScript definitions
-│   └── src/types/        # Type definitions used by both client and server
-└── package.json          # Root package.json with workspaces
+├── client/                    # React frontend portfolio application
+│   ├── public/               # Static assets and images
+│   │   ├── HeroSection.png   # Hero section image
+│   │   ├── Graphics/         # Design portfolio images
+│   │   ├── OCPL/            # OCPL project screenshots
+│   │   ├── Flow/            # Flow project screenshots
+│   │   └── GC-Medmars/      # Medical records system images
+│   ├── src/
+│   │   ├── components/       # Reusable React components
+│   │   │   ├── common/       # Common UI components
+│   │   │   ├── sections/     # Page sections (Hero, About, Projects, etc.)
+│   │   │   └── ui/          # Base UI components
+│   │   ├── lib/             # Utilities and data
+│   │   │   ├── portfolio-data.ts  # Portfolio content and data
+│   │   │   ├── types.ts     # TypeScript type definitions
+│   │   │   └── utils.ts     # Utility functions
+│   │   ├── hooks/           # Custom React hooks
+│   │   ├── styles/          # CSS and styling files
+│   │   └── pages/           # Page components
+├── server/                   # Hono backend API
+│   └── src/
+│       └── index.ts         # API server entry point
+├── shared/                   # Shared TypeScript definitions
+│   └── src/types/           # Type definitions used by both client and server
+└── package.json             # Root package.json with workspaces
 ```
 
-### Server
+## Portfolio Highlights
 
-bhvr uses Hono as a backend API for it's simplicity and massive ecosystem of plugins. If you have ever used Express then it might feel familiar. Declaring routes and returning data is easy.
+**Featured Development Projects:**
 
-```
-server
-├── bun.lock
-├── package.json
-├── README.md
-├── src
-│   └── index.ts
-└── tsconfig.json
-```
+1. **OCPL Attendance System** - A high-performance barcode-based attendance tracking system built with Electron, JavaScript, and Supabase
+2. **Flow** - A web-based virtual queue management system using HTML5, PHP, SQL, CSS3, and Vue.js
+3. **GC-MedMars** - A comprehensive medical records management system for Gordon College built with PHP and JavaScript
 
-```typescript src/index.ts
-import { Hono } from 'hono'
-import { cors } from 'hono/cors'
-import type { ApiResponse } from 'shared/dist'
+**Design & Creative Work:**
+- Brand identity design and logo creation
+- Digital art and abstract artwork
+- UI/UX case studies and mobile app interfaces
+- Motion graphics and video content
+- Print design and marketing materials
 
-const app = new Hono()
+## Technologies Used
 
-app.use(cors())
+**Frontend Development:**
+- React with TypeScript
+- Vue.js
+- HTML5, CSS3, JavaScript
+- Tailwind CSS
+- Three.js for 3D graphics
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+**Backend & Tools:**
+- Hono framework
+- Bun runtime
+- Electron for desktop applications
+- PHP and SQL for web applications
+- Supabase for database management
 
-app.get('/hello', async (c) => {
-
-  const data: ApiResponse = {
-    message: "Hello BHVR!",
-    success: true
-  }
-
-  return c.json(data, { status: 200 })
-})
-
-export default app
-```
-
-If you wanted to add a database to Hono you can do so with a multitude of Typescript libraries like [Supabase](https://supabase.com), or ORMs like [Drizzle](https://orm.drizzle.team/docs/get-started) or [Prisma](https://www.prisma.io/orm)
-
-### Client
-
-bhvr uses Vite + React Typescript template, which means you can build your frontend just as you would with any other React app. This makes it flexible to add UI components like [shadcn/ui](https://ui.shadcn.com) or routing using [React Router](https://reactrouter.com/start/declarative/installation).
-
-```
-client
-├── eslint.config.js
-├── index.html
-├── package.json
-├── public
-│   └── vite.svg
-├── README.md
-├── src
-│   ├── App.css
-│   ├── App.tsx
-│   ├── assets
-│   ├── index.css
-│   ├── main.tsx
-│   └── vite-env.d.ts
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts
-```
-
-```typescript src/App.tsx
-import { useState } from 'react'
-import beaver from './assets/beaver.svg'
-import { ApiResponse } from 'shared'
-import './App.css'
-
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3000"
-
-function App() {
-  const [data, setData] = useState<ApiResponse | undefined>()
-
-  async function sendRequest() {
-    try {
-      const req = await fetch(`${SERVER_URL}/hello`)
-      const res: ApiResponse = await req.json()
-      setData(res)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  return (
-    <>
-      <div>
-        <a href="https://github.com/stevedylandev/bhvr" target="_blank">
-          <img src={beaver} className="logo" alt="beaver logo" />
-        </a>
-      </div>
-      <h1>bhvr</h1>
-      <h2>Bun + Hono + Vite + React</h2>
-      <p>A typesafe fullstack monorepo</p>
-      <div className="card">
-        <button onClick={sendRequest}>
-          Call API
-        </button>
-        {data && (
-          <pre className='response'>
-            <code>
-            Message: {data.message} <br />
-            Success: {data.success.toString()}
-            </code>
-          </pre>
-        )}
-      </div>
-      <p className="read-the-docs">
-        Click the beaver to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
-```
-
-### Shared
-
-The Shared package is used for anything you want to share between the Server and Client. This could be types or libraries that you use in both the enviorments.
-
-```
-shared
-├── package.json
-├── src
-│   ├── index.ts
-│   └── types
-│       └── index.ts
-└── tsconfig.json
-```
-
-Inside the `src/index.ts` we export any of our code from the folders so it's usabe in other parts of the monorepo
-
-```typescript
-export * from "./types"
-```
-
-By running `bun run dev` or `bun run build` it will compile and export the packages from `shared` so it can be used in either `client` or `server`
-
-```typescript
-import { ApiResponse } from 'shared'
-```
+**Design Tools:**
+- Figma for UI/UX design
+- Adobe Photoshop for graphic design
+- DaVinci Resolve for video editing
+- VS Code for development
 
 ## Getting Started
-
-### Quick Start
-
-You can start a new bhvr project using the [CLI](https://github.com/stevedylandev/create-bhvr)
-
-```bash
-bun create bhvr
-```
 
 ### Installation
 
@@ -259,33 +164,24 @@ bun run build:client  # Build the React frontend
 cd client && bun run build:analyze
 ```
 
-### Deployment
+## Contact
 
-Deplying each piece is very versatile and can be done numerous ways, and exploration into automating these will happen at a later date. Here are some references in the meantime.
+- **Email**: seannpatrick25@gmail.com
+- **Phone**: 0931 843 7976
+- **Location**: Olongapo City, Zambales
+- **GitHub**: [seannywoot](https://github.com/seannywoot)
+- **LinkedIn**: [Seann Patrick Tamondong](https://www.linkedin.com/in/seann-patrick-tamondong-512562377/)
+- **Facebook**: [seann.patrick.tamondong](https://www.facebook.com/seann.patrick.tamondong/)
 
-**Client**
-- [Orbiter](https://orbiter.host)
-- [GitHub Pages](https://vite.dev/guide/static-deploy.html#github-pages)
-- [Netlify](https://vite.dev/guide/static-deploy.html#netlify)
-- [Cloudflare Pages](https://vite.dev/guide/static-deploy.html#cloudflare-pages)
+## License
 
-**Server**
-- [Cloudflare Worker](https://gist.github.com/stevedylandev/4aa1fc569bcba46b7169193c0498d0b3)
-- [Bun](https://hono.dev/docs/getting-started/bun)
-- [Node.js](https://hono.dev/docs/getting-started/nodejs)
-
-## Type Sharing
-
-Types are automatically shared between the client and server thanks to the shared package and TypeScript path aliases. You can import them in your code using:
-
-```typescript
-import { ApiResponse } from '@shared/types';
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Learn More
 
-- [Bun Documentation](https://bun.sh/docs)
-- [Vite Documentation](https://vitejs.dev/guide/)
 - [React Documentation](https://react.dev/learn)
+- [Vite Documentation](https://vitejs.dev/guide/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Bun Documentation](https://bun.sh/docs)
 - [Hono Documentation](https://hono.dev/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
