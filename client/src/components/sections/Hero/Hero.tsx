@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { AnimatedText } from "../../common/AnimatedText/AnimatedText";
 import { Button } from "../../ui/button";
 import { ChevronDown } from "lucide-react";
 import { cn } from "../../../lib/utils";

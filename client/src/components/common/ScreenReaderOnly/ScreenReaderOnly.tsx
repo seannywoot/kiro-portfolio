@@ -19,10 +19,14 @@ const ScreenReaderOnly: React.FC<ScreenReaderOnlyProps> = ({
   id,
   ...props
 }) => {
-  return (
-    <Component className={`${styles.srOnly} ${className}`} id={id} {...props}>
-      {children}
-    </Component>
+  return React.createElement(
+    Component,
+    {
+      className: `${styles.srOnly} ${className}`,
+      id,
+      ...props
+    },
+    children
   );
 };
 

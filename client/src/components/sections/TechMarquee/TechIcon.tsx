@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Technology, ImageIcon } from '../../../lib/types';
+import { Technology } from '../../../lib/types';
 import { isImageIcon, getFallbackIcon } from '../../../lib/portfolio-data';
 import styles from './TechIcon.module.css';
 

@@ -5,6 +5,7 @@ import styles from './ModernMarquee.module.css';
 interface ModernMarqueeProps {
   technologies: Technology[];
   speed?: number;
+  pauseOnHover?: boolean;
 }
 
 const ModernMarquee: React.FC<ModernMarqueeProps> = ({

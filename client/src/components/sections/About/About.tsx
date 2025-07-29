@@ -1,6 +1,6 @@
 import React from 'react';
 import { ParallaxContainer } from '../../common/ParallaxContainer/ParallaxContainer';
-import { AboutProps, SkillCategory } from '../../../lib/types';
+import { AboutProps, SkillCategory, Skill, TechnologyCategory } from '../../../lib/types';
 import ScreenReaderOnly from '../../common/ScreenReaderOnly/ScreenReaderOnly';
 import { renderTechnologyIcon } from '../../../lib/portfolio-data';
 import TextType from '../../common/TextType';
@@ -10,7 +10,7 @@ const About: React.FC<AboutProps> = ({
   personal,
   skills
 }) => {
-  const renderSkillItem = (skill: unknown, index: number) => {
+  const renderSkillItem = (skill: Skill, index: number) => {
     const percentage = (skill.level / 5) * 100;
     
     return (
@@ -18,7 +18,7 @@ const About: React.FC<AboutProps> = ({
         <div className={styles.skillHeader}>
           <div className={styles.skillInfo}>
             <span className={styles.skillIcon} aria-hidden="true">
-              {renderTechnologyIcon({ name: skill.name, icon: skill.icon, category: 'skill', priority: 0 })}
+              {renderTechnologyIcon({ name: skill.name, icon: skill.icon || '💻', category: 'skill' as TechnologyCategory, priority: 0 })}
             </span>
             <span className={styles.skillName}>{skill.name}</span>
           </div>

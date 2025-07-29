@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { WorkExperience as WorkExperienceType } from '../../../lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../../ui/dialog';
@@ -10,10 +10,9 @@ interface WorkExperienceProps {
 }
 
 const WorkExperience: React.FC<WorkExperienceProps> = ({ workExperience }) => {
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
-
   const handleVideoPlay = (videoUrl: string) => {
-    setSelectedVideo(videoUrl);
+    // Video play logic can be implemented here if needed
+    console.log('Playing video:', videoUrl);
   };
 
   return (

@@ -62,6 +62,7 @@ This portfolio showcases the work of Seann Tamondong, a 2nd year student at Gord
 3. **GC-MedMars** - A comprehensive medical records management system for Gordon College built with PHP and JavaScript
 
 **Design & Creative Work:**
+
 - Brand identity design and logo creation
 - Digital art and abstract artwork
 - UI/UX case studies and mobile app interfaces
@@ -71,6 +72,7 @@ This portfolio showcases the work of Seann Tamondong, a 2nd year student at Gord
 ## Technologies Used
 
 **Frontend Development:**
+
 - React with TypeScript
 - Vue.js
 - HTML5, CSS3, JavaScript
@@ -78,6 +80,7 @@ This portfolio showcases the work of Seann Tamondong, a 2nd year student at Gord
 - Three.js for 3D graphics
 
 **Backend & Tools:**
+
 - Hono framework
 - Bun runtime
 - Electron for desktop applications
@@ -85,6 +88,7 @@ This portfolio showcases the work of Seann Tamondong, a 2nd year student at Gord
 - Supabase for database management
 
 **Design Tools:**
+
 - Figma for UI/UX design
 - Adobe Photoshop for graphic design
 - DaVinci Resolve for video editing

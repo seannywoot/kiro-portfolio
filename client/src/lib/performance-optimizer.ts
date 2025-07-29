@@ -136,13 +136,13 @@ export class DiagonalMarqueePerformanceOptimizer {
     if (quality === 'minimal' || quality === 'low') {
       // Disable clip-path on low performance
       element.style.clipPath = 'none';
-      element.style.webkitClipPath = 'none';
+      (element.style as any).webkitClipPath = 'none';
     } else {
       // Re-enable clip-path for better quality
       const clipPath = element.dataset.originalClipPath;
       if (clipPath) {
         element.style.clipPath = clipPath;
-        element.style.webkitClipPath = clipPath;
+        (element.style as any).webkitClipPath = clipPath;
       }
     }
   }
