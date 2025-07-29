@@ -25,10 +25,20 @@
   "scss.validate": false,
   "less.validate": false,
   "cSpell.words": [
+    "angvel",
+    "Catmull",
+    "clearcoat",
     "clsx",
     "davinci",
+    "drei",
+    "GLTF",
     "gstatic",
+    "lerp",
+    "lerped",
+    "Lightformer",
     "Medmars",
+    "meshline",
+    "metalness",
     "OCPL",
     "oklch",
     "Olongapo",
@@ -40,6 +50,7 @@
     "tailwindcss",
     "tamondong",
     "techcorp",
+    "unproject",
     "wireframing",
     "Zambales"
   ]
