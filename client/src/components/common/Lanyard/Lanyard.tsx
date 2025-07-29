@@ -192,12 +192,17 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
       [j1, j2].forEach((ref) => {
         if (!(ref.current as any).lerped)
           (ref.current as any).lerped = new THREE.Vector3().copy(
-            (ref.current as any).translation()
+            (ref.current as unknown).translation()
           );
 
         const clampedDistance = Math.max(
           0.1,
-          Math.min(1, (ref.current as any).lerped.distanceTo((ref.current as any).translation()))
+          Math.min(
+            1,
+            (ref.current as any).lerped.distanceTo(
+              (ref.current as any).translation()
+            )
+          )
         );
         (ref.current as any).lerped.lerp(
           (ref.current as any).translation(),
@@ -214,7 +219,11 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
 
       ang.copy((card.current as any).angvel());
       rot.copy((card.current as any).rotation());
-      (card.current as any).setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
+      (card.current as any).setAngvel({
+        x: ang.x,
+        y: ang.y - rot.y * 0.25,
+        z: ang.z,
+      });
     }
   });
 
@@ -297,13 +306,16 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
               material={(materials as any).metal}
               material-roughness={0.3}
             />
-            <mesh geometry={(nodes as any).clamp.geometry} material={(materials as any).metal} />
+            <mesh
+              geometry={(nodes as any).clamp.geometry}
+              material={(materials as any).metal}
+            />
           </group>
         </RigidBody>
       </group>
       <mesh ref={band}>
-        {React.createElement('meshLineGeometry' as any)}
-        {React.createElement('meshLineMaterial' as unknown, {
+        {React.createElement("meshLineGeometry" as any)}
+        {React.createElement("meshLineMaterial" as any, {
           color: "white",
           depthTest: false,
           resolution: isSmall ? [1000, 2000] : [1000, 1000],
