@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -192,7 +191,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
       [j1, j2].forEach((ref) => {
         if (!(ref.current as any).lerped)
           (ref.current as any).lerped = new THREE.Vector3().copy(
-            (ref.current as unknown).translation()
+            (ref.current as any).translation()
           );
 
         const clampedDistance = Math.max(
@@ -315,7 +314,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
       </group>
       <mesh ref={band}>
         {React.createElement("meshLineGeometry" as any)}
-        {React.createElement("meshLineMaterial" as any, {
+        {React.createElement("meshLineMaterial" as unknown, {
           color: "white",
           depthTest: false,
           resolution: isSmall ? [1000, 2000] : [1000, 1000],
