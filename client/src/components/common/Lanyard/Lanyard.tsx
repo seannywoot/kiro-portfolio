@@ -50,7 +50,7 @@ interface MeshLineGeometryType extends THREE.BufferGeometry {
 
 // Type for pointer events
 interface PointerEvent {
-  target: any;
+  target: EventTarget & Element;
   pointerId: number;
   point: THREE.Vector3;
 }
@@ -197,13 +197,29 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
     return (): void => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useRopeJoint(fixed as any, j1 as any, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j1 as any, j2 as any, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j2 as any, j3 as any, [[0, 0, 0], [0, 0, 0], 1]);
-  useSphericalJoint(j3 as any, card as unknown, [
-    [0, 0, 0],
-    [0, 1.45, 0],
-  ]);
+  useRopeJoint(
+    fixed as React.RefObject<RapierRigidBody>,
+    j1 as React.RefObject<RapierRigidBody>,
+    [[0, 0, 0], [0, 0, 0], 1]
+  );
+  useRopeJoint(
+    j1 as React.RefObject<RapierRigidBody>,
+    j2 as React.RefObject<RapierRigidBody>,
+    [[0, 0, 0], [0, 0, 0], 1]
+  );
+  useRopeJoint(
+    j2 as React.RefObject<RapierRigidBody>,
+    j3 as React.RefObject<RapierRigidBody>,
+    [[0, 0, 0], [0, 0, 0], 1]
+  );
+  useSphericalJoint(
+    j3 as React.RefObject<RapierRigidBody>,
+    card as React.RefObject<RapierRigidBody>,
+    [
+      [0, 0, 0],
+      [0, 1.45, 0],
+    ]
+  );
 
   useEffect(() => {
     if (hovered) {
@@ -326,23 +342,11 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e: PointerEvent) => {
-              if (
-                e.target &&
-                typeof e.target === "object" &&
-                "releasePointerCapture" in e.target
-              ) {
-                (e.target as Element).releasePointerCapture(e.pointerId);
-              }
+              e.target.releasePointerCapture(e.pointerId);
               drag(false);
             }}
             onPointerDown={(e: PointerEvent) => {
-              if (
-                e.target &&
-                typeof e.target === "object" &&
-                "setPointerCapture" in e.target
-              ) {
-                (e.target as Element).setPointerCapture(e.pointerId);
-              }
+              e.target.setPointerCapture(e.pointerId);
               drag(
                 new THREE.Vector3()
                   .copy(e.point)
