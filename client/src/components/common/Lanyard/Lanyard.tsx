@@ -43,6 +43,18 @@ interface MeshLineMaterialProps {
   lineWidth?: number;
 }
 
+// Type for MeshLineGeometry with setPoints method
+interface MeshLineGeometryType extends THREE.BufferGeometry {
+  setPoints: (points: THREE.Vector3[]) => void;
+}
+
+// Type for pointer events
+interface PointerEvent {
+  target: any;
+  pointerId: number;
+  point: THREE.Vector3;
+}
+
 // Extend JSX namespace for meshline components
 declare module "@react-three/fiber" {
   interface ThreeElements {
@@ -144,7 +156,16 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
     linearDamping: 4,
   };
 
-  const { nodes, materials } = useGLTF(cardGLB) as any;
+  const gltf = useGLTF(cardGLB);
+  const nodes = gltf.nodes as unknown as {
+    card: { geometry: THREE.BufferGeometry };
+    clip: { geometry: THREE.BufferGeometry };
+    clamp: { geometry: THREE.BufferGeometry };
+  };
+  const materials = gltf.materials as unknown as {
+    base?: { map?: THREE.Texture };
+    metal: THREE.Material;
+  };
   const texture = useTexture(lanyardTexture);
 
   const [curve] = useState(
@@ -179,7 +200,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
   useRopeJoint(fixed as any, j1 as any, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1 as any, j2 as any, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j2 as any, j3 as any, [[0, 0, 0], [0, 0, 0], 1]);
-  useSphericalJoint(j3 as any, card as any, [
+  useSphericalJoint(j3 as any, card as unknown, [
     [0, 0, 0],
     [0, 1.45, 0],
   ]);
@@ -241,8 +262,10 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
         curve.points[2].copy(j1.current.lerped || j1.current.translation());
         curve.points[3].copy(fixed.current.translation());
 
-        if (band.current?.geometry) {
-          (band.current.geometry as unknown).setPoints(curve.getPoints(32));
+        if (band.current?.geometry && "setPoints" in band.current.geometry) {
+          (band.current.geometry as MeshLineGeometryType).setPoints(
+            curve.getPoints(32)
+          );
         }
 
         ang.copy(card.current.angvel());
@@ -302,12 +325,24 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
             position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
-            onPointerUp={(e: any) => {
-              e.target.releasePointerCapture(e.pointerId);
+            onPointerUp={(e: PointerEvent) => {
+              if (
+                e.target &&
+                typeof e.target === "object" &&
+                "releasePointerCapture" in e.target
+              ) {
+                (e.target as Element).releasePointerCapture(e.pointerId);
+              }
               drag(false);
             }}
-            onPointerDown={(e: any) => {
-              e.target.setPointerCapture(e.pointerId);
+            onPointerDown={(e: PointerEvent) => {
+              if (
+                e.target &&
+                typeof e.target === "object" &&
+                "setPointerCapture" in e.target
+              ) {
+                (e.target as Element).setPointerCapture(e.pointerId);
+              }
               drag(
                 new THREE.Vector3()
                   .copy(e.point)
