@@ -26,12 +26,14 @@
   "less.validate": false,
   "cSpell.words": [
     "angvel",
+    "BHVR",
     "Catmull",
     "clearcoat",
     "clsx",
     "davinci",
     "drei",
     "GLTF",
+    "gsap",
     "gstatic",
     "lerp",
     "lerped",
@@ -52,6 +54,7 @@
     "techcorp",
     "unproject",
     "wireframing",
+    "yoyo",
     "Zambales"
   ]
 }

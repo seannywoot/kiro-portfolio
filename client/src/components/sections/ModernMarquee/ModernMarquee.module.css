@@ -116,9 +116,11 @@
   gap: 2px;
   animation: marqueeSlideVertical var(--animation-duration, 25s) linear infinite;
   animation-delay: var(--column-delay, 0s);
-  will-change: auto;
-  contain: layout style;
+  will-change: transform;
+  contain: layout style paint;
   backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .columnUp .columnContent {
@@ -150,7 +152,11 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(8px);
+  backdrop-filter: var(--blur-effects);
+  -webkit-backdrop-filter: var(--blur-effects);
+  will-change: background, border-color;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
   /* Completely flat - no transforms, shadows, or depth */
 }
 
@@ -179,21 +185,25 @@
 /* Animations */
 @keyframes marqueeSlideUp {
   0% {
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
+    -webkit-transform: translateY(0) translateZ(0);
   }
 
   100% {
-    transform: translateY(-33.33%);
+    transform: translateY(-33.33%) translateZ(0);
+    -webkit-transform: translateY(-33.33%) translateZ(0);
   }
 }
 
 @keyframes marqueeSlideDown {
   0% {
-    transform: translateY(-33.33%);
+    transform: translateY(-33.33%) translateZ(0);
+    -webkit-transform: translateY(-33.33%) translateZ(0);
   }
 
   100% {
-    transform: translateY(0);
+    transform: translateY(0) translateZ(0);
+    -webkit-transform: translateY(0) translateZ(0);
   }
 }
 

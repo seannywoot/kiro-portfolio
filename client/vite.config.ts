@@ -24,16 +24,20 @@ export default defineConfig({
           // UI components chunk
           ui: ['lucide-react', '@radix-ui/react-slot'],
           // Utilities chunk
-          utils: ['clsx', 'tailwind-merge', 'class-variance-authority']
+          utils: ['clsx', 'tailwind-merge', 'class-variance-authority'],
+          // Animation libraries
+          animations: ['gsap']
         }
       }
     },
     // Optimize chunk size
     chunkSizeWarningLimit: 1000,
-    // Disable minification to avoid terser dependency issue
-    minify: false,
+    // Enable minification for production
+    minify: 'esbuild',
     // Enable source maps for debugging
-    sourcemap: process.env.NODE_ENV === 'development'
+    sourcemap: process.env.NODE_ENV === 'development',
+    // Target modern browsers for better animation support
+    target: ['es2020', 'chrome80', 'firefox78', 'safari14', 'edge88']
   },
   // Optimize dependencies
   optimizeDeps: {

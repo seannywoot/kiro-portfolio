@@ -16,6 +16,7 @@ import {
   initializePerformanceMonitoring,
   ResourceHints,
 } from "./lib/performance";
+import { detectDeviceCapabilities, applyPerformanceOptimizations } from "./lib/device-detection";
 
 function App() {
   // App loading state
@@ -45,6 +46,10 @@ function App() {
   useEffect(() => {
     const initializeApp = async () => {
       try {
+        // Detect device capabilities and apply optimizations
+        const deviceCapabilities = detectDeviceCapabilities();
+        applyPerformanceOptimizations(deviceCapabilities);
+
         // Set up reduced motion preferences
         const cleanup = motion.onReducedMotionChange((prefersReduced) => {
           document.documentElement.setAttribute(

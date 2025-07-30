@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .test-item {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .marquee-test {
+            height: 100px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 8px;
+        }
+        
+        .marquee-content {
+            display: flex;
+            animation: marqueeSlide 10s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        .marquee-item {
+            flex-shrink: 0;
+            width: 200px;
+            height: 100px;
+            background: rgba(255,255,255,0.9);
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        
+        @keyframes marqueeSlide {
+            0% {
+                transform: translateX(0) translateZ(0);
+            }
+            100% {
+                transform: translateX(-100%) translateZ(0);
+            }
+        }
+        
+        .fade-test {
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .transform-test {
+            transform: translateY(50px);
+            animation: slideUp 1s ease-out forwards;
+        }
+        
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            .marquee-content {
+                animation: none;
+            }
+            
+            .fade-test,
+            .transform-test {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+        }
+        
+        /* Low-end device optimizations */
+        .device-low-end .marquee-content {
+            animation-duration: 20s;
+        }
+        
+        .device-low-end .fade-test,
+        .device-low-end .transform-test {
+            animation-duration: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Animation Test Page</h1>
+        <p>This page tests the animation fixes for cross-device compatibility.</p>
+        
+        <div class="test-item">
+            <h2>Marquee Animation Test</h2>
+            <div class="marquee-test">
+                <div class="marquee-content">
+                    <div class="marquee-item">Item 1</div>
+                    <div class="marquee-item">Item 2</div>
+                    <div class="marquee-item">Item 3</div>
+                    <div class="marquee-item">Item 4</div>
+                    <div class="marquee-item">Item 5</div>
+                    <div class="marquee-item">Item 1</div>
+                    <div class="marquee-item">Item 2</div>
+                    <div class="marquee-item">Item 3</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-item fade-test">
+            <h2>Fade Animation Test</h2>
+            <p>This element should fade in smoothly.</p>
+        </div>
+        
+        <div class="test-item transform-test">
+            <h2>Transform Animation Test</h2>
+            <p>This element should slide up from below.</p>
+        </div>
+        
+        <div class="test-item">
+            <h2>Device Information</h2>
+            <div id="device-info"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Device detection similar to your portfolio
+        function detectDevice() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isTablet = /iPad|Android(?=.*\bMobile\b)(?=.*\bSafari\b)|Android(?=.*\bTablet\b)/i.test(navigator.userAgent);
+            const isDesktop = !isMobile && !isTablet;
+            const preferReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const hardwareConcurrency = navigator.hardwareConcurrency || 2;
+            const deviceMemory = navigator.deviceMemory || 4;
+            const isLowEndDevice = hardwareConcurrency <= 2 || deviceMemory <= 2;
+            
+            return {
+                isMobile,
+                isTablet,
+                isDesktop,
+                preferReducedMotion,
+                hardwareConcurrency,
+                deviceMemory,
+                isLowEndDevice,
+                userAgent: navigator.userAgent
+            };
+        }
+        
+        // Apply device-specific optimizations
+        function applyOptimizations() {
+            const device = detectDevice();
+            
+            if (device.isLowEndDevice) {
+                document.body.classList.add('device-low-end');
+            }
+            
+            if (device.preferReducedMotion) {
+                document.body.classList.add('reduce-motion');
+            }
+            
+            // Display device info
+            const deviceInfo = document.getElementById('device-info');
+            deviceInfo.innerHTML = `
+                <p><strong>Device Type:</strong> ${device.isMobile ? 'Mobile' : device.isTablet ? 'Tablet' : 'Desktop'}</p>
+                <p><strong>Hardware Concurrency:</strong> ${device.hardwareConcurrency}</p>
+                <p><strong>Device Memory:</strong> ${device.deviceMemory}GB</p>
+                <p><strong>Low-end Device:</strong> ${device.isLowEndDevice ? 'Yes' : 'No'}</p>
+                <p><strong>Prefers Reduced Motion:</strong> ${device.preferReducedMotion ? 'Yes' : 'No'}</p>
+                <p><strong>User Agent:</strong> ${device.userAgent}</p>
+            `;
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', applyOptimizations);
+    </script>
+</body>
+</html>

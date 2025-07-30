@@ -238,7 +238,11 @@ const Masonry: React.FC<MasonryProps> = ({
             <div
               data-key={item.id}
               className="absolute box-content cursor-pointer group masonry-item"
-              style={{ willChange: "transform, width, height, opacity" }}
+              style={{ 
+                willChange: "transform, width, height, opacity",
+                transform: "translateZ(0)",
+                WebkitTransform: "translateZ(0)"
+              }}
               tabIndex={0}
               role="button"
               aria-label={`View ${item.title || `project ${item.id}`} details`}

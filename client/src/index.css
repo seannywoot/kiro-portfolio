@@ -407,4 +407,42 @@
       outline-color: var(--ring);
     }
   }
+}/
+* Device-specific performance optimizations */
+.device-low-end {
+  --animation-quality: low;
+  --blur-effects: none;
+  --backdrop-filter: none;
+}
+
+.device-mobile {
+  --animation-quality: medium;
+  --blur-effects: blur(4px);
+  --backdrop-filter: blur(4px);
+}
+
+.device-desktop {
+  --animation-quality: high;
+  --blur-effects: blur(8px);
+  --backdrop-filter: blur(8px);
+}
+
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Performance-optimized backdrop filters */
+.backdrop-blur {
+  backdrop-filter: var(--backdrop-filter);
+  -webkit-backdrop-filter: var(--backdrop-filter);
+}
+
+/* Hardware acceleration for animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
 }
