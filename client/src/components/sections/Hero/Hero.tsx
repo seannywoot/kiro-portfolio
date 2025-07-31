@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../../ui/button";
-import { ChevronDown } from "lucide-react";
+
 import { cn } from "../../../lib/utils";
 import { Lanyard } from "../../common/Lanyard";
 import TextType from "../../common/TextType";
@@ -8,7 +8,6 @@ import styles from "./Hero.module.css";
 
 export interface HeroProps {
   name: string;
-  title: string;
   description: string;
   ctaText: string;
   onCtaClick: () => void;
@@ -21,7 +20,6 @@ export interface HeroProps {
  */
 export function Hero({
   name,
-  title,
   description,
   ctaText,
   onCtaClick,
@@ -38,13 +36,6 @@ export function Hero({
 
     return () => clearTimeout(timer);
   }, []);
-
-  const scrollToNext = () => {
-    const nextSection = document.querySelector('[data-section="tech-marquee"]');
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <section
@@ -75,13 +66,13 @@ export function Hero({
             {/* Animated Name with falling effect */}
             <div
               className={cn(
-                "transition-all duration-1000 ease-out",
+                "transition-all duration-1200 ease-out",
                 isLoaded
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-12",
                 styles.heroFallAnimation
               )}
-              style={{ transitionDelay: "300ms" }}
+              style={{ transitionDelay: "400ms" }}
             >
               <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[var(--foreground)] to-[var(--muted-foreground)] bg-clip-text text-transparent break-words">
                 {name}
@@ -91,13 +82,13 @@ export function Hero({
             {/* Animated Title with Typing Effect and falling effect */}
             <div
               className={cn(
-                "transition-all duration-1000 ease-out",
+                "transition-all duration-1200 ease-out",
                 isLoaded
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-10",
                 styles.heroFallAnimation
               )}
-              style={{ transitionDelay: "600ms" }}
+              style={{ transitionDelay: "700ms" }}
             >
               <div className="text-lg md:text-xl lg:text-2xl text-[var(--primary)] mb-6 font-medium">
                 <TextType
@@ -118,13 +109,13 @@ export function Hero({
             {/* Animated Description with falling effect */}
             <div
               className={cn(
-                "transition-all duration-1000 ease-out",
+                "transition-all duration-1200 ease-out",
                 isLoaded
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-8",
                 styles.heroFallAnimation
               )}
-              style={{ transitionDelay: "900ms" }}
+              style={{ transitionDelay: "1000ms" }}
             >
               <div className="text-base md:text-lg text-[var(--muted-foreground)] mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 {description}
@@ -134,13 +125,13 @@ export function Hero({
             {/* Call to Action with falling effect */}
             <div
               className={cn(
-                "transition-all duration-1000 ease-out",
+                "transition-all duration-1200 ease-out",
                 isLoaded
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-6",
                 styles.heroFallAnimation
               )}
-              style={{ transitionDelay: "1200ms" }}
+              style={{ transitionDelay: "1300ms" }}
             >
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                 <Button
@@ -160,32 +151,6 @@ export function Hero({
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Scroll Indicator with falling effect */}
-      <div
-        className={cn(
-          "absolute bottom-20 left-1/2 transform -translate-x-1/2 z-30",
-          "transition-all duration-1000 ease-out",
-          isLoaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-        )}
-        style={{ transitionDelay: "1500ms" }}
-      >
-        <button
-          onClick={scrollToNext}
-          className={cn(
-            "text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors duration-300",
-            "flex flex-col items-center gap-2 group",
-            styles.scrollIndicator
-          )}
-          aria-label="Scroll to next section"
-        >
-          <span className="text-sm font-medium">Scroll Down</span>
-          <ChevronDown
-            className="w-6 h-6 animate-bounce group-hover:animate-pulse"
-            data-testid="chevron-down"
-          />
-        </button>
       </div>
     </section>
   );

@@ -16,13 +16,24 @@ interface MasonryWithModalProps {
 }
 
 const MasonryWithModal: React.FC<MasonryWithModalProps> = ({ projects, onProjectClick }) => {
-  const masonryItems = projects.map((project, index) => ({
-    id: project.id,
-    img: project.images[0] || "/images/placeholder-design.jpg",
-    url: "#", // We'll handle clicks through the component
-    height: 300 + (index % 4) * 150, // More varied heights for better masonry effect
-    title: project.title,
-  }));
+  const masonryItems = projects.map((project, index) => {
+    // More responsive height calculation that works on both mobile and desktop
+    const baseHeight = 300;
+    const variation = (index % 4) * 120;
+    const mobileBaseHeight = 280;
+    const mobileVariation = (index % 3) * 100;
+    
+    // Use a more reliable way to detect mobile that works during SSR
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
+    
+    return {
+      id: project.id,
+      img: project.images[0] || "/images/placeholder-design.jpg",
+      url: "#", // We'll handle clicks through the component
+      height: isMobile ? mobileBaseHeight + mobileVariation : baseHeight + variation,
+      title: project.title,
+    };
+  });
 
   const handleItemClick = (itemId: string) => {
     const project = projects.find(p => p.id === itemId);

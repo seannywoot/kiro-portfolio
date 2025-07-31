@@ -144,20 +144,15 @@
 /* Masonry Container */
 .masonryContainer {
   width: 100%;
-  min-height: 600px;
   position: relative;
   margin-top: 2rem;
+  padding: 0 0.5rem;
+  /* Height will be set dynamically by the Masonry component */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 480px) {
   .masonryContainer {
-    min-height: 800px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .masonryContainer {
-    min-height: 1000px;
+    padding: 0;
   }
 }
 
@@ -424,6 +419,41 @@
   }
 }
 
+/* Mobile Masonry Optimizations */
+@media (max-width: 479px) {
+  .masonryContainer {
+    padding: 0 0.25rem;
+  }
+  
+  .masonryContainer :global(.masonry-item) {
+    border-radius: 8px;
+  }
+  
+  .masonryContainer :global(.masonry-item > div) {
+    border-radius: 8px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 599px) {
+  .masonryContainer {
+    padding: 0 0.5rem;
+  }
+}
+
+/* Ensure masonry items don't overflow on small screens */
+.masonryContainer :global(.masonry-item) {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.masonryContainer :global(.masonry-item > div) {
+  width: 100% !important;
+  height: 100% !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
 
 
 /* Clickable Card */
@@ -618,21 +648,28 @@
 }
 
 /* Clean Masonry Styles */
-.masonryContainer {
-  position: relative;
-  width: 100%;
-  min-height: 600px;
-}
-
-/* Masonry item base styles */
 .masonryContainer :global(.masonry-item) {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 10px;
 }
 
-/* Simple hover effect */
-.masonryContainer :global(.masonry-item:hover) {
-  transform: scale(0.95);
+/* Responsive hover effects */
+@media (min-width: 768px) {
+  .masonryContainer :global(.masonry-item:hover) {
+    transform: scale(0.95);
+  }
+}
+
+/* Mobile: no hover effects, just focus */
+@media (max-width: 767px) {
+  .masonryContainer :global(.masonry-item) {
+    transition: none;
+  }
+  
+  .masonryContainer :global(.masonry-item:active) {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
 }
 
 .masonryContainer :global(.masonry-item:focus) {

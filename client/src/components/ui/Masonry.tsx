@@ -90,11 +90,12 @@ const Masonry: React.FC<MasonryProps> = ({
   const columns = useMedia(
     [
       "(min-width:1500px)",
-      "(min-width:1000px)",
+      "(min-width:1200px)",
+      "(min-width:900px)",
       "(min-width:600px)",
-      "(min-width:400px)",
+      "(min-width:480px)",
     ],
-    [5, 4, 3, 2],
+    [5, 4, 3, 2, 2],
     1
   );
   const [containerRef, { width }] = useMeasure<HTMLDivElement>();
@@ -134,20 +135,39 @@ const Masonry: React.FC<MasonryProps> = ({
   }, [items]);
 
   const grid = useMemo(() => {
-    if (!width) return [];
+    if (!width) return { items: [], totalHeight: 0 };
     const colHeights = new Array(columns).fill(0);
-    const gap = 16;
+    
+    // Responsive gap and height calculations
+    const isMobile = width < 600;
+    const isTablet = width >= 600 && width < 900;
+    
+    const gap = isMobile ? 12 : isTablet ? 14 : 16;
     const totalGaps = (columns - 1) * gap;
     const columnWidth = (width - totalGaps) / columns;
+    
+    // Responsive height scaling
+    const heightScale = isMobile ? 0.6 : isTablet ? 0.7 : 0.5;
+    const minHeight = isMobile ? 150 : isTablet ? 180 : 200;
+    const maxHeight = isMobile ? 400 : isTablet ? 500 : 600;
 
-    return items.map((child) => {
+    const gridItems = items.map((child) => {
       const col = colHeights.indexOf(Math.min(...colHeights));
       const x = col * (columnWidth + gap);
-      const height = child.height / 2;
+      
+      // Calculate responsive height with constraints
+      let height = child.height * heightScale;
+      height = Math.max(minHeight, Math.min(maxHeight, height));
+      
       const y = colHeights[col];
       colHeights[col] += height + gap;
       return { ...child, x, y, w: columnWidth, h: height };
     });
+
+    // Calculate total height needed
+    const totalHeight = Math.max(...colHeights);
+
+    return { items: gridItems, totalHeight };
   }, [columns, items, width]);
 
   const hasMounted = useRef(false);
@@ -155,7 +175,12 @@ const Masonry: React.FC<MasonryProps> = ({
   useLayoutEffect(() => {
     if (!imagesReady) return;
 
-    grid.forEach((item, index) => {
+    // Update container height to accommodate all items
+    if (containerRef.current) {
+      containerRef.current.style.height = `${grid.totalHeight}px`;
+    }
+
+    grid.items.forEach((item, index) => {
       const selector = `[data-key="${item.id}"]`;
       const animProps = { x: item.x, y: item.y, width: item.w, height: item.h };
 
@@ -191,10 +216,11 @@ const Masonry: React.FC<MasonryProps> = ({
     });
 
     hasMounted.current = true;
-  }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease, getInitialPosition]);
+  }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease, getInitialPosition, containerRef]);
 
   const handleMouseEnter = (id: string, element: HTMLElement) => {
-    if (scaleOnHover) {
+    // Only apply hover effects on non-touch devices
+    if (window.matchMedia('(hover: hover)').matches && scaleOnHover) {
       gsap.to(`[data-key="${id}"]`, {
         scale: hoverScale,
         duration: 0.3,
@@ -209,7 +235,7 @@ const Masonry: React.FC<MasonryProps> = ({
   };
 
   const handleMouseLeave = (id: string, element: HTMLElement) => {
-    if (scaleOnHover) {
+    if (window.matchMedia('(hover: hover)').matches && scaleOnHover) {
       gsap.to(`[data-key="${id}"]`, {
         scale: 1,
         duration: 0.3,
@@ -223,6 +249,27 @@ const Masonry: React.FC<MasonryProps> = ({
     }
   };
 
+  const handleTouchStart = (id: string) => {
+    // Subtle feedback for touch devices
+    if (!window.matchMedia('(hover: hover)').matches) {
+      gsap.to(`[data-key="${id}"]`, {
+        scale: 0.98,
+        duration: 0.1,
+        ease: "power2.out",
+      });
+    }
+  };
+
+  const handleTouchEnd = (id: string) => {
+    if (!window.matchMedia('(hover: hover)').matches) {
+      gsap.to(`[data-key="${id}"]`, {
+        scale: 1,
+        duration: 0.2,
+        ease: "power2.out",
+      });
+    }
+  };
+
   // Remove mouse move handler as we don't need it for expansion
 
 
@@ -230,9 +277,13 @@ const Masonry: React.FC<MasonryProps> = ({
   return (
     <div 
       ref={containerRef} 
-      className="relative w-full h-full"
+      className="relative w-full"
+      style={{ 
+        minHeight: grid.totalHeight > 0 ? `${grid.totalHeight}px` : 'auto',
+        height: grid.totalHeight > 0 ? `${grid.totalHeight}px` : 'auto'
+      }}
     >
-      {grid.map((item) => (
+      {grid.items.map((item) => (
         <Tooltip key={item.id} delayDuration={300}>
           <TooltipTrigger asChild>
             <div
@@ -260,6 +311,8 @@ const Masonry: React.FC<MasonryProps> = ({
               onMouseLeave={(e) => handleMouseLeave(item.id, e.currentTarget)}
               onFocus={(e) => handleMouseEnter(item.id, e.currentTarget)}
               onBlur={(e) => handleMouseLeave(item.id, e.currentTarget)}
+              onTouchStart={() => handleTouchStart(item.id)}
+              onTouchEnd={() => handleTouchEnd(item.id)}
             >
               <div
                 className="relative w-full h-full bg-cover bg-center rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] overflow-hidden"

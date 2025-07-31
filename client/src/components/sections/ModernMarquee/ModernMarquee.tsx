@@ -14,9 +14,7 @@ const ModernMarquee: React.FC<ModernMarqueeProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // No 3D rotations needed for flat design
-
-  // Create multiple columns of icons for the vertical diagonal effect
+  // Create multiple columns of icons for the vertical diagonal effect (desktop)
   const createIconColumns = () => {
     const columns = [];
     const iconsPerColumn = 6;
@@ -72,6 +70,62 @@ const ModernMarquee: React.FC<ModernMarqueeProps> = ({
     return columns;
   };
 
+  // Create horizontal three-row marquee for mobile
+  const createMobileMarqueeRows = () => {
+    const rows = [];
+    const iconsPerRow = Math.ceil(technologies.length / 3);
+    
+    for (let row = 0; row < 3; row++) {
+      const rowIcons = [];
+      for (let i = 0; i < iconsPerRow; i++) {
+        const techIndex = (row * iconsPerRow + i) % technologies.length;
+        const tech = technologies[techIndex];
+        rowIcons.push(
+          <div key={`mobile-${row}-${i}-${tech.name}`} className={styles.mobileIconContainer}>
+            <div className={styles.mobileIconWrapper}>
+              {typeof tech.icon === 'string' ? (
+                <span className={styles.mobileIconEmoji}>{tech.icon}</span>
+              ) : tech.icon && typeof tech.icon === 'object' && 'src' in tech.icon ? (
+                <img 
+                  src={tech.icon.src} 
+                  alt={tech.icon.alt || tech.name}
+                  className={styles.mobileIconImage}
+                />
+              ) : (
+                <span className={styles.mobileIconEmoji}>💻</span>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      // Create the row with alternating directions
+      rows.push(
+        <div 
+          key={row} 
+          className={`${styles.mobileMarqueeRow} ${row === 1 ? styles.mobileRowReverse : styles.mobileRowForward}`}
+          style={{ 
+            '--row-delay': `${row * 0.3}s`,
+            '--mobile-animation-duration': `${speed * 0.8}s`
+          } as React.CSSProperties}
+        >
+          <div className={styles.mobileMarqueeTrack}>
+            {/* Triple the content for seamless loop */}
+            {rowIcons}
+            {rowIcons.map((icon, idx) => 
+              React.cloneElement(icon, { key: `${icon.key}-copy1-${idx}` })
+            )}
+            {rowIcons.map((icon, idx) => 
+              React.cloneElement(icon, { key: `${icon.key}-copy2-${idx}` })
+            )}
+          </div>
+        </div>
+      );
+    }
+    
+    return rows;
+  };
+
   return (
     <div 
       ref={containerRef}
@@ -89,14 +143,19 @@ const ModernMarquee: React.FC<ModernMarqueeProps> = ({
         </div>
       </div>
 
-      {/* Right section with marquee */}
+      {/* Right section with marquee - desktop only */}
       <div className={styles.rightSection}>
         <div className={styles.marqueeContainer}>
           {createIconColumns()}
         </div>
       </div>
-      
 
+      {/* Mobile three-row horizontal marquee */}
+      <div className={styles.mobileMarqueeSection}>
+        <div className={styles.mobileMarqueeContainer}>
+          {createMobileMarqueeRows()}
+        </div>
+      </div>
     </div>
   );
 };
