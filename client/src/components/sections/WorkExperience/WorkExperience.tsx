@@ -36,11 +36,11 @@ const WorkExperience: React.FC<WorkExperienceProps> = ({ workExperience }) => {
         </div>
 
         {/* Work Experience Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className={`${workExperience.length === 1 ? 'flex justify-center' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'} gap-8`}>
           {workExperience.map((experience, index) => (
             <Card 
               key={experience.id} 
-              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-[var(--card)] border-[var(--border)]"
+              className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-[var(--card)] border-[var(--border)] ${workExperience.length === 1 ? 'w-full max-w-2xl' : ''}`}
             >
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between mb-2">

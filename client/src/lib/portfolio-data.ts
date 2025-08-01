@@ -304,11 +304,7 @@ export const portfolioData: PortfolioData = {
         "A high-performance barcode-based attendance tracking system.",
       longDescription:
         "A comprehensive barcode-based attendance tracking system designed for efficient employee time management. Built as a desktop application using Electron for cross-platform compatibility, the system leverages JavaScript for seamless user interactions and Supabase for robust backend data management. The application provides real-time attendance tracking, automated report generation, and intuitive user interface for both administrators and employees. Features include barcode scanning integration, attendance analytics, employee management, and secure data synchronization across multiple devices.",
-      technologies: [
-        "Electron",
-        "JavaScript",
-        "Supabase",
-      ],
+      technologies: ["Electron", "JavaScript", "Supabase"],
       liveUrl: "#",
       githubUrl: "https://github.com/Swif7ify/OCPL-Barcode",
       images: [
@@ -319,30 +315,23 @@ export const portfolioData: PortfolioData = {
         "/OCPL/Screenshot 2025-07-29 092927.png",
         "/OCPL/Screenshot 2025-07-29 092933.png",
         "/OCPL/Screenshot 2025-07-29 092952.png",
-        "/OCPL/Screenshot 2025-07-29 093005.png"
+        "/OCPL/Screenshot 2025-07-29 093005.png",
       ],
       featured: true,
     },
     {
       id: "featured-project-2",
       title: "Flow",
-      description:
-        "A Web-Based Virtual Queue Management System",
+      description: "A Web-Based Virtual Queue Management System",
       longDescription:
         "The Virtual Queue Management System is a digital platform designed to streamline queuing in government offices, clinics, restaurants, and other public spaces. Users can obtain virtual tickets, track their queue position in real-time, and schedule appointments. The system displays service availability at different branches and allows users to manage their profiles, storing personal information and appointment history. Reminders and notifications keep users informed about their queue status and upcoming appointments. An express lane booking feature is available for urgent cases. The system also provides crowd density indicators, a feedback and rating system, and supports multiple queues for different services, ensuring an organized and efficient queuing experience.",
-      technologies: [
-        "HTML5",
-        "PHP",
-        "SQL",
-        "CSS3",
-        "Vue.js",
-      ],
+      technologies: ["HTML5", "PHP", "SQL", "CSS3", "Vue.js"],
       liveUrl: "https://flow-i3g6.vercel.app/landing#/landing",
       githubUrl: "https://github.com/seannywoot/flow-application-cc",
       images: [
         "/Flow/Screenshot 2025-07-29 091613.png",
         "/Flow/Screenshot 2025-07-29 091837.png",
-        "/Flow/Screenshot 2025-07-29 092220.png"
+        "/Flow/Screenshot 2025-07-29 092220.png",
       ],
       featured: true,
     },
@@ -353,18 +342,10 @@ export const portfolioData: PortfolioData = {
         "A comprehensive web-based medical records management system designed for Gordon College.",
       longDescription:
         "GC-MedMaRS (Gordon College Medical Records System) is a PHP-based web application that allows healthcare administrators to manage student medical records, appointments, and departmental data efficiently. The system provides a centralized platform for tracking student health information across five college departments.",
-      technologies: [
-        "PHP",
-        "JavaScript",
-        "HTML5",
-        "CSS3",
-        "SQL",
-      ],
+      technologies: ["PHP", "JavaScript", "HTML5", "CSS3", "SQL"],
       liveUrl: "#",
       githubUrl: "https://github.com/seannywoot/MedMars",
-      images: [
-        "/GC-Medmars/GC-Medmars.png"
-      ],
+      images: ["/GC-Medmars/GC-Medmars.png"],
       featured: true,
     },
 
@@ -375,10 +356,7 @@ export const portfolioData: PortfolioData = {
       description: "Modern brand identity and logo design for tech startup",
       longDescription:
         "Complete brand identity package including logo design, color palette, typography, and brand guidelines. Created a modern, minimalist identity that reflects the company's innovative approach to technology solutions.",
-      technologies: [
-        "Photoshop",
-        "Figma",
-      ],
+      technologies: ["Photoshop", "Figma"],
       liveUrl: "https://example.com/brand-project",
       githubUrl: "#",
       images: ["/Graphics/1.jpg"],
@@ -390,10 +368,7 @@ export const portfolioData: PortfolioData = {
       description: "Abstract digital artwork exploring color and form",
       longDescription:
         "A series of abstract digital artworks exploring the relationship between color, form, and emotion. Created using advanced digital painting techniques and experimental color grading approaches.",
-      technologies: [
-        "Photoshop",
-        "DaVinci Resolve",
-      ],
+      technologies: ["Photoshop", "DaVinci Resolve"],
       liveUrl: "https://example.com/digital-art",
       githubUrl: "#",
       images: ["/Graphics/2.jpg"],
@@ -405,10 +380,7 @@ export const portfolioData: PortfolioData = {
       description: "Mobile app interface design with user experience focus",
       longDescription:
         "Comprehensive UI/UX design for a mobile productivity app. Includes user research, wireframing, prototyping, and final interface design with focus on accessibility and user experience.",
-      technologies: [
-        "Figma",
-        "Photoshop",
-      ],
+      technologies: ["Figma", "Photoshop"],
       liveUrl: "https://example.com/ux-case-study",
       githubUrl: "#",
       images: ["/Graphics/3.jpg"],
@@ -420,10 +392,7 @@ export const portfolioData: PortfolioData = {
       description: "Animated graphics and video content creation",
       longDescription:
         "Dynamic motion graphics and animated content for social media and web platforms. Combines graphic design principles with animation techniques to create engaging visual content.",
-      technologies: [
-        "DaVinci Resolve",
-        "Photoshop",
-      ],
+      technologies: ["DaVinci Resolve", "Photoshop"],
       liveUrl: "https://example.com/motion-graphics",
       githubUrl: "#",
       images: ["/Graphics/4.jpg"],
@@ -435,10 +404,7 @@ export const portfolioData: PortfolioData = {
       description: "Traditional print media design and layout work",
       longDescription:
         "Collection of print design work including posters, brochures, and marketing materials. Demonstrates understanding of typography, layout principles, and print production processes.",
-      technologies: [
-        "Photoshop",
-        "Figma",
-      ],
+      technologies: ["Photoshop", "Figma"],
       liveUrl: "https://example.com/print-portfolio",
       githubUrl: "#",
       images: ["/Graphics/5.jpg"],
@@ -450,10 +416,7 @@ export const portfolioData: PortfolioData = {
       description: "Modern web interface designs and prototypes",
       longDescription:
         "Innovative web design concepts focusing on modern aesthetics, user experience, and responsive design principles. Includes landing pages, dashboards, and e-commerce interfaces.",
-      technologies: [
-        "Figma",
-        "Photoshop",
-      ],
+      technologies: ["Figma", "Photoshop"],
       liveUrl: "https://example.com/web-concepts",
       githubUrl: "#",
       images: ["/Graphics/6.jpg"],
@@ -465,10 +428,7 @@ export const portfolioData: PortfolioData = {
       description: "Artistic photography and photo manipulation work",
       longDescription:
         "Creative photography projects showcasing composition, lighting, and post-processing skills. Includes portrait work, landscape photography, and experimental photo manipulation techniques.",
-      technologies: [
-        "Photoshop",
-        "DaVinci Resolve",
-      ],
+      technologies: ["Photoshop", "DaVinci Resolve"],
       liveUrl: "https://example.com/photography",
       githubUrl: "#",
       images: ["/Graphics/7.jpg"],
@@ -480,10 +440,7 @@ export const portfolioData: PortfolioData = {
       description: "Digital illustrations and character design work",
       longDescription:
         "Collection of digital illustrations including character design, concept art, and editorial illustrations. Demonstrates proficiency in digital painting techniques and visual storytelling.",
-      technologies: [
-        "Photoshop",
-        "Figma",
-      ],
+      technologies: ["Photoshop", "Figma"],
       liveUrl: "https://example.com/illustrations",
       githubUrl: "#",
       images: ["/Graphics/8.jpg"],
@@ -495,10 +452,7 @@ export const portfolioData: PortfolioData = {
       description: "Engaging social media content and marketing materials",
       longDescription:
         "Dynamic social media graphics and marketing materials designed for various platforms. Focuses on brand consistency, engagement optimization, and visual impact across different social media formats.",
-      technologies: [
-        "Photoshop",
-        "Figma",
-      ],
+      technologies: ["Photoshop", "Figma"],
       liveUrl: "https://example.com/social-media",
       githubUrl: "#",
       images: ["/Graphics/9.jpg"],
@@ -687,57 +641,19 @@ export const portfolioData: PortfolioData = {
   workExperience: [
     {
       id: "work-1",
-      company: "TechCorp Solutions",
-      position: "Senior Full Stack Developer",
-      duration: "2022 - Present",
+      company: "Olongapo City Public Library",
+      position: "Front-End Developer",
+      duration: "2025",
       description:
-        "Led development of enterprise-scale web applications serving 100K+ users. Architected microservices infrastructure and mentored junior developers.",
-      technologies: [
-        "React",
-        "TypeScript",
-        "Node.js",
-        "PostgreSQL",
-        "AWS",
-        "Docker",
-      ],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      videoThumbnail: "/images/work-techcorp-thumb.jpg",
+        "Developed a comprehensive barcode-based attendance tracking system designed for efficient employee time management. Built as a desktop application using Electron for cross-platform compatibility, leveraging JavaScript for seamless user interactions and Supabase for robust backend data management.",
+      technologies: ["Electron", "JavaScript", "Supabase"],
+      videoUrl: "https://www.youtube.com/embed/Do-RkUZ65IY",
+      videoThumbnail: "/OCPL/Screenshot 2025-07-29 092854.png",
       achievements: [
-        "Reduced application load time by 40% through performance optimization",
-        "Led team of 5 developers on critical product launch",
-        "Implemented CI/CD pipeline reducing deployment time by 60%",
-      ],
-    },
-    {
-      id: "work-2",
-      company: "StartupXYZ",
-      position: "Frontend Developer",
-      duration: "2020 - 2022",
-      description:
-        "Built responsive web applications from scratch using modern React ecosystem. Collaborated closely with design team to implement pixel-perfect UIs.",
-      technologies: ["React", "JavaScript", "CSS", "Figma", "Git"],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      videoThumbnail: "/images/work-startup-thumb.jpg",
-      achievements: [
-        "Developed 3 major product features used by 10K+ users",
-        "Improved mobile responsiveness across all platforms",
-        "Mentored 2 junior developers",
-      ],
-    },
-    {
-      id: "work-3",
-      company: "Digital Agency Pro",
-      position: "Web Developer",
-      duration: "2019 - 2020",
-      description:
-        "Created custom websites and web applications for various clients. Focused on performance, SEO optimization, and user experience.",
-      technologies: ["HTML5", "CSS", "JavaScript", "WordPress", "PHP"],
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      videoThumbnail: "/images/work-agency-thumb.jpg",
-      achievements: [
-        "Delivered 15+ client projects on time and within budget",
-        "Achieved 95+ PageSpeed scores on all projects",
-        "Increased client website traffic by average of 150%",
+        "Built real-time attendance tracking system with barcode scanning integration",
+        "Implemented automated report generation and attendance analytics",
+        "Created intuitive user interface for both administrators and employees",
+        "Developed secure data synchronization across multiple devices",
       ],
     },
   ],
