@@ -137,13 +137,7 @@ function App() {
           role="region"
           aria-label="Introduction and welcome"
         >
-          <Hero
-            name={portfolioData.personal.name}
-            title={portfolioData.personal.title}
-            description={portfolioData.personal.bio}
-            ctaText="View My Work"
-            onCtaClick={handleHeroCTA}
-          />
+          <Hero />
         </section>
 
         <hr className="section-divider" />

@@ -1,6 +1,14 @@
 "use client";
 
-import { ElementType, useEffect, useRef, useState, createElement, useMemo, useCallback } from "react";
+import {
+  ElementType,
+  useEffect,
+  useRef,
+  useState,
+  createElement,
+  useMemo,
+  useCallback,
+} from "react";
 import { gsap } from "gsap";
 
 interface TextTypeProps {
@@ -53,7 +61,10 @@ const TextType = ({
   const cursorRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLElement>(null);
 
-  const textArray = useMemo(() => Array.isArray(text) ? text : [text], [text]);
+  const textArray = useMemo(
+    () => (Array.isArray(text) ? text : [text]),
+    [text]
+  );
 
   const getRandomSpeed = useCallback(() => {
     if (!variableSpeed) return typingSpeed;
@@ -93,7 +104,7 @@ const TextType = ({
         repeat: -1,
         yoyo: true,
         ease: "power2.inOut",
-        overwrite: "auto"
+        overwrite: "auto",
       });
     }
   }, [showCursor, cursorBlinkDuration]);
@@ -127,10 +138,15 @@ const TextType = ({
         }
       } else {
         if (currentCharIndex < processedText.length) {
-          timeout = setTimeout(() => {
-            setDisplayedText((prev) => prev + processedText[currentCharIndex]);
-            setCurrentCharIndex((prev) => prev + 1);
-          }, variableSpeed ? getRandomSpeed() : typingSpeed);
+          timeout = setTimeout(
+            () => {
+              setDisplayedText(
+                (prev) => prev + processedText[currentCharIndex]
+              );
+              setCurrentCharIndex((prev) => prev + 1);
+            },
+            variableSpeed ? getRandomSpeed() : typingSpeed
+          );
         } else if (textArray.length > 1) {
           timeout = setTimeout(() => {
             setIsDeleting(true);
@@ -146,7 +162,23 @@ const TextType = ({
     }
 
     return () => clearTimeout(timeout);
-  }, [currentCharIndex, displayedText, isDeleting, typingSpeed, deletingSpeed, pauseDuration, textArray, currentTextIndex, loop, initialDelay, isVisible, reverseMode, variableSpeed, onSentenceComplete, getRandomSpeed]);
+  }, [
+    currentCharIndex,
+    displayedText,
+    isDeleting,
+    typingSpeed,
+    deletingSpeed,
+    pauseDuration,
+    textArray,
+    currentTextIndex,
+    loop,
+    initialDelay,
+    isVisible,
+    reverseMode,
+    variableSpeed,
+    onSentenceComplete,
+    getRandomSpeed,
+  ]);
 
   const shouldHideCursor =
     hideCursorWhileTyping &&
