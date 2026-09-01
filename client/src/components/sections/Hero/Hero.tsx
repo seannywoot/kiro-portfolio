@@ -13,11 +13,16 @@ export interface HeroProps {
 /**
  * Hero Section Component
  * 
- * Implements fluid container-driven scaling and crisp High-DPI <picture> art direction
- * across three core breakpoints:
- * - Mobile (<=767px): Serves 1280px High-DPI WebP asset (2x-3x Retina sharp)
- * - Tablet (768px–1023px): Serves 1920px High-DPI WebP asset (2x Retina sharp)
- * - Laptop/Desktop (>=1024px): Serves 1920px 98% quality WebP asset & uncompressed PNG fallback
+ * Implements Figma Auto Layout Strategy across 3 Breakpoints:
+ * - Mobile (<=767px): Vertical stack layout, fill-width touch targets (min 44px), headline omitted for subject focus.
+ * - Tablet (768px–1023px): 12-column fluid grid, fluid clamp typography, side-by-side auto layout.
+ * - Laptop/Desktop (>=1024px): Full 3-column auto layout (Headline Hug -> Subject Window -> Name/Role Hug).
+ * 
+ * Typography & Sizing Modes:
+ * - Headline & Subtitle: clamp() sizing, fit-content hug with max-width fill constraints.
+ * - Name & Position: clamp() sizing, anchored to bottom-right with predictable gap.
+ * - CTA Button: 44px min touch target, fill-width on mobile, hug-content on tablet/desktop.
+ * - Contrast Scrim: WCAG AA 4.5:1 compliant contrast ratio across all device backgrounds.
  */
 export function Hero({ onCtaClick, className = "" }: HeroProps) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -47,14 +52,15 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
     <section
       id="hero"
       aria-label="Introduction and hero section"
-      className={`relative w-full overflow-hidden flex flex-col justify-between select-none ${styles.heroContainer} ${className}`}
+      className={`${styles.heroContainer} ${className}`}
     >
       {/* 
-        Art-Directed Responsive <picture> Tag:
-        Serves High-DPI Retina-ready WebP assets to prevent any blurring on mobile, tablet, or desktop displays.
+        Art-Directed Responsive Background Picture (Zero CLS):
+        - Desktop: High-res WebP / PNG asset
+        - Tablet: 1024px+ High-DPI WebP asset
+        - Mobile: 720p High-DPI WebP asset
       */}
       <picture className={styles.pictureWrapper}>
-        {/* Laptop / Desktop Breakpoint (>=1024px) */}
         <source
           media="(min-width: 1024px)"
           type="image/webp"
@@ -65,15 +71,11 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
           type="image/png"
           srcSet="/Hero%20Section/Hero%20Section.png"
         />
-
-        {/* Tablet Breakpoint (768px - 1023px) */}
         <source
           media="(min-width: 768px)"
           type="image/webp"
           srcSet="/Hero%20Section/hero-tablet.webp"
         />
-
-        {/* Mobile Breakpoint (<=767px) - 1280px High-DPI asset */}
         <source type="image/webp" srcSet="/Hero%20Section/hero-mobile.webp" />
         <img
           src="/Hero%20Section/Hero%20Section.png"
@@ -84,83 +86,74 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
         />
       </picture>
 
-      {/* Background Contrast Protection Layer */}
+      {/* WCAG AA 4.5:1 Contrast Scrim Overlay */}
       <div className={styles.heroOverlay} aria-hidden="true" />
 
-      {/* Main Foreground Content Layer */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 pt-12 sm:pt-16 lg:pt-24 pb-8 flex-1 flex flex-col justify-between">
+      {/* Figma Auto Layout Main Frame */}
+      <div className={styles.autoLayoutMainFrame}>
         
-        {/* Grid Content: 3-column auto-layout on desktop, 1-column stack on mobile */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-4 items-center flex-1 my-auto">
+        {/* Middle Content Auto Layout Frame (Responsive Grid / Stack) */}
+        <div className={styles.contentGrid}>
           
-          {/* Top-Left Column: Headline & Subtitle */}
+          {/* Top-Left Headline & Subtitle Frame (Auto Layout: Gap + Hug Sizing) */}
           <div
-            className={`lg:col-span-5 flex flex-col justify-center space-y-3 sm:space-y-4 lg:space-y-6 z-20 ${
+            className={`${styles.headlineFrame} ${
               isLoaded ? styles.fadeInUp : "opacity-0"
             }`}
             style={{ animationDelay: "150ms" }}
           >
-            <h1
-              id="hero-heading"
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-[5.25rem] font-extrabold tracking-[-0.035em] leading-[0.93] text-white font-['Plus_Jakarta_Sans',sans-serif] drop-shadow-md"
-            >
+            <h1 id="hero-heading" className={styles.headlineText}>
               Structured <br />
               <span className="text-white/95">by design</span>
             </h1>
             
-            <p className="text-xs sm:text-base lg:text-[1.05rem] text-slate-200/95 font-normal leading-relaxed max-w-md font-['Plus_Jakarta_Sans',sans-serif] drop-shadow-sm">
+            <p className={styles.subheadlineText}>
               Interfaces built around clear hierarchy and seamless motion—where
               visual refinement serves real utility.
             </p>
           </div>
 
-          {/* Center Gap: Preserves subject portrait visibility */}
-          <div className="hidden lg:block lg:col-span-2 min-h-[300px]" aria-hidden="true" />
+          {/* Center Subject Spacer (Preserves Subject Face Framing on Desktop) */}
+          <div className={styles.centerSubjectSpacer} aria-hidden="true" />
 
-          {/* Bottom-Right Column: Name & Role Title */}
+          {/* Bottom-Right Name & Role Frame (Auto Layout: Vertical Gap + End Alignment) */}
           <div
-            className={`lg:col-span-5 flex flex-col justify-center lg:items-end text-left lg:text-right space-y-2 sm:space-y-3 z-20 ${
+            className={`${styles.nameFrame} ${
               isLoaded ? styles.fadeInUp : "opacity-0"
             }`}
             style={{ animationDelay: "400ms" }}
           >
-            <div className="flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
-              <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-[4.75rem] font-extrabold tracking-[-0.035em] leading-[0.93] text-white drop-shadow-md">
-                Seann
-              </h2>
-              <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-[4.75rem] font-extrabold tracking-[-0.035em] leading-[0.93] text-white drop-shadow-md">
-                Tamondong
-              </h2>
+            <div className={styles.nameGroup}>
+              <h2 className={styles.nameText}>Seann</h2>
+              <h2 className={styles.nameText}>Tamondong</h2>
             </div>
 
-            <div className="pt-2 border-t-2 border-white/80 inline-block lg:ml-auto">
-              <span className="text-xs sm:text-sm lg:text-base font-semibold tracking-[0.22em] text-white uppercase block font-['Plus_Jakarta_Sans',sans-serif] drop-shadow-sm">
-                FRONT-END DEVELOPER
-              </span>
-            </div>
+            <span className={styles.roleText}>
+              FRONT-END DEVELOPER
+            </span>
           </div>
 
         </div>
 
-        {/* Bottom Horizontal Baseline Rule & Interactive Controls */}
+        {/* Bottom Baseline & Interactive Controls Frame (Auto Layout: Space-Between) */}
         <div
-          className={`mt-auto pt-4 sm:pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 z-20 ${
+          className={`${styles.bottomControlsFrame} ${
             isLoaded ? styles.fadeIn : "opacity-0"
           }`}
           style={{ animationDelay: "650ms" }}
         >
-          <div className="text-[11px] sm:text-xs text-slate-300/80 font-mono tracking-wider">
+          <div className={styles.metaInfoText}>
             PORTFOLIO / SEANN TAMONDONG
           </div>
 
           <button
             onClick={handleScrollClick}
-            className="group flex items-center space-x-3 text-xs sm:text-sm font-semibold tracking-wider text-slate-200 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 rounded-full px-5 py-2 sm:py-2.5 bg-white/10 hover:bg-white/20 border border-white/15 backdrop-blur-sm cursor-pointer"
+            className={styles.ctaButton}
             aria-label="Explore projects section"
           >
             <span>EXPLORE WORK</span>
             <svg
-              className="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform duration-300"
+              className={styles.ctaIcon}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

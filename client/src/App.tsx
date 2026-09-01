@@ -131,14 +131,7 @@ function App() {
       {/* Main Content */}
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
         {/* Hero Section */}
-        <section
-          id="hero"
-          aria-labelledby="hero-heading"
-          role="region"
-          aria-label="Introduction and welcome"
-        >
-          <Hero />
-        </section>
+        <Hero />
 
         <hr className="section-divider" />
 

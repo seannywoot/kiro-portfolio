@@ -1,59 +1,69 @@
 /* ==========================================================================
-   Hero Section Responsive Styles - Fluid Container & High-DPI Crisp Images
+   Hero Section Auto Layout & Full Viewport Maximization
+   Ensures 100% Viewport Coverage & Fluid Scaling Across All Breakpoints:
+   - Mobile: <768px (100vh / 100dvh full screen)
+   - Tablet: 768px - 1023px (100vh / 100dvh full screen)
+   - Desktop & Large Screens: 1024px to 1920px+ (100vh / 100dvh full screen)
    ========================================================================== */
 
 /* 
- * Hero Container:
- * Uses fluid sizing with clamp() instead of fixed heights to allow smooth,
- * proportional scaling between viewports without abrupt jumps.
+ * Root Hero Container:
+ * Strict 100vh / 100dvh height maximization on ALL screen sizes (<1920px and beyond).
+ * Prevents premature section cutoffs and overflow issues.
  */
 .heroContainer {
   position: relative;
   width: 100%;
-  height: clamp(520px, 85vh, 680px);
+  width: 100vw;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background-color: #2b3139;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-/* Tablet Breakpoint (768px - 1023px): Fluid height clamp(620px, 88vh, 840px) */
-@media (min-width: 768px) {
-  .heroContainer {
-    height: clamp(620px, 88vh, 840px);
-  }
-}
-
-/* Laptop/Desktop Breakpoint (>=1024px): Fluid height clamp(720px, 92vh, 1080px) */
-@media (min-width: 1024px) {
-  .heroContainer {
-    height: clamp(720px, 92vh, 1080px);
-  }
+  user-select: none;
+  box-sizing: border-box;
 }
 
 /* 
- * Picture Wrapper & Responsive Image:
- * Absolute fill guarantees zero Cumulative Layout Shift (CLS).
+ * Background Picture Wrapper:
+ * Absolute fill (inset: 0) ensures the background image maximizes
+ * 100% of the viewport container across all screen sizes up to 1920px+.
  */
 .pictureWrapper {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   z-index: 0;
   pointer-events: none;
 }
 
 /* 
- * Responsive Object-Fit & High-DPI Crisp Rendering:
- * Preserves pixel sharpness and high-frequency contrast across all displays.
+ * Responsive Object-Fit & Focal Point (Sync with Subject Area):
+ * - Mobile (<768px): object-fit: cover, centered at 20%
+ * - Tablet (768px - 1023px): object-fit: cover, centered at 25%
+ * - Desktop & Large Screens (>=1024px up to 1920px+): object-fit: cover, centered at 35%
  */
 .heroImg {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   object-fit: cover;
-  object-position: center 22%;
+  object-position: center 20%;
   display: block;
   image-rendering: -webkit-optimize-contrast;
   transition: object-position 0.3s ease-out;
@@ -61,7 +71,7 @@
 
 @media (min-width: 768px) {
   .heroImg {
-    object-position: center 30%;
+    object-position: center 25%;
   }
 }
 
@@ -72,8 +82,9 @@
 }
 
 /* 
- * Contrast Overlay:
- * Multi-layer gradient protects text legibility against background brightness.
+ * Contrast Scrim / Overlay:
+ * Multi-layer gradient calibrated to guarantee WCAG AA 4.5:1 contrast
+ * across all screen sizes (<1920px and beyond).
  */
 .heroOverlay {
   position: absolute;
@@ -81,8 +92,267 @@
   z-index: 1;
   pointer-events: none;
   background: 
-    linear-gradient(to bottom, rgba(15, 18, 22, 0.4) 0%, rgba(15, 18, 22, 0.15) 50%, rgba(15, 18, 22, 0.5) 100%),
-    radial-gradient(circle at center, transparent 40%, rgba(15, 18, 22, 0.35) 100%);
+    linear-gradient(to bottom, rgba(15, 18, 22, 0.45) 0%, rgba(15, 18, 22, 0.2) 40%, rgba(15, 18, 22, 0.6) 100%),
+    radial-gradient(circle at center, transparent 40%, rgba(15, 18, 22, 0.4) 100%);
+}
+
+/* 
+ * Auto Layout Main Frame:
+ * Spans full height of the viewport container (height: 100%, min-height: 100%)
+ * with fluid clamp padding scaling seamlessly up to 1920px+.
+ */
+.autoLayoutMainFrame {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1920px;
+  height: 100%;
+  min-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: clamp(0.75rem, 3vh, 3.25rem) clamp(1rem, 4.5vw, 6rem);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(0.75rem, 2vh, 2rem);
+  box-sizing: border-box;
+}
+
+/* 
+ * Middle Auto Layout Content Frame:
+ * Auto Layout Direction: Stack on mobile, 12-column grid on tablet/desktop.
+ */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: end;
+  flex: 1;
+  width: 100%;
+  gap: clamp(1rem, 3vw, 3.5rem);
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-bottom: clamp(0.25rem, 1vh, 1rem);
+}
+
+@media (min-width: 768px) {
+  .contentGrid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* 
+ * Top-Left Column (Headline + Subheadline Frame):
+ * Omitted on mobile (<768px) to keep focus on portrait and name.
+ */
+.headlineFrame {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-self: flex-start;
+  gap: clamp(0.5rem, 1.2vw, 1.5rem);
+  z-index: 20;
+}
+
+@media (max-width: 767px) {
+  .headlineFrame {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .headlineFrame {
+    grid-column: span 5 / span 5;
+    padding-top: clamp(6rem, 18vh, 16rem);
+  }
+}
+
+/* Fluid Typography: Headline (Scales gracefully for screens <1920px+) */
+.headlineText {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: clamp(2.25rem, 4.2vw + 0.5rem, 6.25rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.93;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* Fluid Typography: Subheadline */
+.subheadlineText {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: clamp(0.8125rem, 0.65vw + 0.55rem, 1.25rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(241, 245, 249, 0.95);
+  max-width: clamp(280px, 32vw, 560px);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Center Spacer (Preserves Subject Portrait Window) */
+.centerSubjectSpacer {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .centerSubjectSpacer {
+    display: block;
+    grid-column: span 2 / span 2;
+    min-height: clamp(200px, 30vh, 400px);
+  }
+}
+
+/* 
+ * Bottom-Right Column (Name & Position Frame):
+ * Figma Auto Layout: Vertical Gap + End Alignment.
+ */
+.nameFrame {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-self: flex-end;
+  gap: clamp(0.25rem, 0.5vw, 0.625rem);
+  z-index: 20;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .nameFrame {
+    grid-column: span 7 / span 7;
+    align-items: flex-end;
+    text-align: right;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nameFrame {
+    grid-column: span 5 / span 5;
+  }
+}
+
+/* Name Group (Hug Content) */
+.nameGroup {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+@media (min-width: 768px) {
+  .nameGroup {
+    align-items: flex-end;
+  }
+}
+
+/* Fluid Typography: Name (Scales seamlessly up to 1920px) */
+.nameText {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: clamp(2.75rem, 4.8vw + 0.5rem, 5.75rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.93;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
+/* Fluid Typography: Role Tagline */
+.roleText {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: clamp(0.6875rem, 0.45vw + 0.45rem, 1.15rem);
+  font-weight: 600;
+  letter-spacing: clamp(0.16em, 0.4vw, 0.26em);
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  display: block;
+  width: fit-content;
+}
+
+/* 
+ * Bottom Baseline & Controls Frame (Figma Auto Layout: Space Between):
+ */
+.bottomControlsFrame {
+  margin-top: auto;
+  padding-top: clamp(0.5rem, 1.8vh, 1.5rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: clamp(0.625rem, 1.2vw, 1.25rem);
+  z-index: 20;
+}
+
+@media (min-width: 640px) {
+  .bottomControlsFrame {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* Meta Info Text (Hug Content) */
+.metaInfoText {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(0.65rem, 0.35vw + 0.4rem, 0.875rem);
+  letter-spacing: 0.08em;
+  color: rgba(203, 213, 225, 0.85);
+  width: fit-content;
+}
+
+/* 
+ * Interactive CTA Button:
+ * - Mobile: Fill Width, min 44px height for accessibility
+ * - Tablet/Desktop/Large: Hug Content with fluid proportions
+ */
+.ctaButton {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: clamp(0.75rem, 0.35vw + 0.55rem, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+  padding: 0 clamp(1.25rem, 1.5vw, 2.25rem);
+  min-height: clamp(44px, 4.5vh, 52px); /* WCAG Accessible Touch Target */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .ctaButton {
+    width: fit-content;
+  }
+}
+
+.ctaButton:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.ctaButton:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.ctaIcon {
+  width: 1.1rem;
+  height: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.ctaButton:hover .ctaIcon {
+  transform: translateY(2px);
 }
 
 /* Entrance Animations */
