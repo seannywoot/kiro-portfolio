@@ -1,1 +1,115 @@
-/* Hero Section Styles - ready for new implementation */
+/* ==========================================================================
+   Hero Section Responsive Styles - Fluid Container & High-DPI Crisp Images
+   ========================================================================== */
+
+/* 
+ * Hero Container:
+ * Uses fluid sizing with clamp() instead of fixed heights to allow smooth,
+ * proportional scaling between viewports without abrupt jumps.
+ */
+.heroContainer {
+  position: relative;
+  width: 100%;
+  height: clamp(520px, 85vh, 680px);
+  overflow: hidden;
+  background-color: #2b3139;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Tablet Breakpoint (768px - 1023px): Fluid height clamp(620px, 88vh, 840px) */
+@media (min-width: 768px) {
+  .heroContainer {
+    height: clamp(620px, 88vh, 840px);
+  }
+}
+
+/* Laptop/Desktop Breakpoint (>=1024px): Fluid height clamp(720px, 92vh, 1080px) */
+@media (min-width: 1024px) {
+  .heroContainer {
+    height: clamp(720px, 92vh, 1080px);
+  }
+}
+
+/* 
+ * Picture Wrapper & Responsive Image:
+ * Absolute fill guarantees zero Cumulative Layout Shift (CLS).
+ */
+.pictureWrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 
+ * Responsive Object-Fit & High-DPI Crisp Rendering:
+ * Preserves pixel sharpness and high-frequency contrast across all displays.
+ */
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  transition: object-position 0.3s ease-out;
+}
+
+@media (min-width: 768px) {
+  .heroImg {
+    object-position: center 30%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroImg {
+    object-position: center 35%;
+  }
+}
+
+/* 
+ * Contrast Overlay:
+ * Multi-layer gradient protects text legibility against background brightness.
+ */
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: 
+    linear-gradient(to bottom, rgba(15, 18, 22, 0.4) 0%, rgba(15, 18, 22, 0.15) 50%, rgba(15, 18, 22, 0.5) 100%),
+    radial-gradient(circle at center, transparent 40%, rgba(15, 18, 22, 0.35) 100%);
+}
+
+/* Entrance Animations */
+.fadeInUp {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fadeIn {
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
