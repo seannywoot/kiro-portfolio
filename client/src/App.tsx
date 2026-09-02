@@ -4,7 +4,7 @@ import Navigation from "./components/common/Navigation/Navigation";
 import ScreenReaderOnly from "./components/common/ScreenReaderOnly/ScreenReaderOnly";
 import ErrorBoundary from "./components/common/ErrorBoundary/ErrorBoundary";
 import Preloader from "./components/common/Preloader/Preloader";
-import ModernMarquee from "./components/sections/ModernMarquee/ModernMarquee";
+import Services from "./components/sections/Services/Services";
 import About from "./components/sections/About/About";
 import WorkExperience from "./components/sections/WorkExperience/WorkExperience";
 import Projects from "./components/sections/Projects/Projects";
@@ -25,16 +25,18 @@ function App() {
   // Navigation sections configuration
   const navigationSections = [
     { id: "hero", label: "Home" },
+    { id: "services", label: "Services" },
+    { id: "about", label: "About" },
     { id: "work-experience", label: "Experience" },
     { id: "projects", label: "Projects" },
     { id: "contact", label: "Contact" },
   ];
 
-  // Handle hero CTA click - scroll to projects
+  // Handle hero CTA click - scroll to services
   const handleHeroCTA = () => {
-    const projectsSection = document.getElementById("projects");
-    if (projectsSection) {
-      projectsSection.scrollIntoView({
+    const servicesSection = document.getElementById("services");
+    if (servicesSection) {
+      servicesSection.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
@@ -93,89 +95,81 @@ function App() {
 
       {/* Main Content */}
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
-        {/* Hero Section */}
-        <Hero isReady={isHeroReady} onCtaClick={handleHeroCTA} />
+        {/* Sticky Hero Section (Pinned under incoming parallax content) */}
+        <div className="sticky top-0 z-0 h-screen h-[100dvh] w-full overflow-hidden will-change-transform">
+          <Hero isReady={isHeroReady} onCtaClick={handleHeroCTA} />
+        </div>
 
-        <hr className="section-divider" />
+        {/* Parallax Content Stream (Slides smoothly on top of Hero) */}
+        <div className="relative z-10 w-full bg-[#121316]">
+          {/* Services Section */}
+          <ErrorBoundary>
+            <Services />
+          </ErrorBoundary>
 
-        {/* Technologies Section */}
-        <ErrorBoundary>
-          <section
-            id="technologies"
-            aria-labelledby="technologies-heading"
-            role="region"
-            aria-label="Technologies and tools showcase"
-            className="transition-all duration-700 ease-out"
-          >
-            <ModernMarquee
-              technologies={portfolioData.technologies}
-              speed={25}
-            />
-          </section>
-        </ErrorBoundary>
+          <hr className="section-divider" />
 
-        <hr className="section-divider" />
+          {/* About Section */}
+          <ErrorBoundary>
+            <section
+              id="about"
+              aria-labelledby="about-heading"
+              role="region"
+              aria-label="About me and skills"
+              className="transition-all duration-700 ease-out"
+            >
+              <About
+                personal={portfolioData.personal}
+                skills={portfolioData.skills}
+              />
+            </section>
+          </ErrorBoundary>
 
-        {/* About Section */}
-        <ErrorBoundary>
-          <section
-            id="about"
-            aria-labelledby="about-heading"
-            role="region"
-            aria-label="About me and skills"
-            className="transition-all duration-700 ease-out"
-          >
-            <About
-              personal={portfolioData.personal}
-              skills={portfolioData.skills}
-            />
-          </section>
-        </ErrorBoundary>
+          <hr className="section-divider" />
 
-        <hr className="section-divider" />
+          {/* Work Experience Section */}
+          <ErrorBoundary>
+            <section
+              id="work-experience"
+              aria-labelledby="work-experience-heading"
+              role="region"
+              aria-label="Professional work experience"
+              className="transition-all duration-700 ease-out"
+            >
+              <WorkExperience workExperience={portfolioData.workExperience} />
+            </section>
+          </ErrorBoundary>
 
-        {/* Work Experience Section */}
-        <ErrorBoundary>
-          <section
-            id="work-experience"
-            aria-labelledby="work-experience-heading"
-            role="region"
-            aria-label="Professional work experience"
-            className="transition-all duration-700 ease-out"
-          >
-            <WorkExperience workExperience={portfolioData.workExperience} />
-          </section>
-        </ErrorBoundary>
+          <hr className="section-divider" />
 
-        <hr className="section-divider" />
+          {/* Projects Section */}
+          <ErrorBoundary>
+            <section
+              id="projects"
+              aria-labelledby="projects-heading"
+              role="region"
+              aria-label="Portfolio projects"
+              className="transition-all duration-700 ease-out"
+            >
+              <Projects projects={portfolioData.projects} />
+            </section>
+          </ErrorBoundary>
 
-        {/* Projects Section */}
-        <ErrorBoundary>
-          <section
-            id="projects"
-            aria-labelledby="projects-heading"
-            role="region"
-            aria-label="Portfolio projects"
-            className="transition-all duration-700 ease-out"
-          >
-            <Projects projects={portfolioData.projects} />
-          </section>
-        </ErrorBoundary>
+          <hr className="section-divider" />
 
-        <hr className="section-divider" />
-
-        {/* Contact Section */}
-        <ErrorBoundary>
-          <section
-            id="contact"
-            aria-labelledby="contact-heading"
-            role="region"
-            aria-label="Contact information and form"
-            className="transition-all duration-700 ease-out"
-          >
-            <Contact contact={portfolioData.contact} />
-          </section>
-        </ErrorBoundary>
+          {/* Contact Section */}
+          <ErrorBoundary>
+            <section
+              id="contact"
+              aria-labelledby="contact-heading"
+              role="region"
+              aria-label="Contact information and form"
+              className="transition-all duration-700 ease-out"
+            >
+              <Contact contact={portfolioData.contact} />
+            </section>
+          </ErrorBoundary>
+        </div>
       </main>
 
       {/* Footer */}

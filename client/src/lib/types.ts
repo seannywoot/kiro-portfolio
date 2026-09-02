@@ -105,11 +105,6 @@ export interface HeroProps {
   onCtaClick: () => void;
 }
 
-export interface TechMarqueeProps {
-  technologies: Technology[];
-  speed?: number;
-  pauseOnHover?: boolean;
-}
 
 export interface ParallaxContainerProps {
   children: React.ReactNode;

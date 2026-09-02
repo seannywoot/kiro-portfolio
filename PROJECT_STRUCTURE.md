@@ -119,8 +119,11 @@ src/
 │   ├── common/             # Reusable common components
 │   │   └── ScrollProgress/ # Scroll progress indicator
 │   ├── sections/           # Page section components
+│   │   ├── About/          # About section
 │   │   ├── Contact/        # Contact section
-│   │   └── ModernMarquee/  # Technology marquee section
+│   │   ├── Hero/           # Hero section
+│   │   ├── Projects/       # Projects section
+│   │   └── WorkExperience/ # Work experience section
 │   ├── ui/                 # Base UI components (shadcn/ui)
 │   ├── comp-588.tsx        # Generated component
 │   ├── logo.tsx            # Logo component
@@ -141,8 +144,6 @@ src/
 │   ├── responsive.ts       # Responsive design utilities
 │   ├── types.ts           # TypeScript type definitions
 │   └── utils.ts           # General utility functions
-├── pages/                  # Page components
-│   └── ModernMarqueeDemo.tsx # Marquee demo page
 ├── styles/                 # Styling files
 │   └── animations.css      # CSS animations
 ├── test/                   # Test configuration

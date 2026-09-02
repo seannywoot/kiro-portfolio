@@ -151,9 +151,9 @@ src/
 │   └── sections/         # Page sections
 │       ├── Hero/         # Landing section
 │       ├── About/        # About & skills
+│       ├── WorkExperience/ # Work experience
 │       ├── Projects/     # Portfolio projects
-│       ├── Contact/      # Contact form
-│       └── ModernMarquee/ # Technology showcase
+│       └── Contact/      # Contact form
 ├── lib/                  # Utilities and data
 │   ├── performance.ts    # Performance monitoring
 │   ├── accessibility.ts  # A11y utilities

@@ -22,12 +22,31 @@ export function Hero({ onCtaClick, className = "", isReady = true }: HeroProps) 
   const [isLoaded, setIsLoaded] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const [scrollY, setScrollY] = useState(0);
 
   const roles = [
     "FRONT-END DEVELOPER",
     "UI/UX DESIGNER",
     "GRAPHIC DESIGNER",
   ];
+
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (window.scrollY <= (window.innerHeight || 800) * 1.2) {
+            setScrollY(window.scrollY);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (isReady) {
@@ -58,14 +77,17 @@ export function Hero({ onCtaClick, className = "", isReady = true }: HeroProps) 
       onCtaClick();
     } else {
       const targetSection =
+        document.getElementById("services") ||
         document.getElementById("projects") ||
-        document.getElementById("technologies") ||
         document.getElementById("about");
       if (targetSection) {
         targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
   };
+
+  const vh = typeof window !== "undefined" ? window.innerHeight || 800 : 800;
+  const parallaxProgress = Math.min(1, Math.max(0, scrollY / vh));
 
   return (
     <section
@@ -119,8 +141,26 @@ export function Hero({ onCtaClick, className = "", isReady = true }: HeroProps) 
         />
       )}
 
+      {/* Dynamic Parallax Depth Dimmer */}
+      <div
+        className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-75 z-[2]"
+        style={{ opacity: parallaxProgress * 0.45 }}
+        aria-hidden="true"
+      />
+
       {/* Main Auto Layout Frame */}
-      <div className={styles.autoLayoutMainFrame}>
+      <div
+        className={styles.autoLayoutMainFrame}
+        style={{
+          transform:
+            parallaxProgress > 0
+              ? `translateY(${parallaxProgress * 45}px) scale(${1 - parallaxProgress * 0.04})`
+              : undefined,
+          opacity: 1 - parallaxProgress * 0.5,
+          transition: "transform 0.05s ease-out, opacity 0.05s ease-out",
+          willChange: "transform, opacity",
+        }}
+      >
         
         {/* Middle Content Auto Layout Frame */}
         <div className={styles.contentGrid}>
