@@ -3,7 +3,6 @@ import { Hero } from "./components/sections/Hero/Hero";
 import Navigation from "./components/common/Navigation/Navigation";
 import ScreenReaderOnly from "./components/common/ScreenReaderOnly/ScreenReaderOnly";
 import ErrorBoundary from "./components/common/ErrorBoundary/ErrorBoundary";
-import SkeletonLoader from "./components/common/SkeletonLoader/SkeletonLoader";
 import ModernMarquee from "./components/sections/ModernMarquee/ModernMarquee";
 import About from "./components/sections/About/About";
 import WorkExperience from "./components/sections/WorkExperience/WorkExperience";
@@ -18,8 +17,6 @@ import {
 import { detectDeviceCapabilities, applyPerformanceOptimizations } from "./lib/device-detection";
 
 function App() {
-  // App loading state
-  const [isAppLoading, setIsAppLoading] = useState(true);
   const [isAppReady, setIsAppReady] = useState(false);
 
   // Navigation sections configuration
@@ -41,71 +38,34 @@ function App() {
     }
   };
 
-  // Initialize app and handle loading states
+  // Initialize app optimizations
   useEffect(() => {
-    const initializeApp = async () => {
-      try {
-        // Detect device capabilities and apply optimizations
-        const deviceCapabilities = detectDeviceCapabilities();
-        applyPerformanceOptimizations(deviceCapabilities);
+    // Detect device capabilities and apply optimizations
+    const deviceCapabilities = detectDeviceCapabilities();
+    applyPerformanceOptimizations(deviceCapabilities);
 
-        // Set up reduced motion preferences
-        const cleanup = motion.onReducedMotionChange((prefersReduced) => {
-          document.documentElement.setAttribute(
-            "data-reduced-motion",
-            prefersReduced.toString()
-          );
-        });
+    // Set up reduced motion preferences
+    const cleanup = motion.onReducedMotionChange((prefersReduced) => {
+      document.documentElement.setAttribute(
+        "data-reduced-motion",
+        prefersReduced.toString()
+      );
+    });
 
-        // Initialize performance monitoring
-        const performanceMonitor = initializePerformanceMonitoring();
+    // Initialize performance monitoring
+    const performanceMonitor = initializePerformanceMonitoring();
 
-        // Add resource hints for better performance
-        ResourceHints.dnsPrefetch("fonts.googleapis.com");
-        ResourceHints.dnsPrefetch("fonts.gstatic.com");
+    // Add resource hints for better performance
+    ResourceHints.dnsPrefetch("fonts.googleapis.com");
+    ResourceHints.dnsPrefetch("fonts.gstatic.com");
 
-        // Simulate app initialization (fonts, critical resources)
-        await new Promise((resolve) => setTimeout(resolve, 800));
+    setIsAppReady(true);
 
-        // Mark app as ready
-        setIsAppReady(true);
-
-        // Add a small delay for smooth transition
-        setTimeout(() => {
-          setIsAppLoading(false);
-        }, 300);
-
-        return () => {
-          cleanup();
-          performanceMonitor.disconnect();
-        };
-      } catch (error) {
-        console.error("App initialization failed:", error);
-        setIsAppLoading(false);
-      }
+    return () => {
+      cleanup();
+      performanceMonitor.disconnect();
     };
-
-    initializeApp();
   }, []);
-
-  // Show loading screen while app initializes
-  if (isAppLoading) {
-    return (
-      <div
-        className="min-h-screen flex items-center justify-center"
-        style={{ background: "var(--background)" }}
-      >
-        <div className="w-full max-w-4xl mx-auto px-4">
-          <SkeletonLoader variant="hero" />
-          <div className="mt-8 text-center">
-            <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
-              Loading portfolio...
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div

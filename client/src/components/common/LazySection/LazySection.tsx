@@ -1,11 +1,9 @@
 import React, { Suspense, lazy, ComponentType } from 'react';
 import { useIntersectionObserver } from '../../../hooks/useIntersectionObserver';
-import SkeletonLoader from '../SkeletonLoader/SkeletonLoader';
 
 interface LazySectionProps {
   children: React.ReactNode;
   fallback?: React.ReactNode;
-  skeletonVariant?: 'default' | 'card' | 'profile' | 'list' | 'hero' | 'project';
   rootMargin?: string;
   threshold?: number;
   className?: string;
@@ -17,13 +15,11 @@ interface LazySectionProps {
  */
 const LazySection: React.FC<LazySectionProps> = ({
   children,
-  fallback,
-  skeletonVariant = 'default',
+  fallback = null,
   rootMargin = '100px',
   threshold = 0.1,
   className = ''
 }) => {
-  const defaultFallback = fallback || <SkeletonLoader variant={skeletonVariant} />;
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold,
     rootMargin
@@ -32,7 +28,7 @@ const LazySection: React.FC<LazySectionProps> = ({
   return (
     <div ref={ref} className={className}>
       {isIntersecting ? (
-        <Suspense fallback={defaultFallback}>
+        <Suspense fallback={fallback}>
           {children}
         </Suspense>
       ) : (
@@ -49,12 +45,12 @@ export default LazySection;
  */
 export function withLazyLoading<T extends object>(
   importFunc: () => Promise<{ default: ComponentType<T> }>,
-  fallback?: React.ReactNode
+  fallback: React.ReactNode = null
 ) {
   const LazyComponent = lazy(importFunc);
   
   return (props: T) => (
-    <Suspense fallback={fallback || <SkeletonLoader />}>
+    <Suspense fallback={fallback}>
       <LazyComponent {...props} />
     </Suspense>
   );
@@ -85,7 +81,7 @@ export function useLazyComponent<T extends object>(
 
     return (
       <div ref={ref}>
-        <Suspense fallback={options.fallback || <SkeletonLoader />}>
+        <Suspense fallback={options.fallback || null}>
           <LazyComponent {...props} />
         </Suspense>
       </div>

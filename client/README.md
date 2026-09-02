@@ -147,8 +147,7 @@ src/
 │   ├── common/           # Reusable UI components
 │   │   ├── Navigation/   # Site navigation
 │   │   ├── ScrollProgress/ # Scroll indicator
-│   │   ├── ErrorBoundary/ # Error handling
-│   │   └── SkeletonLoader/ # Loading states
+│   │   └── ErrorBoundary/ # Error handling
 │   └── sections/         # Page sections
 │       ├── Hero/         # Landing section
 │       ├── About/        # About & skills
@@ -170,7 +169,7 @@ src/
 - **Performance Optimized**: Lazy loading, Core Web Vitals monitoring
 - **Responsive Design**: Mobile-first approach with Tailwind CSS
 - **Error Boundaries**: Graceful error handling for component failures
-- **Loading States**: Skeleton loaders and smooth transitions
+- **Smooth Transitions**: Refined micro-animations and typography
 - **SEO Ready**: Semantic markup and meta tag support
 
 ### Dependencies
