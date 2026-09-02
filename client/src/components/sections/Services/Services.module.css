@@ -216,8 +216,15 @@
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
   user-select: none;
   pointer-events: none;
-  transform: translateZ(0);
+  animation: assetPopOut 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
   transition: height 0.3s ease, left 0.3s ease, right 0.3s ease;
+}
+
+/* Right-sided asset visual optical balance */
+.assetWrapperRight .assetImage {
+  height: clamp(6.2rem, 15vh, 9rem);
+  max-width: 27vw;
 }
 
 /* Extra Narrow Mobile (<480px) */
@@ -234,6 +241,11 @@
     height: clamp(6rem, 15vh, 8.5rem);
     max-width: 28vw;
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  }
+
+  .assetWrapperRight .assetImage {
+    height: clamp(5rem, 12vh, 7rem);
+    max-width: 24vw;
   }
 }
 
@@ -252,6 +264,11 @@
     max-width: 28vw;
     filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.5));
   }
+
+  .assetWrapperRight .assetImage {
+    height: clamp(9.8rem, 20vh, 14.8rem);
+    max-width: 24vw;
+  }
 }
 
 /* Desktop & Large Screens: >=1024px (Matches Hero Section Breakpoint) */
@@ -269,6 +286,11 @@
     max-width: none;
     filter: drop-shadow(0 22px 44px rgba(0, 0, 0, 0.55)) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
   }
+
+  .assetWrapperRight .assetImage {
+    height: clamp(13.2rem, 26vh, 21.5rem);
+    max-width: none;
+  }
 }
 
 /* Large Displays: >=1440px to 1920px+ */
@@ -285,6 +307,11 @@
     height: clamp(18rem, 36vh, 32rem);
     max-width: none;
     filter: drop-shadow(0 26px 52px rgba(0, 0, 0, 0.6)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  }
+
+  .assetWrapperRight .assetImage {
+    height: clamp(14.8rem, 30vh, 26rem);
+    max-width: none;
   }
 }
 
@@ -363,6 +390,31 @@
   }
 
   100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes assetPopOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.82) translateZ(0);
+  }
+
+  65% {
+    opacity: 1;
+    transform: scale(1.035) translateZ(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assetImage {
+    animation: none;
     opacity: 1;
     transform: scale(1);
   }

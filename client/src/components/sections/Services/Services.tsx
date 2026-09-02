@@ -16,7 +16,15 @@ interface ServiceItem {
 }
 
 const servicesList: ServiceItem[] = [
-  { id: "01", title: "UI/UX DESIGN" },
+  {
+    id: "01",
+    title: "UI/UX DESIGN",
+    asset: {
+      src: "/Services%203D%20ASSETS/UI%20UX/Figma%20Right.png",
+      side: "right",
+      alt: "Figma 3D Asset",
+    },
+  },
   {
     id: "02",
     title: "WEBSITE DESIGN",
@@ -26,9 +34,33 @@ const servicesList: ServiceItem[] = [
       alt: "Webflow 3D Asset",
     },
   },
-  { id: "03", title: "WEB DEVELOPMENT" },
-  { id: "04", title: "VIDEO EDITING" },
-  { id: "05", title: "GRAPHIC DESIGN" },
+  {
+    id: "03",
+    title: "WEB DEVELOPMENT",
+    asset: {
+      src: "/Services%203D%20ASSETS/WEB%20DEV/Next.png",
+      side: "right",
+      alt: "Next.js 3D Asset",
+    },
+  },
+  {
+    id: "04",
+    title: "VIDEO EDITING",
+    asset: {
+      src: "/Services%203D%20ASSETS/VIDEO%20EDITING/Davinci.png",
+      side: "left",
+      alt: "DaVinci Resolve 3D Asset",
+    },
+  },
+  {
+    id: "05",
+    title: "GRAPHIC DESIGN",
+    asset: {
+      src: "/Services%203D%20ASSETS/GRAPHIC%20DESIGNER/Photoshop.png",
+      side: "right",
+      alt: "Photoshop 3D Asset",
+    },
+  },
 ];
 
 export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
