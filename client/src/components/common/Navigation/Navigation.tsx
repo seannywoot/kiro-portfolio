@@ -61,7 +61,7 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
     <nav
       className={`fixed top-0 left-0 right-0 w-full z-50 pointer-events-none transition-all duration-300 ease-out ${
         isScrolled
-          ? 'bg-gradient-to-r from-white/[0.12] via-white/[0.04] to-white/[0.08] bg-neutral-950/40 backdrop-blur-2xl border-b border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25),0_10px_30px_rgba(0,0,0,0.4)]'
+          ? 'bg-gradient-to-r from-white/[0.12] via-white/[0.04] to-white/[0.08] bg-neutral-950/40 backdrop-blur-2xl shadow-[0_10px_30px_rgba(0,0,0,0.4)]'
           : 'bg-transparent'
       }`}
     >

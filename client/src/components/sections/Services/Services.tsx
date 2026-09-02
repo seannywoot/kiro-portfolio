@@ -112,13 +112,6 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
     >
       {/* Sticky Viewport */}
       <div className={styles.servicesSticky}>
-        {/* Top Header: ▪ SERVICES ▪ (Positioned tightly above the drum) */}
-        <div className={styles.topHeader}>
-          <span className={styles.headerDot} aria-hidden="true" />
-          <span>SERVICES</span>
-          <span className={styles.headerDot} aria-hidden="true" />
-        </div>
-
         {/* Ambient Top & Bottom Vignette Gradients */}
         <div className={styles.vignetteTop} aria-hidden="true" />
         <div className={styles.vignetteBottom} aria-hidden="true" />
@@ -131,6 +124,13 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
               transform: `translateY(${translateY}px)`,
             }}
           >
+            {/* Top Header: ▪ SERVICES ▪ (Scrolls with the drum) */}
+            <div className={styles.topHeader}>
+              <span className={styles.headerDot} aria-hidden="true" />
+              <span>SERVICES</span>
+              <span className={styles.headerDot} aria-hidden="true" />
+            </div>
+
             {servicesList.map((service, index) => {
               const isActive = index === activeIndex;
               const distanceFromActive = Math.abs(index - activeIndex);
