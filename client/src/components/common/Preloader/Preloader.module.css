@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Editorial Preloader — "Counter" Design
+   
+   A cinematic, minimalist preloader inspired by high-end editorial studios.
+   
+   TIMING:
+   - Counter: 0 → 100 over 2.8s (ease-out deceleration)
+   - Line expand: 0 → 100% width over 2.8s (synchronized)
+   - Hold: 400ms pause at 100% 
+   - Exit: 650ms curtain slide-up
+   ========================================================================== */
+
+/* Fullscreen Overlay */
+.preloader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-color: #121316;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1),
+              opacity 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform, opacity;
+}
+
+/* Exit: curtain slides up */
+.preloaderExiting {
+  transform: translateY(-100%);
+  opacity: 0.98;
+  pointer-events: none;
+}
+
+/* Subtle ambient radial glow */
+.ambientBackground {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(ellipse at 50% 50%, rgba(212, 91, 52, 0.05) 0%, transparent 60%);
+  z-index: 1;
+}
+
+/* ── Central Content Block ── */
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+/* ── Counter Display ── */
+.counter {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: clamp(5rem, 14vw, 12rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #ECEEF2;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+/* ── Horizontal Divider Line ── */
+.dividerTrack {
+  width: clamp(200px, 40vw, 480px);
+  height: 1px;
+  background-color: rgba(236, 238, 242, 0.1);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeIn 0.5s ease 0.2s forwards;
+}
+
+.dividerFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, #D45B34, #ECEEF2);
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
+  transition: transform 0.08s linear;
+}
+
+/* ── Name Label ── */
+.nameLabel {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: clamp(0.7rem, 0.5vw + 0.45rem, 0.95rem);
+  font-weight: 600;
+  letter-spacing: clamp(0.2em, 0.6vw, 0.4em);
+  text-transform: uppercase;
+  color: #8E95A2;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+}
+
+/* ── Corner Markers (Editorial Detail) ── */
+.cornerMark {
+  position: absolute;
+  z-index: 10;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: clamp(0.65rem, 0.35vw + 0.45rem, 0.8rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: rgba(142, 149, 162, 0.7);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.4s forwards;
+}
+
+.cornerTopLeft {
+  top: clamp(1rem, 3vh, 2.5rem);
+  left: clamp(1.25rem, 5vw, 6rem);
+}
+
+.cornerTopRight {
+  top: clamp(1rem, 3vh, 2.5rem);
+  right: clamp(1.25rem, 5vw, 6rem);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cornerBottomLeft {
+  bottom: clamp(1rem, 3vh, 2.5rem);
+  left: clamp(1.25rem, 5vw, 6rem);
+}
+
+.cornerBottomRight {
+  bottom: clamp(1rem, 3vh, 2.5rem);
+  right: clamp(1.25rem, 5vw, 6rem);
+}
+
+/* Status Dot */
+.statusDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background-color: #D45B34;
+  box-shadow: 0 0 8px rgba(212, 91, 52, 0.8);
+  animation: pulseDot 1.4s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.6;
+  }
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .counter,
+  .nameLabel,
+  .cornerMark,
+  .dividerTrack {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .dividerFill {
+    transition: none !important;
+    transform: scaleX(1) !important;
+  }
+
+  .preloaderExiting {
+    transform: none !important;
+    opacity: 0 !important;
+    transition: opacity 0.5s ease !important;
+  }
+}

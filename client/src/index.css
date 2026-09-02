@@ -200,11 +200,22 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    font-family: inherit;
   }
 
+  html,
   body {
     @apply bg-background text-foreground;
+    font-family: 'Hanken Grotesk', var(--font-sans), sans-serif;
     letter-spacing: var(--tracking-normal);
+  }
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: 'Hanken Grotesk', var(--font-sans), sans-serif;
   }
 
   /* Smooth scrolling for the entire page */

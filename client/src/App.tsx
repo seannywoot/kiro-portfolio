@@ -3,6 +3,7 @@ import { Hero } from "./components/sections/Hero/Hero";
 import Navigation from "./components/common/Navigation/Navigation";
 import ScreenReaderOnly from "./components/common/ScreenReaderOnly/ScreenReaderOnly";
 import ErrorBoundary from "./components/common/ErrorBoundary/ErrorBoundary";
+import Preloader from "./components/common/Preloader/Preloader";
 import ModernMarquee from "./components/sections/ModernMarquee/ModernMarquee";
 import About from "./components/sections/About/About";
 import WorkExperience from "./components/sections/WorkExperience/WorkExperience";
@@ -17,6 +18,8 @@ import {
 import { detectDeviceCapabilities, applyPerformanceOptimizations } from "./lib/device-detection";
 
 function App() {
+  const [isPreloading, setIsPreloading] = useState(true);
+  const [isHeroReady, setIsHeroReady] = useState(false);
   const [isAppReady, setIsAppReady] = useState(false);
 
   // Navigation sections configuration
@@ -68,23 +71,30 @@ function App() {
   }, []);
 
   return (
-    <div
-      className={`min-h-screen transition-opacity duration-500 ${
-        isAppReady ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      {/* Page header with navigation */}
-      <header
-        role="banner"
-        className="transition-transform duration-300 ease-out"
+    <>
+      {isPreloading && (
+        <Preloader
+          onStartExit={() => setIsHeroReady(true)}
+          onComplete={() => {
+            setIsHeroReady(true);
+            setIsPreloading(false);
+          }}
+        />
+      )}
+      <div
+        className={`min-h-screen transition-opacity duration-700 ${
+          isAppReady ? "opacity-100" : "opacity-0"
+        }`}
       >
+      {/* Page header with navigation */}
+      <header role="banner" className="relative z-50">
         <Navigation sections={navigationSections} />
       </header>
 
       {/* Main Content */}
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
         {/* Hero Section */}
-        <Hero />
+        <Hero isReady={isHeroReady} onCtaClick={handleHeroCTA} />
 
         <hr className="section-divider" />
 
@@ -234,6 +244,7 @@ function App() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
 

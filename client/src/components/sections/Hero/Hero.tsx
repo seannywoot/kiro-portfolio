@@ -8,12 +8,17 @@ export interface HeroProps {
   ctaText?: string;
   onCtaClick?: () => void;
   className?: string;
+  /**
+   * Triggers the choreographed entrance animations when true.
+   * Defaults to true if Hero is rendered standalone.
+   */
+  isReady?: boolean;
 }
 
 /**
  * Hero Section Component - Editorial & Minimalist Edition
  */
-export function Hero({ onCtaClick, className = "" }: HeroProps) {
+export function Hero({ onCtaClick, className = "", isReady = true }: HeroProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
@@ -25,11 +30,15 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
   ];
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 60);
-    return () => clearTimeout(timer);
-  }, []);
+    if (isReady) {
+      const timer = setTimeout(() => {
+        setIsLoaded(true);
+      }, 50);
+      return () => clearTimeout(timer);
+    } else {
+      setIsLoaded(false);
+    }
+  }, [isReady]);
 
   // Subtle interactive ambient glow for desktop
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
@@ -89,7 +98,7 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
         <img
           src="/Hero%20Section/Hero%20Section.png"
           alt="Seann Tamondong - Front-End Developer"
-          className={`${styles.heroImg} ${imgLoaded ? styles.heroImgLoaded : ""}`}
+          className={`${styles.heroImg} ${imgLoaded && isLoaded ? styles.heroImgLoaded : ""}`}
           loading="eager"
           decoding="async"
           onLoad={() => setImgLoaded(true)}
@@ -150,7 +159,6 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
             </div>
 
             <div className={styles.roleWrapper}>
-              <span className={styles.roleDot} aria-hidden="true" />
               <div className={styles.roleTrackWrapper}>
                 <div className={styles.roleTrack}>
                   {roles.map((role, idx) => (
