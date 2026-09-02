@@ -271,13 +271,12 @@
   padding-bottom: 0.08em;
 }
 
-/* Fluid Typography: Role Tagline & Animated Switcher */
+/* Fluid Typography: Role Tagline & Infinite Scroll Track */
 .roleWrapper {
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  height: clamp(1.2rem, 1.6vw + 0.8rem, 2rem);
+  height: clamp(1.3rem, 1.6vw + 0.8rem, 2.1rem);
   width: fit-content;
   padding: 0.15rem 0;
 }
@@ -291,27 +290,60 @@
   flex-shrink: 0;
 }
 
-.roleText {
+.roleTrackWrapper {
+  overflow: hidden;
+  height: clamp(1.3rem, 1.6vw + 0.8rem, 2.1rem);
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+}
+
+.roleTrack {
+  display: flex;
+  flex-direction: column;
+  animation: roleInfiniteScroll 8.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  will-change: transform;
+}
+
+.roleItem {
   font-family: 'Hanken Grotesk', sans-serif;
   font-size: clamp(0.6875rem, 0.45vw + 0.45rem, 1.15rem);
   font-weight: 600;
   letter-spacing: clamp(0.16em, 0.4vw, 0.26em);
   text-transform: uppercase;
   color: #ECEEF2;
-  display: inline-block;
-  width: fit-content;
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
+  white-space: nowrap;
+  height: clamp(1.3rem, 1.6vw + 0.8rem, 2.1rem);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
-.roleEntering {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes roleInfiniteScroll {
+  0%,
+  26% {
+    transform: translateY(0%);
+  }
+  33.3%,
+  59.3% {
+    transform: translateY(-25%);
+  }
+  66.6%,
+  92.6% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(-75%);
+  }
 }
 
-.roleExiting {
-  opacity: 0;
-  transform: translateY(-8px);
+@media (prefers-reduced-motion: reduce) {
+  .roleTrack {
+    animation: none;
+    transform: translateY(0);
+  }
 }
 
 /* 

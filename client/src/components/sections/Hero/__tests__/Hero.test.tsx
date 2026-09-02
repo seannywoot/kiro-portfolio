@@ -9,9 +9,11 @@ describe('Hero', () => {
     expect(screen.getByText(/Structured/i)).toBeInTheDocument();
     expect(screen.getByText(/by design/i)).toBeInTheDocument();
     expect(screen.getByText(/Interfaces built around clear hierarchy/i)).toBeInTheDocument();
-    expect(screen.getByText(/Seann/i)).toBeInTheDocument();
-    expect(screen.getByText(/Tamondong/i)).toBeInTheDocument();
-    expect(screen.getByText(/FRONT-END DEVELOPER/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /^Seann$/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /^Tamondong$/i })).toBeInTheDocument();
+    expect(screen.getAllByText(/FRONT-END DEVELOPER/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(/UI\/UX DESIGNER/i)).toBeInTheDocument();
+    expect(screen.getByText(/GRAPHIC DESIGNER/i)).toBeInTheDocument();
   });
 
   it('handles scroll CTA click', () => {

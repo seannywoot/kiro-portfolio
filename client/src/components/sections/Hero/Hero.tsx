@@ -16,8 +16,6 @@ export interface HeroProps {
 export function Hero({ onCtaClick, className = "" }: HeroProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
 
   const roles = [
@@ -32,19 +30,6 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
     }, 60);
     return () => clearTimeout(timer);
   }, []);
-
-  // Smooth editorial role rotator
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setRoleIndex((prev) => (prev + 1) % roles.length);
-        setIsTransitioning(false);
-      }, 350);
-    }, 3200);
-
-    return () => clearInterval(interval);
-  }, [roles.length]);
 
   // Subtle interactive ambient glow for desktop
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
@@ -166,14 +151,19 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
 
             <div className={styles.roleWrapper}>
               <span className={styles.roleDot} aria-hidden="true" />
-              <span
-                key={roleIndex}
-                className={`${styles.roleText} ${
-                  isTransitioning ? styles.roleExiting : styles.roleEntering
-                }`}
-              >
-                {roles[roleIndex]}
-              </span>
+              <div className={styles.roleTrackWrapper}>
+                <div className={styles.roleTrack}>
+                  {roles.map((role, idx) => (
+                    <span key={idx} className={styles.roleItem}>
+                      {role}
+                    </span>
+                  ))}
+                  {/* Cloned first item for seamless infinite scroll loop */}
+                  <span aria-hidden="true" className={styles.roleItem}>
+                    {roles[0]}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
