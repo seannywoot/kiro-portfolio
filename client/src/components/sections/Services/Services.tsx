@@ -8,15 +8,27 @@ export interface ServicesProps {
 interface ServiceItem {
   id: string;
   title: string;
+  asset?: {
+    src: string;
+    side: "left" | "right";
+    alt: string;
+  };
 }
 
 const servicesList: ServiceItem[] = [
-  { id: "01", title: "BRAND STRATEGY" },
-  { id: "02", title: "CREATIVE DIRECTION" },
-  { id: "03", title: "UI/UX DESIGN" },
-  { id: "04", title: "WEBSITE DESIGN" },
-  { id: "05", title: "DESIGN SYSTEM" },
-  { id: "06", title: "FRONT-END DEVELOPMENT" },
+  { id: "01", title: "UI/UX DESIGN" },
+  {
+    id: "02",
+    title: "WEBSITE DESIGN",
+    asset: {
+      src: "/Services%203D%20ASSETS/WEBSITE%20DESIGN/webflow%20left%20.png",
+      side: "left",
+      alt: "Webflow 3D Asset",
+    },
+  },
+  { id: "03", title: "WEB DEVELOPMENT" },
+  { id: "04", title: "VIDEO EDITING" },
+  { id: "05", title: "GRAPHIC DESIGN" },
 ];
 
 export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
@@ -157,7 +169,29 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
                           <span className={styles.squareDot} />
                         </div>
 
-                        <h2 className={styles.activeTitle}>{service.title}</h2>
+                        <div className={styles.activeTitleContainer}>
+                          {service.asset?.side === "left" && (
+                            <div className={styles.assetWrapperLeft}>
+                              <img
+                                src={service.asset.src}
+                                alt={service.asset.alt}
+                                className={styles.assetImage}
+                              />
+                            </div>
+                          )}
+
+                          <h2 className={styles.activeTitle}>{service.title}</h2>
+
+                          {service.asset?.side === "right" && (
+                            <div className={styles.assetWrapperRight}>
+                              <img
+                                src={service.asset.src}
+                                alt={service.asset.alt}
+                                className={styles.assetImage}
+                              />
+                            </div>
+                          )}
+                        </div>
 
                         <div className={`${styles.ribbonSide} ${styles.ribbonSideRight}`}>
                           <span className={styles.squareDot} />

@@ -25,8 +25,10 @@ export function Hero({ onCtaClick, className = "", isReady = true }: HeroProps) 
   const [scrollY, setScrollY] = useState(0);
 
   const roles = [
-    "FRONT-END DEVELOPER",
     "UI/UX DESIGNER",
+    "WEBSITE DESIGNER",
+    "WEB DEVELOPER",
+    "VIDEO EDITOR",
     "GRAPHIC DESIGNER",
   ];
 

@@ -143,7 +143,6 @@
   border-top: 1px solid rgba(255, 255, 255, 0.9);
   border-bottom: 1px solid rgba(255, 255, 255, 0.9);
   position: relative;
-  overflow: hidden;
 }
 
 /* Ribbon Segment Left / Right with square dots */
@@ -155,6 +154,7 @@
   padding: 0 clamp(1.25rem, 3vw, 3.5rem);
   height: 100%;
   flex-shrink: 0;
+  z-index: 5;
 }
 
 .ribbonSideLeft {
@@ -172,17 +172,133 @@
   display: inline-block;
 }
 
+/* Active Title Container & 3D Assets */
+.activeTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  padding: 0 1rem;
+  position: relative;
+}
+
+/* Base / Mobile (<768px) */
+.assetWrapperLeft {
+  position: absolute;
+  left: clamp(-3.5rem, -4vw, -1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.assetWrapperRight {
+  position: absolute;
+  right: clamp(-3.5rem, -4vw, -1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.assetImage {
+  height: clamp(7.5rem, 18vh, 11rem);
+  width: auto;
+  max-width: 32vw;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
+  user-select: none;
+  pointer-events: none;
+  transform: translateZ(0);
+  transition: height 0.3s ease, left 0.3s ease, right 0.3s ease;
+}
+
+/* Extra Narrow Mobile (<480px) */
+@media (max-width: 480px) {
+  .assetWrapperLeft {
+    left: clamp(-2.5rem, -3vw, -0.5rem);
+  }
+
+  .assetWrapperRight {
+    right: clamp(-2.5rem, -3vw, -0.5rem);
+  }
+
+  .assetImage {
+    height: clamp(6rem, 15vh, 8.5rem);
+    max-width: 28vw;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  }
+}
+
+/* Tablet: 768px - 1023px (Matches Hero Section Breakpoint) */
+@media (min-width: 768px) {
+  .assetWrapperLeft {
+    left: clamp(-7rem, -6vw, -2.5rem);
+  }
+
+  .assetWrapperRight {
+    right: clamp(-7rem, -6vw, -2.5rem);
+  }
+
+  .assetImage {
+    height: clamp(12rem, 24vh, 18rem);
+    max-width: 28vw;
+    filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.5));
+  }
+}
+
+/* Desktop & Large Screens: >=1024px (Matches Hero Section Breakpoint) */
+@media (min-width: 1024px) {
+  .assetWrapperLeft {
+    left: clamp(-10rem, -8vw, -4.5rem);
+  }
+
+  .assetWrapperRight {
+    right: clamp(-10rem, -8vw, -4.5rem);
+  }
+
+  .assetImage {
+    height: clamp(16rem, 32vh, 26rem);
+    max-width: none;
+    filter: drop-shadow(0 22px 44px rgba(0, 0, 0, 0.55)) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+  }
+}
+
+/* Large Displays: >=1440px to 1920px+ */
+@media (min-width: 1440px) {
+  .assetWrapperLeft {
+    left: clamp(-14rem, -10vw, -7rem);
+  }
+
+  .assetWrapperRight {
+    right: clamp(-14rem, -10vw, -7rem);
+  }
+
+  .assetImage {
+    height: clamp(18rem, 36vh, 32rem);
+    max-width: none;
+    filter: drop-shadow(0 26px 52px rgba(0, 0, 0, 0.6)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  }
+}
+
 /* Active Title in Ribbon */
 .activeTitle {
-  font-size: clamp(1.75rem, 3.8vw, 3.5rem);
+  font-size: clamp(1.5rem, 3.6vw, 3.5rem);
   font-weight: 850;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: #0b0c0e;
   text-align: center;
-  flex: 1;
   white-space: nowrap;
-  padding: 0 1rem;
+  padding: 0;
+  margin: 0;
 }
 
 /* Subtle Shadow/Reflection Bar below ribbon */
