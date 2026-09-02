@@ -178,52 +178,12 @@
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--ring) 10%, transparent);
 }
 
-/* Enhanced skip link for better accessibility */
-.skipLink {
-  position: absolute;
-  top: -50px;
-  left: 8px;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  padding: 12px 16px;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 14px;
-  z-index: 1000;
-  box-shadow: 0 4px 6px color-mix(in srgb, var(--shadow-color) 10%, transparent);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Hardware acceleration for smooth animation */
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-}
-
-.skipLink:focus {
-  top: 8px;
-  transform: translate3d(0, 0, 0) scale(1.02);
-  box-shadow: 0 8px 12px color-mix(in srgb, var(--shadow-color) 15%, transparent);
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .techMarqueeSection:focus-within {
     outline: 3px solid;
     outline-offset: 2px;
     background: rgba(0, 0, 0, 0.05);
-  }
-  
-  .skipLink {
-    background: #000;
-    color: #fff;
-    border: 2px solid #fff;
-  }
-  
-  .skipLink:focus {
-    background: #fff;
-    color: #000;
-    border: 2px solid #000;
   }
 }
 
@@ -232,11 +192,6 @@
   .techMarqueeSection:focus-within {
     outline-color: var(--ring);
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--ring) 10%, transparent);
-  }
-  
-  .skipLink {
-    background: var(--primary);
-    box-shadow: 0 4px 6px color-mix(in srgb, var(--shadow-color) 30%, transparent);
   }
 }
 

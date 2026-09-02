@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Hero } from "./components/sections/Hero/Hero";
 import Navigation from "./components/common/Navigation/Navigation";
-import ScrollProgress from "./components/common/ScrollProgress/ScrollProgress";
 import ScreenReaderOnly from "./components/common/ScreenReaderOnly/ScreenReaderOnly";
 import ErrorBoundary from "./components/common/ErrorBoundary/ErrorBoundary";
 import SkeletonLoader from "./components/common/SkeletonLoader/SkeletonLoader";
@@ -114,18 +113,12 @@ function App() {
         isAppReady ? "opacity-100" : "opacity-0"
       }`}
     >
-      {/* Skip to main content link for keyboard users */}
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
-
       {/* Page header with navigation */}
       <header
         role="banner"
         className="transition-transform duration-300 ease-out"
       >
         <Navigation sections={navigationSections} />
-        <ScrollProgress />
       </header>
 
       {/* Main Content */}

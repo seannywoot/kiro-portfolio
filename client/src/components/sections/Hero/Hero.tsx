@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styles from "./Hero.module.css";
 
 export interface HeroProps {
@@ -11,27 +11,52 @@ export interface HeroProps {
 }
 
 /**
- * Hero Section Component
- * 
- * Implements Figma Auto Layout Strategy across 3 Breakpoints:
- * - Mobile (<=767px): Vertical stack layout, fill-width touch targets (min 44px), headline omitted for subject focus.
- * - Tablet (768px–1023px): 12-column fluid grid, fluid clamp typography, side-by-side auto layout.
- * - Laptop/Desktop (>=1024px): Full 3-column auto layout (Headline Hug -> Subject Window -> Name/Role Hug).
- * 
- * Typography & Sizing Modes:
- * - Headline & Subtitle: clamp() sizing, fit-content hug with max-width fill constraints.
- * - Name & Position: clamp() sizing, anchored to bottom-right with predictable gap.
- * - CTA Button: 44px min touch target, fill-width on mobile, hug-content on tablet/desktop.
- * - Contrast Scrim: WCAG AA 4.5:1 compliant contrast ratio across all device backgrounds.
+ * Hero Section Component - Editorial & Minimalist Edition
  */
 export function Hero({ onCtaClick, className = "" }: HeroProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+
+  const roles = [
+    "FRONT-END DEVELOPER",
+    "UI/UX DESIGNER",
+    "GRAPHIC DESIGNER",
+  ];
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 50);
+    }, 60);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Smooth editorial role rotator
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setRoleIndex((prev) => (prev + 1) % roles.length);
+        setIsTransitioning(false);
+      }, 350);
+    }, 3200);
+
+    return () => clearInterval(interval);
+  }, [roles.length]);
+
+  // Subtle interactive ambient glow for desktop
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setMousePos(null);
   }, []);
 
   const handleScrollClick = () => {
@@ -53,12 +78,11 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
       id="hero"
       aria-label="Introduction and hero section"
       className={`${styles.heroContainer} ${className}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       {/* 
         Art-Directed Responsive Background Picture (Zero CLS):
-        - Desktop: High-res WebP / PNG asset
-        - Tablet: 1024px+ High-DPI WebP asset
-        - Mobile: 720p High-DPI WebP asset
       */}
       <picture className={styles.pictureWrapper}>
         <source
@@ -80,22 +104,34 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
         <img
           src="/Hero%20Section/Hero%20Section.png"
           alt="Seann Tamondong - Front-End Developer"
-          className={styles.heroImg}
+          className={`${styles.heroImg} ${imgLoaded ? styles.heroImgLoaded : ""}`}
           loading="eager"
           decoding="async"
+          onLoad={() => setImgLoaded(true)}
         />
       </picture>
 
-      {/* WCAG AA 4.5:1 Contrast Scrim Overlay */}
+      {/* WCAG Contrast Scrim Overlay */}
       <div className={styles.heroOverlay} aria-hidden="true" />
 
-      {/* Figma Auto Layout Main Frame */}
+      {/* Ambient Interactive Spotlight */}
+      {mousePos && (
+        <div
+          className={styles.ambientSpotlight}
+          style={{
+            background: `radial-gradient(750px circle at ${mousePos.x}px ${mousePos.y}px, rgba(212, 91, 52, 0.08), transparent 70%)`,
+          }}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Main Auto Layout Frame */}
       <div className={styles.autoLayoutMainFrame}>
         
-        {/* Middle Content Auto Layout Frame (Responsive Grid / Stack) */}
+        {/* Middle Content Auto Layout Frame */}
         <div className={styles.contentGrid}>
           
-          {/* Top-Left Headline & Subtitle Frame (Auto Layout: Gap + Hug Sizing) */}
+          {/* Top-Left Headline & Subtitle Frame */}
           <div
             className={`${styles.headlineFrame} ${
               isLoaded ? styles.fadeInUp : "opacity-0"
@@ -104,45 +140,54 @@ export function Hero({ onCtaClick, className = "" }: HeroProps) {
           >
             <h1 id="hero-heading" className={styles.headlineText}>
               Structured <br />
-              <span className="text-white/95">by design</span>
+              <span className={styles.headlineHighlight}>by design</span>
             </h1>
             
             <p className={styles.subheadlineText}>
-              Interfaces built around clear hierarchy and seamless motion—where
-              visual refinement serves real utility.
+              Interfaces built around clear hierarchy and seamless <br />
+              motion—where visual refinement serves real utility.
             </p>
           </div>
 
-          {/* Center Subject Spacer (Preserves Subject Face Framing on Desktop) */}
+          {/* Center Subject Spacer */}
           <div className={styles.centerSubjectSpacer} aria-hidden="true" />
 
-          {/* Bottom-Right Name & Role Frame (Auto Layout: Vertical Gap + End Alignment) */}
+          {/* Bottom-Right Name & Role Frame */}
           <div
             className={`${styles.nameFrame} ${
               isLoaded ? styles.fadeInUp : "opacity-0"
             }`}
-            style={{ animationDelay: "400ms" }}
+            style={{ animationDelay: "380ms" }}
           >
             <div className={styles.nameGroup}>
               <h2 className={styles.nameText}>Seann</h2>
               <h2 className={styles.nameText}>Tamondong</h2>
             </div>
 
-            <span className={styles.roleText}>
-              FRONT-END DEVELOPER
-            </span>
+            <div className={styles.roleWrapper}>
+              <span className={styles.roleDot} aria-hidden="true" />
+              <span
+                key={roleIndex}
+                className={`${styles.roleText} ${
+                  isTransitioning ? styles.roleExiting : styles.roleEntering
+                }`}
+              >
+                {roles[roleIndex]}
+              </span>
+            </div>
           </div>
 
         </div>
 
-        {/* Bottom Baseline & Interactive Controls Frame (Auto Layout: Space-Between) */}
+        {/* Bottom Baseline & Interactive Controls Frame */}
         <div
           className={`${styles.bottomControlsFrame} ${
             isLoaded ? styles.fadeIn : "opacity-0"
           }`}
-          style={{ animationDelay: "650ms" }}
+          style={{ animationDelay: "600ms" }}
         >
           <div className={styles.metaInfoText}>
+            <span className={styles.metaStatusDot} aria-hidden="true" />
             PORTFOLIO / SEANN TAMONDONG
           </div>
 

@@ -73,51 +73,57 @@
 }
 
 :root {
-  /* Claude Theme - Light Mode */
-  --background: oklch(0.9818 0.0054 95.0986);
-  --foreground: oklch(0.3438 0.0269 95.7226);
-  --card: oklch(0.9818 0.0054 95.0986);
-  --card-foreground: oklch(0.1908 0.002 106.5859);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2671 0.0196 98.939);
-  --primary: oklch(0.6171 0.1375 39.0427);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.9245 0.0138 92.9892);
-  --secondary-foreground: oklch(0.4334 0.0177 98.6048);
-  --muted: oklch(0.9341 0.0153 90.239);
-  --muted-foreground: oklch(0.6059 0.0075 97.4233);
-  --accent: oklch(0.9245 0.0138 92.9892);
-  --accent-foreground: oklch(0.2671 0.0196 98.939);
-  --destructive: oklch(0.1908 0.002 106.5859);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.8847 0.0069 97.3627);
-  --input: oklch(0.7621 0.0156 98.3528);
-  --ring: oklch(0.6171 0.1375 39.0427);
-  --chart-1: oklch(0.5583 0.1276 42.9956);
-  --chart-2: oklch(0.6898 0.1581 290.4107);
-  --chart-3: oklch(0.8816 0.0276 93.128);
-  --chart-4: oklch(0.8822 0.0403 298.1792);
-  --chart-5: oklch(0.5608 0.1348 42.0584);
-  --sidebar: oklch(0.9663 0.008 98.8792);
-  --sidebar-foreground: oklch(0.359 0.0051 106.6524);
-  --sidebar-primary: oklch(0.6171 0.1375 39.0427);
-  --sidebar-primary-foreground: oklch(0.9881 0 0);
-  --sidebar-accent: oklch(0.9245 0.0138 92.9892);
-  --sidebar-accent-foreground: oklch(0.325 0 0);
-  --sidebar-border: oklch(0.9401 0 0);
-  --sidebar-ring: oklch(0.7731 0 0);
+  /* Editorial Palette - Base Tokens */
+  --surface-base: #121316;
+  --surface-elevated: #1B1D22;
+  --border-hairline: #2C3038;
+  --type-primary: #ECEEF2;
+  --type-secondary: #8E95A2;
+  --editorial-accent: #D45B34;
 
-  /* Portfolio-specific variables using Claude theme colors */
-  --portfolio-primary: oklch(0.6171 0.1375 39.0427);
-  /* Claude orange */
-  --portfolio-secondary: oklch(0.6898 0.1581 290.4107);
-  /* Claude purple accent */
-  --portfolio-text-muted: oklch(0.6059 0.0075 97.4233);
-  --portfolio-surface: oklch(0.9818 0.0054 95.0986);
-  --portfolio-surface-elevated: oklch(0.9663 0.008 98.8792);
+  --background: #121316;
+  --foreground: #ECEEF2;
+  --card: #1B1D22;
+  --card-foreground: #ECEEF2;
+  --popover: #1B1D22;
+  --popover-foreground: #ECEEF2;
+  --primary: #D45B34;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1B1D22;
+  --secondary-foreground: #8E95A2;
+  --muted: #1B1D22;
+  --muted-foreground: #8E95A2;
+  --accent: #D45B34;
+  --accent-foreground: #FFFFFF;
+  --destructive: #E24A4A;
+  --destructive-foreground: #FFFFFF;
+  --border: #2C3038;
+  --input: #2C3038;
+  --ring: #D45B34;
+  --chart-1: #D45B34;
+  --chart-2: #E27A3F;
+  --chart-3: #8E95A2;
+  --chart-4: #2C3038;
+  --chart-5: #1B1D22;
 
-  /* Claude theme typography and spacing */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+  --sidebar: #121316;
+  --sidebar-foreground: #ECEEF2;
+  --sidebar-primary: #D45B34;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1B1D22;
+  --sidebar-accent-foreground: #ECEEF2;
+  --sidebar-border: #2C3038;
+  --sidebar-ring: #D45B34;
+
+  /* Portfolio-specific variables */
+  --portfolio-primary: #D45B34;
+  --portfolio-secondary: #E27A3F;
+  --portfolio-text-muted: #8E95A2;
+  --portfolio-surface: #121316;
+  --portfolio-surface-elevated: #1B1D22;
+
+  /* Typography and spacing */
+  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -130,100 +136,55 @@
   --tracking-wider: calc(var(--tracking-normal) + 0.05em);
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
   --tracking-normal: 0em;
-  --shadow-color: oklch(0 0 0);
-  --shadow-opacity: 0.1;
+  --shadow-color: #000000;
+  --shadow-opacity: 0.15;
   --shadow-blur: 3px;
   --shadow-spread: 0px;
   --shadow-offset-x: 0;
   --shadow-offset-y: 1px;
   --letter-spacing: 0em;
   --spacing: 0.25rem;
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 2px 4px -1px hsl(0 0% 0% / 0.1);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 4px 6px -1px hsl(0 0% 0% / 0.1);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 8px 10px -1px hsl(0 0% 0% / 0.1);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+  --shadow-2xs: 0 1px 3px 0px rgba(0, 0, 0, 0.2);
+  --shadow-xs: 0 1px 3px 0px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px 0px rgba(0, 0, 0, 0.25);
+  --shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-.dark {
-  /* Claude Theme - Dark Mode */
-  --background: oklch(0.2679 0.0036 106.6427);
-  --foreground: oklch(0.8074 0.0142 93.0137);
-  --card: oklch(0.2679 0.0036 106.6427);
-  --card-foreground: oklch(0.9818 0.0054 95.0986);
-  --popover: oklch(0.3085 0.0035 106.6039);
-  --popover-foreground: oklch(0.9211 0.004 106.4781);
-  --primary: oklch(0.6724 0.1308 38.7559);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.9818 0.0054 95.0986);
-  --secondary-foreground: oklch(0.3085 0.0035 106.6039);
-  --muted: oklch(0.2213 0.0038 106.707);
-  --muted-foreground: oklch(0.7713 0.0169 99.0657);
-  --accent: oklch(0.213 0.0078 95.4245);
-  --accent-foreground: oklch(0.9663 0.008 98.8792);
-  --destructive: oklch(0.6368 0.2078 25.3313);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.3618 0.0101 106.8928);
-  --input: oklch(0.4336 0.0113 100.2195);
-  --ring: oklch(0.6724 0.1308 38.7559);
-  --chart-1: oklch(0.5583 0.1276 42.9956);
-  --chart-2: oklch(0.6898 0.1581 290.4107);
-  --chart-3: oklch(0.213 0.0078 95.4245);
-  --chart-4: oklch(0.3074 0.0516 289.323);
-  --chart-5: oklch(0.5608 0.1348 42.0584);
-  --sidebar: oklch(0.2357 0.0024 67.7077);
-  --sidebar-foreground: oklch(0.8074 0.0142 93.0137);
-  --sidebar-primary: oklch(0.325 0 0);
-  --sidebar-primary-foreground: oklch(0.9881 0 0);
-  --sidebar-accent: oklch(0.168 0.002 106.6177);
-  --sidebar-accent-foreground: oklch(0.8074 0.0142 93.0137);
-  --sidebar-border: oklch(0.9401 0 0);
-  --sidebar-ring: oklch(0.7731 0 0);
+/* Editorial Navigation Text Fill Hover Effects (Left-to-Right Accent Fill) */
+.nav-fill-accent {
+  display: inline-block;
+  background: linear-gradient(to right, #D45B34 50%, #ECEEF2 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  transition: background-position 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: background-position;
+}
 
-  /* Portfolio-specific dark mode colors using Claude theme */
-  --portfolio-primary: oklch(0.6724 0.1308 38.7559);
-  /* Claude orange dark */
-  --portfolio-secondary: oklch(0.6898 0.1581 290.4107);
-  /* Claude purple accent */
-  --portfolio-text-muted: oklch(0.7713 0.0169 99.0657);
-  --portfolio-surface: oklch(0.2679 0.0036 106.6427);
-  --portfolio-surface-elevated: oklch(0.3085 0.0035 106.6039);
+/* Hovering button OR text triggers slow left-to-right fill */
+button:hover .nav-fill-accent,
+.group:hover .nav-fill-accent,
+.nav-fill-accent:hover {
+  background-position: 0% 0 !important;
+}
 
-  /* Claude theme typography and spacing */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  --radius: 0.5rem;
-  --shadow-color: oklch(0 0 0);
-  --shadow-opacity: 0.1;
-  --shadow-blur: 3px;
-  --shadow-spread: 0px;
-  --shadow-offset-x: 0;
-  --shadow-offset-y: 1px;
-  --letter-spacing: 0em;
-  --spacing: 0.25rem;
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 2px 4px -1px hsl(0 0% 0% / 0.1);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 4px 6px -1px hsl(0 0% 0% / 0.1);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 8px 10px -1px hsl(0 0% 0% / 0.1);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+/* Active State: permanently accent color with no underline */
+.nav-fill-accent-active {
+  display: inline-block;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  color: #D45B34 !important;
+  -webkit-text-fill-color: #D45B34 !important;
+  font-weight: 700;
 }
 
 /* Section Divider */
@@ -326,27 +287,6 @@
     }
   }
 
-  /* Skip link for keyboard navigation */
-  .skip-link {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: var(--primary);
-    color: var(--primary-foreground);
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 500;
-    z-index: 1000;
-    transition: top 0.3s ease;
-  }
-
-  .skip-link:focus {
-    top: 6px;
-    outline: 2px solid var(--ring);
-    outline-offset: 2px;
-  }
-
   /* Enhanced focus indicators for better accessibility */
   *:focus-visible {
     outline: 2px solid var(--ring);
@@ -391,58 +331,46 @@
       transition-duration: 0.01ms !important;
     }
 
-    .skip-link {
-      transition: none;
-    }
-  }
-
-  /* Dark mode adjustments for accessibility */
-  @media (prefers-color-scheme: dark) {
-    .skip-link {
-      background: var(--primary);
-      color: var(--primary-foreground);
-    }
-
     *:focus-visible {
       outline-color: var(--ring);
     }
   }
-}/
-* Device-specific performance optimizations */
-.device-low-end {
-  --animation-quality: low;
-  --blur-effects: none;
-  --backdrop-filter: none;
-}
 
-.device-mobile {
-  --animation-quality: medium;
-  --blur-effects: blur(4px);
-  --backdrop-filter: blur(4px);
-}
+  /* Device-specific performance optimizations */
+  .device-low-end {
+    --animation-quality: low;
+    --blur-effects: none;
+    --backdrop-filter: none;
+  }
 
-.device-desktop {
-  --animation-quality: high;
-  --blur-effects: blur(8px);
-  --backdrop-filter: blur(8px);
-}
+  .device-mobile {
+    --animation-quality: medium;
+    --blur-effects: blur(4px);
+    --backdrop-filter: blur(4px);
+  }
 
-.reduce-motion * {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
-  scroll-behavior: auto !important;
-}
+  .device-desktop {
+    --animation-quality: high;
+    --blur-effects: blur(8px);
+    --backdrop-filter: blur(8px);
+  }
 
-/* Performance-optimized backdrop filters */
-.backdrop-blur {
-  backdrop-filter: var(--backdrop-filter);
-  -webkit-backdrop-filter: var(--backdrop-filter);
-}
+  .reduce-motion * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 
-/* Hardware acceleration for animations */
-.gpu-accelerated {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: transform;
-}
+  /* Performance-optimized backdrop filters */
+  .backdrop-blur {
+    backdrop-filter: var(--backdrop-filter);
+    -webkit-backdrop-filter: var(--backdrop-filter);
+  }
+
+  /* Hardware acceleration for animations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+  }
