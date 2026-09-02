@@ -155,44 +155,46 @@
 }
 
 /* Editorial Navigation Text Fill Hover Effects (Left-to-Right Accent Fill) */
-.nav-fill-accent {
-  display: inline-block;
-  background: linear-gradient(to right, #D45B34 50%, #ECEEF2 50%);
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  transition: background-position 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: background-position;
-}
+@layer base {
+  .nav-fill-accent {
+    display: inline-block;
+    background: linear-gradient(to right, #D45B34 50%, #ECEEF2 50%) !important;
+    background-size: 200% 100% !important;
+    background-position: 100% 0 !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+    transition: background-position 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: background-position;
+  }
 
-/* Hovering button OR text triggers slow left-to-right fill */
-button:hover .nav-fill-accent,
-.group:hover .nav-fill-accent,
-.nav-fill-accent:hover {
-  background-position: 0% 0 !important;
-}
+  /* Hovering button OR text triggers slow left-to-right fill */
+  button:hover .nav-fill-accent,
+  .group:hover .nav-fill-accent,
+  .nav-fill-accent:hover {
+    background-position: 0% 0 !important;
+  }
 
-/* Active State: permanently accent color with no underline */
-.nav-fill-accent-active {
-  display: inline-block;
-  background: none !important;
-  background-image: none !important;
-  -webkit-background-clip: unset !important;
-  background-clip: unset !important;
-  color: #D45B34 !important;
-  -webkit-text-fill-color: #D45B34 !important;
-  font-weight: 700;
-}
+  /* Active State: permanently accent color with no underline */
+  .nav-fill-accent-active {
+    display: inline-block;
+    background: none !important;
+    background-image: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    color: #D45B34 !important;
+    -webkit-text-fill-color: #D45B34 !important;
+    font-weight: 700;
+  }
 
-/* Section Divider */
-.section-divider {
-  width: 80%;
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 0 auto;
+  /* Section Divider */
+  .section-divider {
+    width: 80%;
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 auto;
+  }
 }
 
 @layer base {
@@ -374,3 +376,4 @@ button:hover .nav-fill-accent,
     -webkit-transform: translateZ(0);
     will-change: transform;
   }
+}
