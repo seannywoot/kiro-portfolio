@@ -67,7 +67,7 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
     >
       <div
         className={`max-w-[1920px] mx-auto px-[clamp(1rem,4.5vw,6rem)] flex justify-between items-center text-white pointer-events-auto font-['Hanken_Grotesk',sans-serif] relative transition-all duration-300 ease-out ${
-          isScrolled ? 'py-3.5 md:py-4' : 'py-[clamp(0.75rem,3vh,3.25rem)]'
+          isScrolled ? 'py-3.5 md:py-4' : 'py-[clamp(0.625rem,1.5vh,3.25rem)]'
         }`}
       >
 

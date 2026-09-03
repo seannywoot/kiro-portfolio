@@ -84,12 +84,12 @@ function App() {
         />
       )}
       <div
-        className={`min-h-screen transition-opacity duration-700 ${
+        className={`min-h-screen max-w-full overflow-x-clip transition-opacity duration-700 ${
           isAppReady ? "opacity-100" : "opacity-0"
         }`}
       >
       {/* Page header with navigation */}
-      <header role="banner" className="relative z-50">
+      <header role="banner" className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
         <Navigation sections={navigationSections} />
       </header>
 

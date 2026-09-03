@@ -208,6 +208,8 @@
     @apply bg-background text-foreground;
     font-family: 'Hanken Grotesk', var(--font-sans), sans-serif;
     letter-spacing: var(--tracking-normal);
+    overflow-x: clip;
+    max-width: 100%;
   }
 
   button,
@@ -317,6 +319,12 @@
   [tabindex]:not([tabindex="-1"]) {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* Exempt nav buttons from forced 44px min-height — nav padding provides adequate touch targets */
+  nav button {
+    min-height: unset;
+    min-width: unset;
   }
 
   /* High contrast mode support */

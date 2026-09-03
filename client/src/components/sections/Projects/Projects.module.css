@@ -3,6 +3,7 @@
   padding: 6rem 0;
   background: var(--background);
   position: relative;
+  overflow-x: clip;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -72,6 +73,23 @@
 .sectionDivider {
   margin: 4rem 0 3rem 0;
   text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.sectionDivider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+  z-index: 0;
 }
 
 .sectionSubtitle {
@@ -80,8 +98,10 @@
   color: var(--foreground);
   position: relative;
   display: inline-block;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   background: var(--background);
+  z-index: 1;
+  max-width: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -91,20 +111,10 @@
   }
 }
 
-.sectionSubtitle::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: -50%;
-  right: -50%;
-  height: 1px;
-  background: var(--border);
-  z-index: -1;
-}
-
-@media (prefers-color-scheme: dark) {
-  .sectionSubtitle::before {
-    background: var(--border);
+@media (max-width: 480px) {
+  .sectionSubtitle {
+    font-size: 1.125rem;
+    padding: 0 0.75rem;
   }
 }
 
