@@ -68,6 +68,9 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [rowHeight, setRowHeight] = useState(110);
 
+  const [firstIconVisible, setFirstIconVisible] = useState(false);
+  const firstIconTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   // Measure row height responsively
   useEffect(() => {
     const updateDimensions = () => {
@@ -82,6 +85,15 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (firstIconTimerRef.current) {
+        clearTimeout(firstIconTimerRef.current);
+      }
+    };
   }, []);
 
   // Handle scroll progress within the sticky section
@@ -105,6 +117,34 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
     );
 
     setActiveIndex(computedIndex);
+
+    // Late introduce the first service icon so it's not visible early
+    if (rect.top > 80) {
+      // User has scrolled back up into Hero; reset first icon visibility
+      if (firstIconTimerRef.current) {
+        clearTimeout(firstIconTimerRef.current);
+        firstIconTimerRef.current = null;
+      }
+      setFirstIconVisible(false);
+    } else if (rect.top <= 0) {
+      // Sticky section is pinned / active
+      if (scrolled >= 40 || computedIndex > 0) {
+        // Scrolled into service or past it: show immediately
+        if (firstIconTimerRef.current) {
+          clearTimeout(firstIconTimerRef.current);
+          firstIconTimerRef.current = null;
+        }
+        setFirstIconVisible(true);
+      } else {
+        // Pinned at start of service 01: late introduce with a slight delay
+        if (!firstIconTimerRef.current) {
+          firstIconTimerRef.current = setTimeout(() => {
+            setFirstIconVisible(true);
+            firstIconTimerRef.current = null;
+          }, 350);
+        }
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -132,6 +172,9 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
   // Handle click on a service item to smoothly scroll to it
   const handleItemClick = (index: number) => {
     if (!wrapperRef.current) return;
+    if (index === 0) {
+      setFirstIconVisible(true);
+    }
     const rect = wrapperRef.current.getBoundingClientRect();
     const windowHeight = window.innerHeight || 800;
     const totalScrollable = rect.height - windowHeight;
@@ -178,6 +221,7 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
             {servicesList.map((service, index) => {
               const isActive = index === activeIndex;
               const distanceFromActive = Math.abs(index - activeIndex);
+              const shouldShowAsset = index !== 0 || firstIconVisible;
 
               return (
                 <div
@@ -202,7 +246,7 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
                         </div>
 
                         <div className={styles.activeTitleContainer}>
-                          {service.asset?.side === "left" && (
+                          {service.asset?.side === "left" && shouldShowAsset && (
                             <div className={styles.assetWrapperLeft}>
                               <img
                                 src={service.asset.src}
@@ -214,7 +258,7 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
 
                           <h2 className={styles.activeTitle}>{service.title}</h2>
 
-                          {service.asset?.side === "right" && (
+                          {service.asset?.side === "right" && shouldShowAsset && (
                             <div className={styles.assetWrapperRight}>
                               <img
                                 src={service.asset.src}
