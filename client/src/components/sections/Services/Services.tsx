@@ -70,21 +70,45 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
 
   const [firstIconVisible, setFirstIconVisible] = useState(false);
   const firstIconTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastWidthRef = useRef<number>(
+    typeof window !== "undefined" ? window.innerWidth : 1200
+  );
 
-  // Measure row height responsively
+  // Preload all 3D service assets on mount for seamless, stutter-free scroll transitions
+  useEffect(() => {
+    servicesList.forEach((service) => {
+      if (service.asset?.src) {
+        const img = new Image();
+        img.src = service.asset.src;
+      }
+    });
+  }, []);
+
+  // Measure row height responsively, avoiding forced re-renders from mobile address bar resize
   useEffect(() => {
     const updateDimensions = () => {
-      const isMobile = window.innerWidth < 768;
+      const currentWidth = window.innerWidth;
+      const isMobile = currentWidth < 768;
       const vh = window.innerHeight || 800;
       const calculatedHeight = isMobile
-        ? Math.max(75, Math.min(95, vh * 0.1))
+        ? Math.max(70, Math.min(88, vh * 0.1))
         : Math.max(95, Math.min(125, vh * 0.12));
       setRowHeight(calculatedHeight);
+      lastWidthRef.current = currentWidth;
     };
 
     updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
+
+    const handleResize = () => {
+      // Only recalculate if viewport width actually changed (rotation / devtools resize),
+      // ignoring address bar show/hide which only changes innerHeight
+      if (Math.abs(window.innerWidth - lastWidthRef.current) > 5) {
+        updateDimensions();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Cleanup timer on unmount
@@ -110,10 +134,11 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
     const scrolled = -rect.top;
     const progress = Math.min(1, Math.max(0, scrolled / totalScrollable));
 
-    // Compute active index based on scroll progress
+    // Distribute scroll dwell equally across all services so items 01 and 05 don't abruptly exit
+    const numServices = servicesList.length;
     const computedIndex = Math.min(
-      servicesList.length - 1,
-      Math.max(0, Math.round(progress * (servicesList.length - 1)))
+      numServices - 1,
+      Math.max(0, Math.floor(progress * numServices))
     );
 
     setActiveIndex(computedIndex);
@@ -128,7 +153,7 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
       setFirstIconVisible(false);
     } else if (rect.top <= 0) {
       // Sticky section is pinned / active
-      if (scrolled >= 40 || computedIndex > 0) {
+      if (scrolled >= 25 || computedIndex > 0) {
         // Scrolled into service or past it: show immediately
         if (firstIconTimerRef.current) {
           clearTimeout(firstIconTimerRef.current);
@@ -141,7 +166,7 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
           firstIconTimerRef.current = setTimeout(() => {
             setFirstIconVisible(true);
             firstIconTimerRef.current = null;
-          }, 350);
+          }, 300);
         }
       }
     }
@@ -178,7 +203,8 @@ export const Services: React.FC<ServicesProps> = ({ className = "" }) => {
     const rect = wrapperRef.current.getBoundingClientRect();
     const windowHeight = window.innerHeight || 800;
     const totalScrollable = rect.height - windowHeight;
-    const targetProgress = index / (servicesList.length - 1);
+    // Target the center of the service's scroll zone
+    const targetProgress = (index + 0.5) / servicesList.length;
     const targetScrollY = window.scrollY + rect.top + targetProgress * totalScrollable;
 
     window.scrollTo({

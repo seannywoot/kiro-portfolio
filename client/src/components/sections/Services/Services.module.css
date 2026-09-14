@@ -11,6 +11,13 @@
   z-index: 10;
 }
 
+@media (max-width: 767px) {
+  .servicesScrollWrapper {
+    /* Calibrated scroll distance on touch screens so items don't whip past uncontrollably */
+    height: 270vh;
+  }
+}
+
 /* Sticky Viewport Container */
 .servicesSticky {
   position: sticky;
@@ -18,7 +25,7 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
   overflow: hidden;
   background-color: #0b0c0e;
   font-family: "Hanken Grotesk", sans-serif;
@@ -70,7 +77,9 @@
   flex-direction: column;
   align-items: center;
   will-change: transform;
-  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* Service Item Row */
@@ -82,6 +91,7 @@
   justify-content: center;
   cursor: pointer;
   box-sizing: border-box;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Non-Active Inactive Item Styling */
@@ -112,6 +122,12 @@
   color: rgba(255, 255, 255, 0.22);
   transition: color 0.3s ease;
   white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .itemTitle {
+    font-size: clamp(1.35rem, 5.5vw, 2.2rem);
+  }
 }
 
 .serviceRow:hover .itemTitle {
@@ -172,6 +188,17 @@
   display: inline-block;
 }
 
+/* On mobile (<768px): omit the 2-dot side design so the image can sit in that space */
+@media (max-width: 767px) {
+  .squareDot {
+    display: none;
+  }
+
+  .ribbonSide {
+    display: none;
+  }
+}
+
 /* Active Title Container & 3D Assets */
 .activeTitleContainer {
   display: flex;
@@ -183,10 +210,11 @@
   position: relative;
 }
 
-/* Base / Mobile (<768px) */
+/* Base / Mobile (<768px):
+   Position 3D asset directly in the outer space where the 2-dot design was omitted */
 .assetWrapperLeft {
   position: absolute;
-  left: clamp(-3.5rem, -4vw, -1rem);
+  left: clamp(0.25rem, 2vw, 0.75rem);
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -198,7 +226,7 @@
 
 .assetWrapperRight {
   position: absolute;
-  right: clamp(-3.5rem, -4vw, -1rem);
+  right: clamp(0.25rem, 2vw, 0.75rem);
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -209,43 +237,50 @@
 }
 
 .assetImage {
-  height: clamp(7.5rem, 18vh, 11rem);
+  height: clamp(5.2rem, 12vh, 7.2rem);
   width: auto;
-  max-width: 32vw;
+  max-width: 22vw;
   object-fit: contain;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
   user-select: none;
   pointer-events: none;
-  animation: assetPopOut 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: assetPopOut 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: transform, opacity;
   transition: height 0.3s ease, left 0.3s ease, right 0.3s ease;
 }
 
-/* Right-sided asset visual optical balance */
+/* Right-sided asset visual optical balance on mobile */
 .assetWrapperRight .assetImage {
-  height: clamp(6.2rem, 15vh, 9rem);
-  max-width: 27vw;
+  height: clamp(4.6rem, 10.5vh, 6.2rem);
+  max-width: 20vw;
+}
+
+@media (max-width: 767px) {
+  .activeTitleContainer {
+    /* Safe gutter padding so the title never touches the 3D assets on the flanks */
+    padding: 0 clamp(3.5rem, 16vw, 4.5rem);
+  }
 }
 
 /* Extra Narrow Mobile (<480px) */
 @media (max-width: 480px) {
   .assetWrapperLeft {
-    left: clamp(-2.5rem, -3vw, -0.5rem);
+    left: clamp(0.15rem, 1.5vw, 0.5rem);
   }
 
   .assetWrapperRight {
-    right: clamp(-2.5rem, -3vw, -0.5rem);
+    right: clamp(0.15rem, 1.5vw, 0.5rem);
   }
 
   .assetImage {
-    height: clamp(6rem, 15vh, 8.5rem);
-    max-width: 28vw;
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+    height: clamp(4.5rem, 10vh, 5.8rem);
+    max-width: 21vw;
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
   }
 
   .assetWrapperRight .assetImage {
-    height: clamp(5rem, 12vh, 7rem);
-    max-width: 24vw;
+    height: clamp(4rem, 9vh, 5.2rem);
+    max-width: 19vw;
   }
 }
 
@@ -326,6 +361,12 @@
   white-space: nowrap;
   padding: 0;
   margin: 0;
+}
+
+@media (max-width: 767px) {
+  .activeTitle {
+    font-size: clamp(1.05rem, 4.4vw, 1.45rem);
+  }
 }
 
 /* Subtle Shadow/Reflection Bar below ribbon */
