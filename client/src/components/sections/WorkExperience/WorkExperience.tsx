@@ -1,173 +1,231 @@
 import React from 'react';
 import { WorkExperience as WorkExperienceType } from '../../../lib/types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../../ui/dialog';
 import { AspectRatio } from '../../ui/aspect-ratio';
-import { PlayIcon, BriefcaseIcon, CalendarIcon, CheckIcon } from 'lucide-react';
 
 interface WorkExperienceProps {
   workExperience: WorkExperienceType[];
 }
 
-const WorkExperience: React.FC<WorkExperienceProps> = ({ workExperience }) => {
-  const handleVideoPlay = (videoUrl: string) => {
-    // Video play logic can be implemented here if needed
-    console.log('Playing video:', videoUrl);
-  };
+const defaultDeliverables = [
+  { label: 'Interface design', number: '01' },
+  { label: 'Front-end development', number: '02' },
+  { label: 'Data integration', number: '03' },
+];
 
+export const WorkExperience: React.FC<WorkExperienceProps> = ({ workExperience }) => {
   return (
-    <section className="py-20 px-4 bg-[var(--background)]">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-sm font-medium mb-4">
-            <BriefcaseIcon className="w-4 h-4" />
-            Recent Work Experience
+    <section className="w-full bg-[#F3EFEA] text-[#111215] py-20 sm:py-24 md:py-32 px-5 sm:px-8 md:px-12 lg:px-16 transition-colors duration-500">
+      <div className="max-w-[1360px] mx-auto">
+        {/* Top Header Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pb-10 sm:pb-12 lg:pb-14 items-end">
+          {/* Section Marker */}
+          <div className="lg:col-span-3 pb-1 sm:pb-2 lg:pb-3">
+            <div className="inline-flex items-center gap-3 text-xs sm:text-[13px] font-mono tracking-[0.22em] text-[#222429] uppercase font-semibold">
+              <span>02</span>
+              <span className="w-8 sm:w-10 h-[1.5px] bg-[#D45B34]" aria-hidden="true" />
+              <span>EXPERIENCE</span>
+            </div>
           </div>
-          <h2 
-            id="work-experience-heading"
-            className="text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-6"
-          >
-            My Professional Journey
-          </h2>
-          <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
-            Explore my career progression through interactive video showcases and detailed project highlights.
-          </p>
+
+          {/* Editorial Headline */}
+          <div className="lg:col-span-9">
+            <h2
+              id="work-experience-heading"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] xl:text-[5rem] font-extrabold text-[#0D0E11] tracking-[-0.035em] leading-[1.02] select-none"
+            >
+              <span className="block">Learning in public.</span>
+              <span className="block mt-1 sm:mt-1.5">Building for people.</span>
+            </h2>
+          </div>
         </div>
 
-        {/* Work Experience Grid */}
-        <div className={`${workExperience.length === 1 ? 'flex justify-center' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'} gap-8`}>
-          {workExperience.map((experience, index) => (
-            <Card 
-              key={experience.id} 
-              className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-[var(--card)] border-[var(--border)] ${workExperience.length === 1 ? 'w-full max-w-2xl' : ''}`}
-            >
-              <CardHeader className="pb-4">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2 text-[var(--primary)] text-sm font-medium">
-                    <CalendarIcon className="w-4 h-4" />
-                    {experience.duration}
-                  </div>
-                  <div className="text-2xl font-bold text-[var(--muted-foreground)]/30">
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-                </div>
-                <CardTitle className="text-xl font-bold text-[var(--card-foreground)] mb-1">
-                  {experience.position}
-                </CardTitle>
-                <CardDescription className="text-[var(--primary)] font-semibold">
-                  {experience.company}
-                </CardDescription>
-              </CardHeader>
+        {/* Full-width Divider Line */}
+        <div className="w-full border-t border-[#D5D0C6]" aria-hidden="true" />
 
-              <CardContent className="space-y-4">
-                {/* Video Thumbnail */}
-                {experience.videoUrl && (
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <div 
-                        className="relative cursor-pointer group/video rounded-lg overflow-hidden"
-                        onClick={() => handleVideoPlay(experience.videoUrl!)}
-                      >
-                        <AspectRatio ratio={16 / 9}>
-                          <div className="w-full h-full bg-gradient-to-br from-[var(--primary)]/20 to-[var(--primary)]/5 flex items-center justify-center relative">
-                            {experience.videoThumbnail ? (
-                              <img 
-                                src={experience.videoThumbnail} 
-                                alt={`${experience.company} work showcase`}
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              <div className="text-6xl opacity-20">🎥</div>
-                            )}
-                            <div className="absolute inset-0 bg-black/20 group-hover/video:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                              <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover/video:scale-110 transition-transform duration-300">
-                                <PlayIcon className="w-8 h-8 text-[var(--primary)] ml-1" />
-                              </div>
+        {/* Work Experience Entries */}
+        {workExperience.map((experience) => {
+          const deliverables = experience.deliverables || defaultDeliverables;
+          const location = experience.location || 'Olongapo City, PH';
+          const duration = experience.duration || '2025 — Present';
+          const tag = experience.tag || 'SELECTED WORK / OCPL';
+          const projectUrl = experience.projectUrl || 'https://github.com/Swif7ify/OCPL-Barcode';
+          const thumbnail = experience.videoThumbnail || '/OCPL/Screenshot 2025-07-29 092854.png';
+
+          return (
+            <div
+              key={experience.id}
+              className="grid grid-cols-1 md:grid-cols-12 items-stretch"
+            >
+              {/* Column 1: Dates & Location */}
+              <div className="md:col-span-3 py-8 sm:py-10 lg:py-12 md:pr-8 md:border-r border-[#D5D0C6] flex flex-col justify-start">
+                <p className="text-sm sm:text-base font-semibold text-[#D45B34] tracking-tight">
+                  {duration}
+                </p>
+                <p className="text-xs sm:text-sm text-[#6F737C] font-medium mt-1">
+                  {location}
+                </p>
+              </div>
+
+              {/* Column 2: Title, Description, Deliverables (with Divider Line on Right) */}
+              <div className="md:col-span-5 py-8 sm:py-10 lg:py-12 px-0 md:px-8 lg:px-10 md:border-r border-[#D5D0C6] flex flex-col justify-between">
+                <div>
+                  {/* Eyebrow / Company */}
+                  <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#71757E] font-medium">
+                    {experience.company}
+                  </p>
+
+                  {/* Role Title */}
+                  <h3 className="text-2xl sm:text-3xl lg:text-[2rem] font-bold text-[#0D0E11] tracking-tight mt-2.5 mb-4 leading-tight">
+                    {experience.position}
+                  </h3>
+
+                  {/* Role Description */}
+                  <p className="text-sm sm:text-[15px] text-[#3A3D44] leading-relaxed mb-8 font-normal">
+                    {experience.description}
+                  </p>
+                </div>
+
+                {/* Deliverables / Scope Breakdown */}
+                <div className="w-full">
+                  {deliverables.map((item, index) => (
+                    <div
+                      key={item.label}
+                      className={`flex items-center justify-between py-3.5 sm:py-4 border-t border-[#D5D0C6] text-xs sm:text-sm transition-colors duration-200 hover:text-[#D45B34] ${
+                        index === deliverables.length - 1 ? 'border-b border-[#D5D0C6]' : ''
+                      }`}
+                    >
+                      <span className="font-medium text-[#1A1C20]">{item.label}</span>
+                      <span className="font-mono text-[#8C909A] text-xs">
+                        {item.number || String(index + 1).padStart(2, '0')}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 3: Minimal Showcase Card on the Right */}
+              <div className="md:col-span-4 py-8 sm:py-10 lg:py-12 md:pl-8 lg:pl-10 flex flex-col justify-center">
+                {/* Minimal Card Container */}
+                <div className="w-full bg-[#181B20] p-1.5 sm:p-2 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md">
+                  {experience.videoUrl ? (
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`Watch video showcase of ${experience.position} at ${experience.company}`}
+                          className="relative w-full aspect-[16/10] rounded-xl overflow-hidden cursor-pointer group select-none block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D45B34]"
+                        >
+                          <img
+                            src={thumbnail}
+                            alt={`${experience.company} application screenshot`}
+                            className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-[1.02]"
+                          />
+
+                          {/* Minimal Centered Play Button */}
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/20 transition-colors duration-300">
+                            <div className="w-13 h-13 sm:w-14 sm:h-14 md:w-15 md:h-15 rounded-full bg-white shadow-md flex items-center justify-center transition-all duration-300 group-hover:scale-108 group-active:scale-95">
+                              <svg
+                                className="w-5 h-5 sm:w-5.5 sm:h-5.5 translate-x-[1px] text-[#D45B34]"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                              >
+                                <polygon points="6 3 20 12 6 21 6 3" />
+                              </svg>
                             </div>
                           </div>
-                        </AspectRatio>
-                      </div>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-4xl w-[90vw] p-0">
-                      <DialogHeader className="p-6 pb-0">
-                        <DialogTitle className="text-xl font-bold">
-                          {experience.position} at {experience.company}
-                        </DialogTitle>
-                      </DialogHeader>
-                      <div className="p-6 pt-4">
-                        <AspectRatio ratio={16 / 9}>
-                          <iframe
-                            src={experience.videoUrl}
-                            title={`${experience.company} work experience video`}
-                            className="w-full h-full rounded-lg"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        </AspectRatio>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                )}
+                        </div>
+                      </DialogTrigger>
 
-                {/* Description */}
-                <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">
-                  {experience.description}
-                </p>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2">
-                  {experience.technologies.slice(0, 4).map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 bg-[var(--primary)]/10 text-[var(--primary)] text-xs rounded-md font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {experience.technologies.length > 4 && (
-                    <span className="px-2 py-1 bg-[var(--muted)] text-[var(--muted-foreground)] text-xs rounded-md font-medium">
-                      +{experience.technologies.length - 4} more
-                    </span>
+                      {/* Modal Video Player */}
+                      <DialogContent className="max-w-4xl w-[92vw] p-0 bg-[#121316] border-[#2C3038] text-white overflow-hidden rounded-2xl">
+                        <DialogHeader className="p-6 pb-2">
+                          <DialogTitle className="text-lg sm:text-xl font-bold text-white">
+                            {experience.position} — {experience.company}
+                          </DialogTitle>
+                        </DialogHeader>
+                        <div className="p-4 sm:p-6 pt-2">
+                          <AspectRatio ratio={16 / 9}>
+                            <iframe
+                              src={experience.videoUrl}
+                              title={`${experience.company} work experience showcase`}
+                              className="w-full h-full rounded-xl border border-white/10"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </AspectRatio>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  ) : (
+                    <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden">
+                      <img
+                        src={thumbnail}
+                        alt={`${experience.company} application screenshot`}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    </div>
                   )}
                 </div>
 
-                {/* Key Achievements */}
-                {experience.achievements && experience.achievements.length > 0 && (
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-semibold text-[var(--card-foreground)]">
-                      Key Achievements:
-                    </h4>
-                    <ul className="space-y-1">
-                      {experience.achievements.slice(0, 2).map((achievement, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-xs text-[var(--muted-foreground)]">
-                          <CheckIcon className="w-3 h-3 text-[var(--primary)] mt-0.5 flex-shrink-0" />
-                          <span>{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                {/* Minimal Card Bottom Meta Bar */}
+                <div className="mt-3 px-1 flex items-center justify-between">
+                  <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#6F737C] font-medium">
+                    {tag}
+                  </span>
+                  {projectUrl && (
+                    <a
+                      href={projectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open external link for ${tag}`}
+                      className="group/link text-[#D45B34] p-0.5 inline-flex items-center justify-center focus:outline-none focus-visible:ring-1 focus-visible:ring-[#D45B34]"
+                    >
+                      <svg
+                        className="w-4 h-4 text-[#D45B34] transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
 
-        {/* Call to Action */}
-        <div className="text-center mt-12">
-          <p className="text-[var(--muted-foreground)] mb-6">
-            Want to learn more about my professional experience?
-          </p>
-          <a 
-            href="/Tamondong_Resume.pdf" 
-            download="Tamondong_Resume.pdf"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--primary)] text-[var(--primary-foreground)] rounded-lg font-medium hover:bg-[var(--primary)]/90 transition-colors duration-200"
-          >
-            <span>Download Resume</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </a>
+        {/* Full-width Divider Line */}
+        <div className="w-full border-t border-[#D5D0C6]" aria-hidden="true" />
+
+        {/* Working Principle Bottom Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 py-10 sm:py-12 md:py-14 items-start">
+          {/* Label */}
+          <div className="lg:col-span-3 pt-1">
+            <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.22em] text-[#71757E] font-medium block">
+              WORKING PRINCIPLE
+            </span>
+          </div>
+
+          {/* Quote */}
+          <div className="lg:col-span-9">
+            <blockquote className="text-2xl sm:text-3xl md:text-[2.25rem] font-bold text-[#0D0E11] tracking-tight leading-[1.24] max-w-3xl">
+              “Make the complex feel considered, then make the considered feel simple.”
+            </blockquote>
+          </div>
         </div>
       </div>
     </section>

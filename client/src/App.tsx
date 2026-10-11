@@ -9,6 +9,7 @@ import About from "./components/sections/About/About";
 import WorkExperience from "./components/sections/WorkExperience/WorkExperience";
 import Projects from "./components/sections/Projects/Projects";
 import Contact from "./components/sections/Contact/Contact";
+import Footer from "./components/sections/Footer";
 import { portfolioData } from "./lib/portfolio-data";
 import { motion } from "./lib/accessibility";
 import {
@@ -125,8 +126,6 @@ function App() {
             </section>
           </ErrorBoundary>
 
-          <hr className="section-divider" />
-
           {/* Work Experience Section */}
           <ErrorBoundary>
             <section
@@ -139,8 +138,6 @@ function App() {
               <WorkExperience workExperience={portfolioData.workExperience} />
             </section>
           </ErrorBoundary>
-
-          <hr className="section-divider" />
 
           {/* Projects Section */}
           <ErrorBoundary>
@@ -173,70 +170,10 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer
-        role="contentinfo"
-        className="bg-[var(--card)] text-[var(--card-foreground)] py-12 border-t border-[var(--border)]"
-      >
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-center md:text-left">
-              <p className="text-sm text-[var(--muted-foreground)] mb-2">
-                © {new Date().getFullYear()} {portfolioData.personal.name}. All
-                rights reserved.
-              </p>
-              <p className="text-xs text-[var(--muted-foreground)]/70">
-                Built with React, TypeScript, and Tailwind CSS
-              </p>
-            </div>
-
-            <div className="flex items-center gap-4">
-              {portfolioData.contact.socialMedia.map((social) => (
-                <a
-                  key={social.platform}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-all duration-200 hover:scale-110 interactive"
-                  aria-label={`Visit ${social.platform} profile`}
-                >
-                  <span className="text-lg" role="img" aria-hidden="true">
-                    {typeof social.icon === "string" ? (
-                      social.icon
-                    ) : social.icon &&
-                      typeof social.icon === "object" &&
-                      "src" in social.icon ? (
-                      <img
-                        src={social.icon.src}
-                        alt={social.icon.alt || social.platform}
-                        style={{
-                          width: "20px",
-                          height: "20px",
-                          objectFit: "contain",
-                        }}
-                      />
-                    ) : (
-                      "🔗"
-                    )}
-                  </span>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-8 pt-6 border-t border-[var(--border)] text-center">
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="inline-flex items-center gap-2 text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-all duration-200 interactive text-sm"
-              aria-label="Scroll to top of page"
-            >
-              <span>Back to top</span>
-              <span className="text-xs">↑</span>
-            </button>
-          </div>
-
-          <ScreenReaderOnly>End of page content</ScreenReaderOnly>
-        </div>
-      </footer>
+      <Footer
+        personal={portfolioData.personal}
+        contact={portfolioData.contact}
+      />
     </div>
     </>
   );

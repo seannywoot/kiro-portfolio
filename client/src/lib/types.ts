@@ -48,6 +48,8 @@ export type TechnologyCategory =
 export interface Project {
   id: string;
   title: string;
+  category?: string;
+  year?: string;
   description: string;
   longDescription?: string;
   technologies: string[];
@@ -70,15 +72,24 @@ export interface Skill {
 }
 
 // Work experience interface
+export interface WorkExperienceDeliverable {
+  label: string;
+  number?: string;
+}
+
 export interface WorkExperience {
   id: string;
   company: string;
   position: string;
   duration: string;
+  location?: string;
   description: string;
   technologies: string[];
   videoUrl?: string;
   videoThumbnail?: string;
+  deliverables?: WorkExperienceDeliverable[];
+  tag?: string;
+  projectUrl?: string;
   achievements?: string[];
 }
 
@@ -123,6 +134,12 @@ export interface AnimatedTextProps {
 export interface AboutProps {
   personal: PersonalInfo;
   skills: SkillCategory[];
+}
+
+export interface FooterProps {
+  personal?: PersonalInfo;
+  contact?: ContactInfo;
+  className?: string;
 }
 
 // Animation and scroll related interfaces

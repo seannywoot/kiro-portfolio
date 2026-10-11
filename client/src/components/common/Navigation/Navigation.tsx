@@ -14,29 +14,77 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 40);
+    let ticking = false;
 
-      const scrollOffset = scrollPosition + 160;
-      for (const section of sections) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollOffset >= offsetTop && scrollOffset < offsetTop + offsetHeight) {
-            setActiveSection(section.id);
-            break;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const windowHeight = window.innerHeight || 800;
+          const scrollHeight = document.documentElement.scrollHeight;
+
+          setIsScrolled(scrollY > 40);
+
+          // 1. At very top of page -> Hero (Home)
+          if (scrollY < 120) {
+            setActiveSection('hero');
+            ticking = false;
+            return;
           }
-        }
+
+          // 2. Near bottom of page -> Last section (Contact)
+          if (windowHeight + scrollY >= scrollHeight - 80) {
+            const lastSection = sections[sections.length - 1];
+            if (lastSection) {
+              setActiveSection(lastSection.id);
+            }
+            ticking = false;
+            return;
+          }
+
+          // 3. Focal reading line at ~40% of viewport height
+          const anchorY = windowHeight * 0.4;
+          let currentSectionId = '';
+
+          // Check non-hero content sections in reverse DOM order (bottom to top).
+          // Content sections stack above the sticky hero container (z-10 over z-0).
+          // Checking from bottom to top accurately identifies the active visible section.
+          const contentSections = sections.filter((s) => s.id !== 'hero');
+          for (let i = contentSections.length - 1; i >= 0; i--) {
+            const section = contentSections[i];
+            const element = document.getElementById(section.id);
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              if (rect.top <= anchorY && rect.bottom > anchorY) {
+                currentSectionId = section.id;
+                break;
+              }
+            }
+          }
+
+          // 4. If no content section covers the anchor line, Hero is active
+          if (!currentSectionId) {
+            currentSectionId = 'hero';
+          }
+
+          setActiveSection(currentSectionId);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, [sections]);
 
   const scrollToSection = (sectionId: string) => {
+    setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({

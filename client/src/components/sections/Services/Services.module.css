@@ -244,8 +244,6 @@
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
   user-select: none;
   pointer-events: none;
-  animation: assetPopOut 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity;
   transition: height 0.3s ease, left 0.3s ease, right 0.3s ease;
 }
 
@@ -431,31 +429,6 @@
   }
 
   100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes assetPopOut {
-  0% {
-    opacity: 0;
-    transform: scale(0.82) translateZ(0);
-  }
-
-  65% {
-    opacity: 1;
-    transform: scale(1.035) translateZ(0);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1) translateZ(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .assetImage {
-    animation: none;
     opacity: 1;
     transform: scale(1);
   }

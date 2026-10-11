@@ -106,7 +106,7 @@ export const portfolioData: PortfolioData = {
   personal: {
     name: "Seann Tamondong",
     title: "Front-End Developer • UI/UX Design • Graphic Design",
-    bio: "2nd year student at Gordon College with a passion for creating beautiful, user-centered digital experiences. I specialize in UI/UX design, front-end development, and graphic design, focusing on crafting intuitive interfaces that blend functionality with visual appeal. I love transforming creative ideas into engaging digital solutions.",
+    bio: "I'm Seann Tamondong, a second-year Gordon College student shaping thoughtful digital experiences across interface design, front-end development, and visual communication.",
     avatar: "/2X2.jpg",
     resume: "/documents/alex-johnson-resume.pdf",
   },
@@ -300,11 +300,13 @@ export const portfolioData: PortfolioData = {
     {
       id: "featured-project-1",
       title: "OCPL Attendance System",
+      category: "DESKTOP APPLICATION",
+      year: "2025",
       description:
-        "A high-performance barcode-based attendance tracking system.",
+        "A barcode-based attendance system designed to make employee time management accurate, immediate, and easier to administer across the library.",
       longDescription:
         "A comprehensive barcode-based attendance tracking system designed for efficient employee time management. Built as a desktop application using Electron for cross-platform compatibility, the system leverages JavaScript for seamless user interactions and Supabase for robust backend data management. The application provides real-time attendance tracking, automated report generation, and intuitive user interface for both administrators and employees. Features include barcode scanning integration, attendance analytics, employee management, and secure data synchronization across multiple devices.",
-      technologies: ["Electron", "JavaScript", "Supabase"],
+      technologies: ["ELECTRON", "JAVASCRIPT", "SUPABASE"],
       liveUrl: "#",
       githubUrl: "https://github.com/Swif7ify/OCPL-Barcode",
       images: [
@@ -322,10 +324,13 @@ export const portfolioData: PortfolioData = {
     {
       id: "featured-project-2",
       title: "Flow",
-      description: "A Web-Based Virtual Queue Management System",
+      category: "VIRTUAL QUEUE PLATFORM",
+      year: "2025",
+      description:
+        "A digital platform designed to streamline queuing in government offices, clinics, and public spaces through real-time virtual ticketing and scheduling.",
       longDescription:
         "The Virtual Queue Management System is a digital platform designed to streamline queuing in government offices, clinics, restaurants, and other public spaces. Users can obtain virtual tickets, track their queue position in real-time, and schedule appointments. The system displays service availability at different branches and allows users to manage their profiles, storing personal information and appointment history. Reminders and notifications keep users informed about their queue status and upcoming appointments. An express lane booking feature is available for urgent cases. The system also provides crowd density indicators, a feedback and rating system, and supports multiple queues for different services, ensuring an organized and efficient queuing experience.",
-      technologies: ["HTML5", "PHP", "SQL", "CSS3", "Vue.js"],
+      technologies: ["HTML5", "PHP", "SQL", "CSS3", "VUE.JS"],
       liveUrl: "https://flow-i3g6.vercel.app/landing#/landing",
       githubUrl: "https://github.com/seannywoot/flow-application-cc",
       images: [
@@ -338,11 +343,13 @@ export const portfolioData: PortfolioData = {
     {
       id: "featured-project-3",
       title: "GC-MedMars",
+      category: "MEDICAL RECORDS SYSTEM",
+      year: "2025",
       description:
-        "A comprehensive web-based medical records management system designed for Gordon College.",
+        "A comprehensive web-based medical records management system designed for tracking student healthcare information across college departments.",
       longDescription:
         "GC-MedMaRS (Gordon College Medical Records System) is a PHP-based web application that allows healthcare administrators to manage student medical records, appointments, and departmental data efficiently. The system provides a centralized platform for tracking student health information across five college departments.",
-      technologies: ["PHP", "JavaScript", "HTML5", "CSS3", "SQL"],
+      technologies: ["PHP", "JAVASCRIPT", "HTML5", "CSS3", "SQL"],
       liveUrl: "#",
       githubUrl: "https://github.com/seannywoot/MedMars",
       images: ["/GC-Medmars/GC-Medmars.png"],
@@ -462,11 +469,46 @@ export const portfolioData: PortfolioData = {
 
   skills: [
     {
-      name: "Frontend Development",
+      name: "DESIGN",
+      skills: [
+        {
+          name: "UI/UX Design",
+          level: 5,
+          icon: {
+            type: "image",
+            src: "/figma.png",
+            alt: "UI/UX Design",
+            fallback: "🎯",
+          } as ImageIcon,
+        },
+        {
+          name: "Website Design",
+          level: 5,
+          icon: {
+            type: "image",
+            src: "/react.png",
+            alt: "Website Design",
+            fallback: "🌐",
+          } as ImageIcon,
+        },
+        {
+          name: "Graphic Design",
+          level: 5,
+          icon: {
+            type: "image",
+            src: "/photoshop.png",
+            alt: "Graphic Design",
+            fallback: "🎨",
+          } as ImageIcon,
+        },
+      ],
+    },
+    {
+      name: "DEVELOPMENT",
       skills: [
         {
           name: "React",
-          level: 4,
+          level: 5,
           icon: {
             type: "image",
             src: "/react.png",
@@ -475,18 +517,8 @@ export const portfolioData: PortfolioData = {
           } as ImageIcon,
         },
         {
-          name: "Vue.js",
-          level: 3,
-          icon: {
-            type: "image",
-            src: "/vue.png",
-            alt: "Vue.js logo",
-            fallback: "💚",
-          } as ImageIcon,
-        },
-        {
           name: "JavaScript",
-          level: 4,
+          level: 5,
           icon: {
             type: "image",
             src: "/JAVASCRIPT.png",
@@ -495,43 +527,23 @@ export const portfolioData: PortfolioData = {
           } as ImageIcon,
         },
         {
-          name: "TypeScript",
-          level: 3,
-          icon: {
-            type: "image",
-            src: "/typescript.png",
-            alt: "TypeScript logo",
-            fallback: "📘",
-          } as ImageIcon,
-        },
-        {
-          name: "HTML5",
+          name: "HTML & CSS",
           level: 5,
           icon: {
             type: "image",
             src: "/HTML.png",
-            alt: "HTML5 logo",
+            alt: "HTML & CSS logo",
             fallback: "🌐",
-          } as ImageIcon,
-        },
-        {
-          name: "CSS3",
-          level: 4,
-          icon: {
-            type: "image",
-            src: "/CSS.png",
-            alt: "CSS3 logo",
-            fallback: "🎨",
           } as ImageIcon,
         },
       ],
     },
     {
-      name: "Design & Creative Tools",
+      name: "TOOLS",
       skills: [
         {
           name: "Figma",
-          level: 4,
+          level: 5,
           icon: {
             type: "image",
             src: "/figma.png",
@@ -551,7 +563,7 @@ export const portfolioData: PortfolioData = {
         },
         {
           name: "DaVinci Resolve",
-          level: 3,
+          level: 4,
           icon: {
             type: "image",
             src: "/davinci.png",
@@ -561,94 +573,27 @@ export const portfolioData: PortfolioData = {
         },
       ],
     },
-    {
-      name: "Development Tools & Languages",
-      skills: [
-        {
-          name: "VS Code",
-          level: 5,
-          icon: {
-            type: "image",
-            src: "/VS CODE.png",
-            alt: "Visual Studio Code logo",
-            fallback: "💻",
-          } as ImageIcon,
-        },
-        {
-          name: "Python",
-          level: 3,
-          icon: {
-            type: "image",
-            src: "/PYTHON.png",
-            alt: "Python logo",
-            fallback: "🐍",
-          } as ImageIcon,
-        },
-        {
-          name: "Java",
-          level: 3,
-          icon: {
-            type: "image",
-            src: "/java.png",
-            alt: "Java logo",
-            fallback: "☕",
-          } as ImageIcon,
-        },
-        {
-          name: "Vite",
-          level: 3,
-          icon: {
-            type: "image",
-            src: "/vite.svg",
-            alt: "Vite logo",
-            fallback: "⚡",
-          } as ImageIcon,
-        },
-        {
-          name: "Bun",
-          level: 2,
-          icon: {
-            type: "image",
-            src: "/Bun.png",
-            alt: "Bun runtime logo",
-            fallback: "🥟",
-          } as ImageIcon,
-        },
-        {
-          name: "Hono",
-          level: 2,
-          icon: {
-            type: "image",
-            src: "/HONO.png",
-            alt: "Hono framework logo",
-            fallback: "🔥",
-          } as ImageIcon,
-        },
-        {
-          name: "GitHub",
-          level: 4,
-          icon: {
-            type: "image",
-            src: "/github-sign.png",
-            alt: "GitHub logo",
-            fallback: "🐙",
-          } as ImageIcon,
-        },
-      ],
-    },
   ],
 
   workExperience: [
     {
       id: "work-1",
-      company: "Olongapo City Public Library",
+      company: "OLONGAPO CITY PUBLIC LIBRARY",
       position: "Front-End Developer",
       duration: "2025",
+      location: "Olongapo City, PH",
       description:
-        "Developed a comprehensive barcode-based attendance tracking system designed for efficient employee time management. Built as a desktop application using Electron for cross-platform compatibility, leveraging JavaScript for seamless user interactions and Supabase for robust backend data management.",
+        "Designed and developed a barcode-based attendance application that turns a manual administrative process into a focused, reliable digital workflow.",
+      deliverables: [
+        { label: "Interface design", number: "01" },
+        { label: "Front-end development", number: "02" },
+        { label: "Data integration", number: "03" },
+      ],
       technologies: ["Electron", "JavaScript", "Supabase"],
       videoUrl: "https://www.youtube.com/embed/Do-RkUZ65IY",
       videoThumbnail: "/OCPL/Screenshot 2025-07-29 092854.png",
+      tag: "SELECTED WORK / OCPL",
+      projectUrl: "https://github.com/Swif7ify/OCPL-Barcode",
       achievements: [
         "Built real-time attendance tracking system with barcode scanning integration",
         "Implemented automated report generation and attendance analytics",
