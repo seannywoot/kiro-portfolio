@@ -40,7 +40,7 @@ export const About: React.FC<AboutProps> = ({
   });
 
   const leadBioText =
-    "A second-year Gordon College student shaping thoughtful digital experiences across interface design, front-end development, and visual communication.";
+    "A fourth-year BSIT student shaping thoughtful digital experiences across interface design, front-end development, and visual communication.";
 
   const secondaryBioText =
     "I work from structure outward—finding the essential idea, building a clear system around it, and refining the details until the experience feels natural to use.";
@@ -94,7 +94,7 @@ export const About: React.FC<AboutProps> = ({
               {/* Monospace Accent Tag */}
               <div className="sm:col-span-3 pt-1">
                 <div className="font-mono text-xs sm:text-[12px] tracking-[0.2em] text-[#717680] font-medium uppercase leading-tight">
-                  PROFILE / 2025
+                  PROFILE
                 </div>
               </div>
 

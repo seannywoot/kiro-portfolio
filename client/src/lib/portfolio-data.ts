@@ -299,6 +299,20 @@ export const portfolioData: PortfolioData = {
     // Featured Projects - Development Work
     {
       id: "featured-project-1",
+      title: "Project METRO",
+      category: "DIGITAL ENFORCEMENT & MONITORING",
+      year: "2025",
+      description:
+        "An integrated digital enforcement dashboard and consumer monitoring portal developed for DTI Zambales to streamline market price tracking, inspection workflows, and compliance reporting.",
+      longDescription:
+        "Project METRO (Market Enforcement, Tracking, and Regulatory Operations) is an integrated digital enforcement platform engineered for the Department of Trade and Industry (DTI) Zambales. The system transitions manual market monitoring into a centralized data pipeline—unifying field inspection workflows, and public consumer advisories. Designed from wireframes to functional frontend, it provides regulatory officers with dedicated inspection dashboards, offline-tolerant data capture, and automated discrepancy reporting, while offering consumers a transparent window into fair market pricing across regional commercial hubs.",
+      technologies: ["REACT", "TYPESCRIPT", "NEXT", "TAILWIND CSS", "SUPABASE", "MONGODB"],
+      liveUrl: "https://metro.consumerhub.online/",
+      images: ["/METRO/METRO Hero.png"],
+      featured: true,
+    },
+    {
+      id: "featured-project-2",
       title: "OCPL Attendance System",
       category: "DESKTOP APPLICATION",
       year: "2025",
@@ -322,7 +336,7 @@ export const portfolioData: PortfolioData = {
       featured: true,
     },
     {
-      id: "featured-project-2",
+      id: "featured-project-3",
       title: "Flow",
       category: "VIRTUAL QUEUE PLATFORM",
       year: "2025",
@@ -338,21 +352,6 @@ export const portfolioData: PortfolioData = {
         "/Flow/Screenshot 2025-07-29 091837.png",
         "/Flow/Screenshot 2025-07-29 092220.png",
       ],
-      featured: true,
-    },
-    {
-      id: "featured-project-3",
-      title: "GC-MedMars",
-      category: "MEDICAL RECORDS SYSTEM",
-      year: "2025",
-      description:
-        "A comprehensive web-based medical records management system designed for tracking student healthcare information across college departments.",
-      longDescription:
-        "GC-MedMaRS (Gordon College Medical Records System) is a PHP-based web application that allows healthcare administrators to manage student medical records, appointments, and departmental data efficiently. The system provides a centralized platform for tracking student health information across five college departments.",
-      technologies: ["PHP", "JAVASCRIPT", "HTML5", "CSS3", "SQL"],
-      liveUrl: "#",
-      githubUrl: "https://github.com/seannywoot/MedMars",
-      images: ["/GC-Medmars/GC-Medmars.png"],
       featured: true,
     },
 
