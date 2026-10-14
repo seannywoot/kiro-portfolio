@@ -13,6 +13,8 @@ import {
   Send,
   CheckCircle,
   AlertCircle,
+  Copy,
+  Check,
 } from "lucide-react";
 import styles from "./Contact.module.css";
 
@@ -43,6 +45,19 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
   >("idle");
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [showMailtoFallback, setShowMailtoFallback] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = async () => {
+    const targetEmail = contact.email || "seannpatrick25@gmail.com";
+    try {
+      await navigator.clipboard.writeText(targetEmail);
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2500);
+    } catch {
+      // Fallback if clipboard API not available
+      setCopiedEmail(false);
+    }
+  };
 
   // Form validation with polite, human-readable visitor error messages
   const validateForm = (): FormValidationError[] => {
@@ -359,23 +374,59 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
                   </span>
                 </div>
                 {showMailtoFallback && (
-                  <a
-                    href={`mailto:${contact.email || "seannpatrick25@gmail.com"}?subject=${encodeURIComponent(
-                      formData.subject || "Portfolio Inquiry"
-                    )}&body=${encodeURIComponent(formData.message || "")}`}
+                  <div
                     style={{
-                      marginTop: "4px",
-                      display: "inline-flex",
+                      marginTop: "6px",
+                      display: "flex",
+                      flexWrap: "wrap",
                       alignItems: "center",
-                      gap: "6px",
-                      fontSize: "13px",
-                      color: "#93c5fd",
-                      textDecoration: "underline",
-                      fontWeight: 500,
+                      gap: "10px",
                     }}
                   >
-                    <Mail size={15} /> Click here to email me directly ({contact.email || "seannpatrick25@gmail.com"})
-                  </a>
+                    <button
+                      type="button"
+                      onClick={handleCopyEmail}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        fontSize: "12px",
+                        fontWeight: 600,
+                        color: "#ffffff",
+                        backgroundColor: "#2563eb",
+                        border: "none",
+                        borderRadius: "6px",
+                        padding: "6px 12px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {copiedEmail ? (
+                        <>
+                          <Check size={14} /> Copied!
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={14} /> Copy Email Address
+                        </>
+                      )}
+                    </button>
+                    <a
+                      href={`mailto:${contact.email || "seannpatrick25@gmail.com"}?subject=${encodeURIComponent(
+                        formData.subject || "Portfolio Inquiry"
+                      )}&body=${encodeURIComponent(formData.message || "")}`}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "5px",
+                        fontSize: "13px",
+                        color: "#93c5fd",
+                        textDecoration: "underline",
+                        fontWeight: 500,
+                      }}
+                    >
+                      <Mail size={14} /> Open in Mail App ({contact.email || "seannpatrick25@gmail.com"})
+                    </a>
+                  </div>
                 )}
               </div>
             )}

@@ -1,6 +1,7 @@
 {
   "name": "portfolio",
   "version": "0.3.1",
+  "type": "module",
   "description": "A monorepo template built with Bun, Hono, Vite, and React",
   "author": "Steve Simkins",
   "license": "MIT",

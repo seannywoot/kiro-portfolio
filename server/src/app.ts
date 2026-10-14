@@ -3,7 +3,7 @@ import { cors } from "hono/cors";
 import { bodyLimit } from "hono/body-limit";
 import { zValidator } from "@hono/zod-validator";
 import { Resend } from "resend";
-import { contactFormSchema } from "shared";
+import { contactFormSchema } from "../../shared/src/schemas/contact";
 import { createRateLimitMiddleware, getClientIp } from "./rate-limiter";
 import { renderContactEmailHtml } from "./email-template";
 import fs from "node:fs";
