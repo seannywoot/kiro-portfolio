@@ -53,6 +53,12 @@ export default defineConfig({
     // Optimize HMR
     hmr: {
       overlay: true
+    },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
+      }
     }
   }
 })

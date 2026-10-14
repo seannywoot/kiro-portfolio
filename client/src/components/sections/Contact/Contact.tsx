@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { hc } from "hono/client";
+import type { AppType } from "server";
 import {
   ContactInfo,
   ContactFormData,
@@ -14,16 +16,24 @@ import {
 } from "lucide-react";
 import styles from "./Contact.module.css";
 
+// Initialize Hono RPC client
+const client = hc<AppType>("/");
+
 interface ContactProps {
   contact: ContactInfo;
 }
 
+interface FormState extends ContactFormData {
+  _gotcha?: string;
+}
+
 const Contact: React.FC<ContactProps> = ({ contact }) => {
-  const [formData, setFormData] = useState<ContactFormData>({
+  const [formData, setFormData] = useState<FormState>({
     name: "",
     email: "",
     subject: "",
     message: "",
+    _gotcha: "",
   });
 
   const [errors, setErrors] = useState<FormValidationError[]>([]);
@@ -31,34 +41,58 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [showMailtoFallback, setShowMailtoFallback] = useState(false);
 
-  // Form validation
+  // Form validation with polite, human-readable visitor error messages
   const validateForm = (): FormValidationError[] => {
     const newErrors: FormValidationError[] = [];
 
     if (!formData.name.trim()) {
-      newErrors.push({ field: "name", message: "Name is required" });
+      newErrors.push({
+        field: "name",
+        message: "Please enter your name (at least 2 characters)",
+      });
+    } else if (formData.name.trim().length < 2) {
+      newErrors.push({
+        field: "name",
+        message: "Please enter your name (at least 2 characters)",
+      });
     }
 
     if (!formData.email.trim()) {
-      newErrors.push({ field: "email", message: "Email is required" });
+      newErrors.push({
+        field: "email",
+        message: "Please enter a valid email address so I can get back to you",
+      });
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.push({
         field: "email",
-        message: "Please enter a valid email address",
+        message: "Please enter a valid email address so I can get back to you",
       });
     }
 
     if (!formData.subject.trim()) {
-      newErrors.push({ field: "subject", message: "Subject is required" });
+      newErrors.push({
+        field: "subject",
+        message: "Please enter a subject (at least 5 characters)",
+      });
+    } else if (formData.subject.trim().length < 5) {
+      newErrors.push({
+        field: "subject",
+        message: "Please enter a subject (at least 5 characters)",
+      });
     }
 
     if (!formData.message.trim()) {
-      newErrors.push({ field: "message", message: "Message is required" });
+      newErrors.push({
+        field: "message",
+        message: "Please share a bit more detail (at least 10 characters)",
+      });
     } else if (formData.message.trim().length < 10) {
       newErrors.push({
         field: "message",
-        message: "Message must be at least 10 characters long",
+        message: "Please share a bit more detail (at least 10 characters)",
       });
     }
 
@@ -78,7 +112,7 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
     }
   };
 
-  // Handle form submission
+  // Handle form submission via typed Hono RPC client
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -90,17 +124,66 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
 
     setIsSubmitting(true);
     setErrors([]);
+    setSubmitStatus("idle");
+    setShowMailtoFallback(false);
 
     try {
-      // Simulate form submission (replace with actual API call)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const response = await client.api.contact.$post({
+        json: {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          _gotcha: formData._gotcha,
+        },
+      });
 
-      // For demo purposes, we'll just show success
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      const result = await response.json();
+      console.log("[Contact Form] Response received:", {
+        status: response.status,
+        ok: response.ok,
+        result,
+      });
+
+      if (response.ok && result.success) {
+        setSubmitStatus("success");
+        setFeedbackMessage(
+          result.message || "Thank you! Your message has been sent successfully."
+        );
+        setShowMailtoFallback(false);
+        setFormData({ name: "", email: "", subject: "", message: "", _gotcha: "" });
+      } else {
+        setSubmitStatus("error");
+        setFeedbackMessage(
+          result.message || "Failed to send message. Please try again."
+        );
+
+        if (
+          "showDirectEmailFallback" in result &&
+          result.showDirectEmailFallback
+        ) {
+          setShowMailtoFallback(true);
+        }
+
+        if ("fieldErrors" in result && result.fieldErrors) {
+          const serverErrors: FormValidationError[] = [];
+          for (const [field, messages] of Object.entries(result.fieldErrors)) {
+            if (Array.isArray(messages) && messages[0]) {
+              serverErrors.push({ field, message: messages[0] });
+            }
+          }
+          if (serverErrors.length > 0) {
+            setErrors(serverErrors);
+          }
+        }
+      }
     } catch (error) {
-      console.error("Form submission error:", error);
+      console.error("Contact submission error:", error);
       setSubmitStatus("error");
+      setFeedbackMessage(
+        "I'm having trouble connecting to the service right now. Please feel free to email me directly!"
+      );
+      setShowMailtoFallback(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -212,23 +295,105 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
             <h3 className={styles.formTitle}>Send a Message</h3>
 
             {submitStatus === "success" && (
-              <div className={styles.successMessage}>
-                <CheckCircle size={20} />
-                <span>Thank you! Your message has been sent successfully.</span>
+              <div
+                className={styles.successMessage}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "10px",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <CheckCircle size={20} />
+                  <span>
+                    {feedbackMessage ||
+                      "Thank you! Your message has been sent successfully."}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSubmitStatus("idle");
+                    setFeedbackMessage("");
+                  }}
+                  style={{
+                    fontSize: "12px",
+                    color: "#93c5fd",
+                    textDecoration: "underline",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                  }}
+                >
+                  Send another message
+                </button>
               </div>
             )}
 
             {submitStatus === "error" && (
-              <div className={styles.errorMessage}>
-                <AlertCircle size={20} />
-                <span>
-                  Sorry, there was an error sending your message. Please try
-                  again.
-                </span>
+              <div
+                className={styles.errorMessage}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <AlertCircle size={20} />
+                  <span>
+                    {feedbackMessage ||
+                      "Sorry, there was an error sending your message. Please try again."}
+                  </span>
+                </div>
+                {showMailtoFallback && (
+                  <a
+                    href={`mailto:${contact.email || "seannpatrick25@gmail.com"}?subject=${encodeURIComponent(
+                      formData.subject || "Portfolio Inquiry"
+                    )}&body=${encodeURIComponent(formData.message || "")}`}
+                    style={{
+                      marginTop: "4px",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      fontSize: "13px",
+                      color: "#93c5fd",
+                      textDecoration: "underline",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <Mail size={15} /> Click here to email me directly ({contact.email || "seannpatrick25@gmail.com"})
+                  </a>
+                )}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className={styles.form}>
+              {/* Honeypot field: invisible to real users, catches automated bots */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: "-9999px",
+                  opacity: 0,
+                  pointerEvents: "none",
+                }}
+                aria-hidden="true"
+              >
+                <label htmlFor="_gotcha">Do not fill this field</label>
+                <input
+                  type="text"
+                  id="_gotcha"
+                  name="_gotcha"
+                  value={formData._gotcha || ""}
+                  onChange={handleInputChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label htmlFor="name" className={styles.formLabel}>
