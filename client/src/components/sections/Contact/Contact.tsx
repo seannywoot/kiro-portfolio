@@ -138,14 +138,20 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
         },
       });
 
-      const result = await response.json();
+      let result: any = null;
+      try {
+        result = await response.json();
+      } catch (jsonErr) {
+        console.warn("[Contact Form] Non-JSON response received:", response.status, jsonErr);
+      }
+
       console.log("[Contact Form] Response received:", {
         status: response.status,
         ok: response.ok,
         result,
       });
 
-      if (response.ok && result.success) {
+      if (response.ok && result?.success) {
         setSubmitStatus("success");
         setFeedbackMessage(
           result.message || "Thank you! Your message has been sent successfully."
@@ -155,17 +161,20 @@ const Contact: React.FC<ContactProps> = ({ contact }) => {
       } else {
         setSubmitStatus("error");
         setFeedbackMessage(
-          result.message || "Failed to send message. Please try again."
+          result?.message ||
+            "I'm having trouble receiving messages right now. Please feel free to email me directly!"
         );
+        setShowMailtoFallback(true);
 
         if (
+          result &&
           "showDirectEmailFallback" in result &&
           result.showDirectEmailFallback
         ) {
           setShowMailtoFallback(true);
         }
 
-        if ("fieldErrors" in result && result.fieldErrors) {
+        if (result && "fieldErrors" in result && result.fieldErrors) {
           const serverErrors: FormValidationError[] = [];
           for (const [field, messages] of Object.entries(result.fieldErrors)) {
             if (Array.isArray(messages) && messages[0]) {

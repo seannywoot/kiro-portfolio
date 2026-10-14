@@ -11,16 +11,17 @@ import path from "node:path";
 
 // Guarantee .env is loaded even when running from server/ subdirectory
 function loadEnvFallback() {
-  if (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== "your_resend_api_key_here") {
-    return;
-  }
-  const possiblePaths = [
-    path.resolve(process.cwd(), ".env"),
-    path.resolve(process.cwd(), "../.env"),
-    path.resolve(__dirname, "../../.env"),
-  ];
-  for (const envPath of possiblePaths) {
-    try {
+  try {
+    if (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== "your_resend_api_key_here") {
+      return;
+    }
+    const cwd = process.cwd();
+    const possiblePaths = [
+      path.resolve(cwd, ".env"),
+      path.resolve(cwd, "../.env"),
+      path.resolve(cwd, "server/.env"),
+    ];
+    for (const envPath of possiblePaths) {
       if (fs.existsSync(envPath)) {
         const content = fs.readFileSync(envPath, "utf-8");
         for (const line of content.split(/\r?\n/)) {
@@ -38,8 +39,8 @@ function loadEnvFallback() {
           break;
         }
       }
-    } catch {}
-  }
+    }
+  } catch {}
 }
 loadEnvFallback();
 
